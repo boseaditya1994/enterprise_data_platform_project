@@ -1,0 +1,121 @@
+collector_id,collector_name,hire_date,team_name,collector_level,manager_name,is_active_flag,source_updated_at,change_reason
+COL-1000,Stacy Erickson,2021-04-28,Mid Stage 30-59,Junior,Raymond Garcia,True,2025-01-01,INITIAL_LOAD
+COL-1001,Gary Goodwin,2020-10-28,Mid Stage 30-59,Senior,Katie Wang,True,2025-01-01,INITIAL_LOAD
+COL-1002,Wendy Jenkins,2022-06-01,Recovery,Junior,Brent Mckee,True,2025-01-01,INITIAL_LOAD
+COL-1003,Brenda Wolfe,2022-06-02,Late Stage 90+,Team Lead,William Weber,True,2025-01-01,INITIAL_LOAD
+COL-1004,Melissa Maxwell,2022-05-28,Early Stage 1-29,Junior,Christine Rojas,True,2025-01-01,INITIAL_LOAD
+COL-1005,Judy Thomas,2024-07-12,Late Stage 60-89,Team Lead,Samantha Patton,True,2025-01-01,INITIAL_LOAD
+COL-1006,Kellie Rush,2026-01-28,Late Stage 90+,Junior,Elizabeth Lee,True,2025-01-01,INITIAL_LOAD
+COL-1007,Chloe Allen,2023-05-05,Mid Stage 30-59,Senior,Melissa Turner,True,2025-01-01,INITIAL_LOAD
+COL-1008,John Wilson,2020-11-24,Mid Stage 30-59,Junior,Bradley Montoya,True,2025-01-01,INITIAL_LOAD
+COL-1009,Mrs. Barbara Gonzalez DDS,2024-08-27,Late Stage 90+,Senior,Eugene Kelley,True,2025-01-01,INITIAL_LOAD
+COL-1010,Teresa Allen,2021-08-01,Early Stage 1-29,Junior,Sean Anderson,True,2025-01-01,INITIAL_LOAD
+COL-1011,Joseph Goodman,2025-06-22,Early Stage 1-29,Junior,Jose Richards,True,2025-01-01,INITIAL_LOAD
+COL-1012,Caitlyn Bentley,2024-04-06,Late Stage 60-89,Senior,Cory Blake,True,2025-01-01,INITIAL_LOAD
+COL-1013,Lynn Wilson,2021-06-04,Mid Stage 30-59,Junior,Victoria Bush,True,2025-01-01,INITIAL_LOAD
+COL-1014,Shelly Grant,2021-01-21,Mid Stage 30-59,Junior,Mr. Matthew Cain,True,2025-01-01,INITIAL_LOAD
+COL-1015,Joseph Rodriguez,2021-02-01,Early Stage 1-29,Junior,Whitney Guzman,True,2025-01-01,INITIAL_LOAD
+COL-1016,Sarah Blackwell,2022-11-16,Recovery,Senior,Logan Smith,True,2025-01-01,INITIAL_LOAD
+COL-1017,Carrie Jacobs,2021-12-14,Late Stage 90+,Junior,Darryl Espinoza,True,2025-01-01,INITIAL_LOAD
+COL-1018,Timothy Ortiz,2025-02-22,Late Stage 60-89,Junior,Misty Petty,True,2025-01-01,INITIAL_LOAD
+COL-1019,Thomas Morgan,2026-03-28,Early Stage 1-29,Junior,Stanley Lee,True,2025-01-01,INITIAL_LOAD
+COL-1020,Holly Flores,2024-07-04,Early Stage 1-29,Senior,Kelly Martin,True,2025-01-01,INITIAL_LOAD
+COL-1021,Erik Dougherty,2022-05-13,Recovery,Senior,Leah Anderson,True,2025-01-01,INITIAL_LOAD
+COL-1022,Reginald Wolf,2023-01-31,Late Stage 90+,Junior,Michael Wright,True,2025-01-01,INITIAL_LOAD
+COL-1023,John Ferguson,2021-10-29,Recovery,Junior,Adrian Mitchell,True,2025-01-01,INITIAL_LOAD
+COL-1024,Mrs. Erica Stone,2021-06-25,Mid Stage 30-59,Junior,Matthew Johnson,True,2025-01-01,INITIAL_LOAD
+COL-1025,Robert Ferguson,2020-08-21,Early Stage 1-29,Junior,Crystal Mata,True,2025-01-01,INITIAL_LOAD
+COL-1026,Joseph Taylor,2023-03-04,Late Stage 60-89,Junior,Edward Barnett,True,2025-01-01,INITIAL_LOAD
+COL-1027,Rachel Buchanan,2023-12-05,Recovery,Junior,Sandra Walker,True,2025-01-01,INITIAL_LOAD
+COL-1028,Matthew Coleman,2021-01-12,Mid Stage 30-59,Junior,Michelle Morse,True,2025-01-01,INITIAL_LOAD
+COL-1029,Richard Mclaughlin,2025-01-18,Late Stage 60-89,Team Lead,Sarah Wright,True,2025-01-01,INITIAL_LOAD
+COL-1030,Kathryn Allison,2023-09-28,Early Stage 1-29,Junior,Kevin Shaw,True,2025-01-01,INITIAL_LOAD
+COL-1031,Jessica Stein,2023-12-01,Mid Stage 30-59,Senior,Jennifer Valdez,True,2025-01-01,INITIAL_LOAD
+COL-1032,Nancy Schwartz,2025-03-09,Late Stage 60-89,Junior,Karen House,True,2025-01-01,INITIAL_LOAD
+COL-1033,Diana Elliott,2022-08-16,Late Stage 60-89,Junior,Andrew Knapp,True,2025-01-01,INITIAL_LOAD
+COL-1034,James Small,2021-07-13,Late Stage 90+,Senior,Sheila Davis,True,2025-01-01,INITIAL_LOAD
+COL-1035,Jason Boyer,2023-01-09,Recovery,Junior,Catherine Townsend,True,2025-01-01,INITIAL_LOAD
+COL-1036,Joe Brown,2026-02-21,Late Stage 60-89,Junior,Deborah Thomas,True,2025-01-01,INITIAL_LOAD
+COL-1037,Shawn Harrington,2026-02-06,Late Stage 60-89,Senior,Daniel Moreno,True,2025-01-01,INITIAL_LOAD
+COL-1038,Amy Martinez,2025-03-02,Recovery,Junior,Kim Page,True,2025-01-01,INITIAL_LOAD
+COL-1039,Robert Lopez,2022-07-11,Late Stage 90+,Junior,Paula Love,True,2025-01-01,INITIAL_LOAD
+COL-1040,Jack Dillon,2025-02-17,Late Stage 60-89,Junior,Elizabeth Myers,True,2025-01-01,INITIAL_LOAD
+COL-1041,Patricia Morgan,2020-11-18,Recovery,Junior,Maria Smith,True,2025-01-01,INITIAL_LOAD
+COL-1042,Ruth Church,2026-05-11,Recovery,Senior,Robert Mendoza,True,2025-01-01,INITIAL_LOAD
+COL-1043,Sarah Ruiz,2023-07-05,Mid Stage 30-59,Junior,Jason Schultz,True,2025-01-01,INITIAL_LOAD
+COL-1044,Kimberly Bradley,2022-04-04,Early Stage 1-29,Junior,Eric Martinez,True,2025-01-01,INITIAL_LOAD
+COL-1045,Bradley Sanchez,2024-07-26,Recovery,Junior,Samantha Graham,True,2025-01-01,INITIAL_LOAD
+COL-1046,Nicholas Howard,2021-09-22,Mid Stage 30-59,Junior,Hannah Lindsey,True,2025-01-01,INITIAL_LOAD
+COL-1047,Nicholas Clark,2022-02-16,Early Stage 1-29,Team Lead,Andrew Johnson,True,2025-01-01,INITIAL_LOAD
+COL-1048,Donald Travis,2023-09-25,Mid Stage 30-59,Junior,Lindsey Walls,True,2025-01-01,INITIAL_LOAD
+COL-1049,Erin Castro,2021-02-08,Late Stage 60-89,Team Lead,Jessica Golden,True,2025-01-01,INITIAL_LOAD
+COL-1050,Barbara Robertson,2021-11-21,Mid Stage 30-59,Senior,Kelly Schneider,True,2025-01-01,INITIAL_LOAD
+COL-1051,Ralph Bailey,2021-10-17,Late Stage 60-89,Senior,Paul Ramos,True,2025-01-01,INITIAL_LOAD
+COL-1052,Kayla Miller,2024-03-27,Recovery,Junior,Aaron Schultz,True,2025-01-01,INITIAL_LOAD
+COL-1053,Danielle Alvarado,2021-07-06,Early Stage 1-29,Junior,Elizabeth Nguyen,True,2025-01-01,INITIAL_LOAD
+COL-1054,Charles Gomez,2021-08-23,Mid Stage 30-59,Senior,Maria Evans,True,2025-01-01,INITIAL_LOAD
+COL-1055,Edwin Weaver,2025-12-06,Recovery,Senior,Rachel Gutierrez,True,2025-01-01,INITIAL_LOAD
+COL-1056,Daniel Hill,2022-07-29,Recovery,Junior,Curtis Woodard,True,2025-01-01,INITIAL_LOAD
+COL-1057,Melissa Stuart,2026-02-22,Late Stage 90+,Junior,Heather Hall,True,2025-01-01,INITIAL_LOAD
+COL-1058,Lisa Ortiz,2024-09-11,Late Stage 60-89,Junior,James Pugh,True,2025-01-01,INITIAL_LOAD
+COL-1059,Stephen Wong,2023-11-19,Recovery,Team Lead,Larry Kelly,True,2025-01-01,INITIAL_LOAD
+COL-1060,Todd Liu,2023-03-11,Recovery,Junior,Melissa Frey,True,2025-01-01,INITIAL_LOAD
+COL-1061,Susan Wilson,2023-06-10,Recovery,Senior,Alexander Aguilar,True,2025-01-01,INITIAL_LOAD
+COL-1062,Amanda Higgins,2025-05-03,Late Stage 60-89,Senior,Sherry Hopkins,True,2025-01-01,INITIAL_LOAD
+COL-1063,Sharon Hernandez,2023-09-19,Recovery,Senior,Brian Mcmillan,True,2025-01-01,INITIAL_LOAD
+COL-1064,Amanda Huber,2024-08-18,Late Stage 90+,Senior,Janet Anderson,True,2025-01-01,INITIAL_LOAD
+COL-1065,Brenda Maxwell,2023-01-21,Mid Stage 30-59,Junior,Brian Sullivan Jr.,True,2025-01-01,INITIAL_LOAD
+COL-1066,Taylor Simpson,2024-11-21,Mid Stage 30-59,Team Lead,Tyler Clark,True,2025-01-01,INITIAL_LOAD
+COL-1067,Jeffery Suarez,2023-12-23,Early Stage 1-29,Senior,Melissa Hudson,True,2025-01-01,INITIAL_LOAD
+COL-1068,Mr. Bryan Lee,2026-06-24,Mid Stage 30-59,Senior,James Baker,True,2025-01-01,INITIAL_LOAD
+COL-1069,Jonathan Golden,2021-04-28,Mid Stage 30-59,Junior,Christopher Dougherty,True,2025-01-01,INITIAL_LOAD
+COL-1070,Shane White,2022-02-11,Early Stage 1-29,Senior,Denise Schroeder MD,True,2025-01-01,INITIAL_LOAD
+COL-1071,Mrs. Laura Cain,2022-10-10,Recovery,Junior,Mr. Christopher Ryan DDS,True,2025-01-01,INITIAL_LOAD
+COL-1072,Joel Waters,2025-12-25,Mid Stage 30-59,Junior,Anna Sanders,True,2025-01-01,INITIAL_LOAD
+COL-1073,Daniel Schmidt,2024-11-23,Mid Stage 30-59,Senior,Sean Hughes,True,2025-01-01,INITIAL_LOAD
+COL-1074,Lauren Morrison,2021-04-05,Mid Stage 30-59,Junior,Mr. Luis Fowler,True,2025-01-01,INITIAL_LOAD
+COL-1075,Nathan Roberts,2021-11-22,Late Stage 90+,Senior,Daniel Dickson,True,2025-01-01,INITIAL_LOAD
+COL-1076,Barbara Hughes,2021-05-08,Early Stage 1-29,Junior,Susan Lynch,True,2025-01-01,INITIAL_LOAD
+COL-1077,Henry Smith,2025-09-02,Late Stage 60-89,Senior,Jessica Harvey,True,2025-01-01,INITIAL_LOAD
+COL-1078,Kristine Cook,2025-02-23,Early Stage 1-29,Junior,Jacqueline Wheeler,True,2025-01-01,INITIAL_LOAD
+COL-1079,Felicia Brown,2020-09-25,Early Stage 1-29,Senior,Jose Gilbert,True,2025-01-01,INITIAL_LOAD
+COL-1080,Kevin Schneider,2021-10-12,Mid Stage 30-59,Junior,Jonathan Ruiz,True,2025-01-01,INITIAL_LOAD
+COL-1081,Stephanie Edwards,2025-02-02,Recovery,Senior,Patricia Melton,True,2025-01-01,INITIAL_LOAD
+COL-1082,Katie Lewis,2022-09-28,Late Stage 90+,Senior,Mary Harris,True,2025-01-01,INITIAL_LOAD
+COL-1083,Daniel Rice,2022-02-23,Late Stage 90+,Junior,Chelsea Tyler,True,2025-01-01,INITIAL_LOAD
+COL-1084,Dean Nelson,2021-06-30,Late Stage 90+,Junior,Charles Hoover,True,2025-01-01,INITIAL_LOAD
+COL-1085,David Martinez,2020-08-28,Late Stage 60-89,Senior,Nicole Taylor MD,True,2025-01-01,INITIAL_LOAD
+COL-1086,Edwin Leonard,2022-09-03,Late Stage 60-89,Senior,Karen Padilla,True,2025-01-01,INITIAL_LOAD
+COL-1087,Melissa Watkins,2024-04-24,Recovery,Senior,Robert White,True,2025-01-01,INITIAL_LOAD
+COL-1088,Richard Moran,2025-10-30,Early Stage 1-29,Senior,Rachael Wilson,True,2025-01-01,INITIAL_LOAD
+COL-1089,Amy Young,2025-08-10,Mid Stage 30-59,Junior,Jocelyn Burgess,True,2025-01-01,INITIAL_LOAD
+COL-1090,Anthony Smith,2024-04-04,Recovery,Junior,Katherine Jones,True,2025-01-01,INITIAL_LOAD
+COL-1091,Dennis Jones,2024-02-03,Late Stage 90+,Junior,Stephen Fernandez,True,2025-01-01,INITIAL_LOAD
+COL-1092,James Ramos,2024-05-03,Late Stage 90+,Junior,John Anderson,True,2025-01-01,INITIAL_LOAD
+COL-1093,John Chan,2021-08-24,Late Stage 90+,Senior,Eric Kennedy,True,2025-01-01,INITIAL_LOAD
+COL-1094,Tonya Shepard,2021-07-27,Late Stage 90+,Junior,Alicia Smith,True,2025-01-01,INITIAL_LOAD
+COL-1095,Barbara Brown,2021-03-14,Late Stage 60-89,Team Lead,Julie Thomas,True,2025-01-01,INITIAL_LOAD
+COL-1096,Ryan Stephens,2024-02-22,Late Stage 60-89,Senior,Angie Wilson,True,2025-01-01,INITIAL_LOAD
+COL-1097,Dennis Burnett,2022-12-31,Recovery,Senior,Christina Martinez,True,2025-01-01,INITIAL_LOAD
+COL-1098,Jacob Johnson,2026-02-13,Late Stage 60-89,Team Lead,Randy Wyatt,True,2025-01-01,INITIAL_LOAD
+COL-1099,James Townsend,2026-04-18,Recovery,Junior,Matthew Barnes,True,2025-01-01,INITIAL_LOAD
+COL-1100,Jackson Gregory,2024-02-17,Early Stage 1-29,Senior,Amy Jensen,True,2025-01-01,INITIAL_LOAD
+COL-1101,Guy Hudson,2022-03-04,Recovery,Junior,Mrs. Christina Miller MD,True,2025-01-01,INITIAL_LOAD
+COL-1102,Corey Thomas,2025-08-09,Mid Stage 30-59,Junior,Crystal Compton,True,2025-01-01,INITIAL_LOAD
+COL-1103,Michael Davis,2021-12-30,Mid Stage 30-59,Senior,Brandon Singh,True,2025-01-01,INITIAL_LOAD
+COL-1104,Anita Hall,2022-05-23,Late Stage 60-89,Junior,Kimberly Martinez,True,2025-01-01,INITIAL_LOAD
+COL-1105,Matthew Ross,2022-10-23,Mid Stage 30-59,Team Lead,Stacey Williams,True,2025-01-01,INITIAL_LOAD
+COL-1106,Bryan Elliott,2025-01-23,Late Stage 90+,Senior,Kimberly Jackson,True,2025-01-01,INITIAL_LOAD
+COL-1107,Adrian Moore,2025-07-22,Recovery,Senior,Joshua Brown,True,2025-01-01,INITIAL_LOAD
+COL-1108,Amber Garza,2022-07-18,Late Stage 90+,Junior,Tara Ray,True,2025-01-01,INITIAL_LOAD
+COL-1109,Anthony Cantrell,2022-06-20,Late Stage 90+,Senior,Justin Bowen,True,2025-01-01,INITIAL_LOAD
+COL-1110,Jordan Garrett,2023-05-27,Late Stage 60-89,Junior,Jeffrey Brown,True,2025-01-01,INITIAL_LOAD
+COL-1111,Dr. Jacob Phillips,2022-02-01,Early Stage 1-29,Senior,Chris Holder,True,2025-01-01,INITIAL_LOAD
+COL-1112,Stephanie Watson,2021-10-10,Recovery,Junior,Kathy Spencer,True,2025-01-01,INITIAL_LOAD
+COL-1113,Mrs. Leah Bird,2021-07-18,Late Stage 90+,Senior,Lynn West,True,2025-01-01,INITIAL_LOAD
+COL-1114,Sierra Macias,2023-11-12,Late Stage 60-89,Junior,James Salazar,True,2025-01-01,INITIAL_LOAD
+COL-1115,Clarence Jackson,2023-11-27,Mid Stage 30-59,Junior,Nicole Mcgee,True,2025-01-01,INITIAL_LOAD
+COL-1116,Anthony Brown,2024-10-01,Early Stage 1-29,Junior,Jeffrey Lawrence,True,2025-01-01,INITIAL_LOAD
+COL-1117,Lauren Howard,2023-11-18,Late Stage 60-89,Junior,Christopher Robinson,True,2025-01-01,INITIAL_LOAD
+COL-1118,Laura Moore,2024-06-25,Late Stage 90+,Senior,Gina Navarro,True,2025-01-01,INITIAL_LOAD
+COL-1119,Katrina Garcia,2021-02-04,Late Stage 60-89,Junior,John Moore,True,2025-01-01,INITIAL_LOAD

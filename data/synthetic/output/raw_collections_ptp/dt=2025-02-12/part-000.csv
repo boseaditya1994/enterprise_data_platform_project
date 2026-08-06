@@ -1,0 +1,4 @@
+ptp_id,loan_id,customer_id,contact_id,collector_id,ptp_created_date,ptp_promised_date,ptp_amount,ptp_status,amount_paid_against_ptp,fulfillment_date
+PTP-700058,LN-500917,CUST-106385,CTC-60000500,COL-1044,2025-02-12,2025-02-18,75.9,Kept,75.9,2025-02-15
+PTP-700272,LN-505217,CUST-100219,CTC-60002659,COL-1015,2025-02-12,2025-02-21,113.98,Broken,0.0,
+PTP-700826,LN-508103,CUST-104940,CTC-60008061,COL-1105,2025-02-12,2025-02-16,120.96,Kept,120.96,2025-02-17

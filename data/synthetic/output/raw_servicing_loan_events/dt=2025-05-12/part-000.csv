@@ -1,0 +1,4 @@
+loan_id,event_type,event_date,details
+LN-503285,CHARGE_OFF,2025-05-12,balance=2914.65
+LN-503462,CHARGE_OFF,2025-05-12,balance=91023.64
+LN-503604,CHARGE_OFF,2025-05-12,balance=4909.06

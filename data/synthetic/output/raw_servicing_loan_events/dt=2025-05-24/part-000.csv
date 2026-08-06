@@ -1,0 +1,3 @@
+loan_id,event_type,event_date,details
+LN-502920,RESTRUCTURE,2025-05-24,new_rate_reduction=0.02;new_term_months=72
+LN-509389,SETTLEMENT,2025-05-24,settled_amount=5737.28

@@ -1,0 +1,18 @@
+payment_id,loan_id,customer_id,payment_date,payment_amount,scheduled_amount,payment_type,payment_method,payment_status,is_reversal_flag,nsf_flag,original_payment_id,effective_date,ingestion_date,is_late_arrival,is_corrupt_record
+PMT-9045687,LN-506017,CUST-105534,2025-06-20,179.3,179.3,Scheduled,ACH,Posted,False,False,,2025-06-20,2025-06-30,True,False
+PMT-9045983,LN-506713,CUST-101922,2025-06-21,93.08,0.0,Extra,ACH,Posted,False,False,,2025-06-21,2025-06-30,True,False
+PMT-9046446,LN-505076,CUST-106070,2025-06-22,484.56,484.56,Scheduled,Debit Card,Posted,False,False,,2025-06-22,2025-06-30,True,False
+PMT-9046471,LN-508624,CUST-101426,2025-06-22,314.17,0.0,Extra,ACH,Posted,False,False,,2025-06-22,2025-06-30,True,False
+PMT-9046501,LN-501399,CUST-105361,2025-06-23,566.29,566.29,Scheduled,ACH,Posted,False,False,,2025-06-23,2025-06-30,True,False
+PMT-9046596,LN-501117,CUST-101388,2025-06-23,965.85,965.85,Scheduled,ACH,Posted,False,False,,2025-06-23,2025-06-30,True,False
+PMT-9046626,LN-503528,CUST-103175,2025-06-23,708.88,708.88,Scheduled,Debit Card,Posted,False,False,,2025-06-23,2025-06-30,True,False
+PMT-9046757,LN-501626,CUST-100555,2025-06-23,1183.89,1183.89,Scheduled,Debit Card,Posted,False,False,,2025-06-23,2025-06-30,True,False
+PMT-9046779,LN-500878,CUST-106716,2025-06-23,311.64,311.64,Scheduled,ACH,Posted,False,False,,2025-06-23,2025-06-30,True,False
+PMT-9046938,LN-501219,CUST-103102,2025-06-24,112.72,112.72,Scheduled,Debit Card,Posted,False,False,,2025-06-24,2025-06-30,True,False
+PMT-9047305,LN-508014,CUST-104485,2025-06-25,794.79,794.79,Scheduled,Check,Posted,False,False,,2025-06-25,2025-06-30,True,False
+PMT-9047513,LN-503757,CUST-106198,2025-06-25,194.95,194.95,Scheduled,ACH,Posted,False,False,,2025-06-25,2025-06-30,True,False
+PMT-9048153,LN-507701,CUST-106801,2025-06-27,503.86,503.86,Scheduled,ACH,Posted,False,False,,2025-06-27,2025-06-30,True,False
+PMT-9048241,LN-506488,CUST-101584,2025-06-28,1428.51,1428.51,Scheduled,ACH,Posted,False,False,,2025-06-28,2025-06-30,True,False
+PMT-9048280,LN-502403,CUST-101614,2025-06-28,319.06,0.0,Extra,Debit Card,Posted,False,False,,2025-06-28,2025-06-30,True,False
+PMT-9048528,LN-505401,CUST-102677,2025-06-28,198.35,198.35,Scheduled,ACH,Posted,False,False,,2025-06-28,2025-06-30,True,False
+PMT-9048252-REV,LN-505617,CUST-101406,2025-06-30,-746.17,746.17,Scheduled,ACH,Reversed,True,False,PMT-9048252,2025-06-30,2025-06-30,False,False

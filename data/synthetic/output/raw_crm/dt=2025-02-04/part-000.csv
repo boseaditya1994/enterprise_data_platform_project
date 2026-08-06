@@ -1,0 +1,4 @@
+customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
+CUST-100251,Roy,Mays,1975-07-23,7711,roy.mays228@yahoo.com,599-162-4731,North Linda,AK,45474,Mass,Self-Employed,2025-02-04,CRM,RELOCATION
+CUST-102029,Travis,Crawford,2001-01-17,6870,travis.crawford230@gmail.com,234-267-8703,Jessicaview,IL,83239,Affluent,Unemployed,2025-02-04,CRM,RELOCATION
+CUST-105244,Adrian,Ho,1952-01-22,6187,adrian.ho533@gmail.com,819-505-2858,Christinabury,TN,11995,Mass,Employed,2025-02-04,CRM,RELOCATION

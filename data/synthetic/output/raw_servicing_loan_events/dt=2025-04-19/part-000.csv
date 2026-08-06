@@ -1,0 +1,4 @@
+loan_id,event_type,event_date,details
+LN-500799,RESTRUCTURE,2025-04-19,new_rate_reduction=0.02;new_term_months=66
+LN-506139,FRAUD_FLAG,2025-04-19,
+LN-507868,CHARGE_OFF,2025-04-19,balance=16336.35

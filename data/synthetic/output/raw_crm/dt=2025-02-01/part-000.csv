@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
+CUST-102107,John,Robinson,1992-05-13,6625,john.robinson876@hotmail.com,294-270-2150,North Stephentown,MH,33915,Mass,Self-Employed,2025-02-01,CRM,RELOCATION
+CUST-103813,Samantha,Russell,1986-08-16,8456,samantha.russell693@yahoo.com,633-606-1013,Annestad,PW,08217,Affluent,Employed,2025-02-01,CRM,RELOCATION
+CUST-106613,James,Wheeler,1984-02-09,4702,james.wheeler357@hotmail.com,446-439-9449,New Monicabury,RI,30981,Mass,Employed,2025-02-01,CRM,RELOCATION
+CUST-107512,Andrew,Smith,1992-09-28,7175,andrew.smith121@gmail.com,770-901-8278,Grayton,NH,05169,Mass,Retired,2025-02-01,CRM,RELOCATION
+CUST-107567,Corey,Russo,1998-07-03,9990,corey.russo394@hotmail.com,838-091-4237,Lake Steven,NM,26022,Affluent,Employed,2025-02-01,CRM,RELOCATION

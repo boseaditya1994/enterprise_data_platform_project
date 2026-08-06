@@ -1,0 +1,13 @@
+
+    
+    
+    
+    create table "dbt_warehouse"."seeds"."risk_band_seed" ("risk_band_sk" integer,"risk_band_code" text,"risk_band_name" text,"score_range_low" integer,"score_range_high" integer)
+  ;
+    -- dbt seed --
+    
+          COPY "dbt_warehouse"."seeds"."risk_band_seed" FROM '/Users/adityabose/Documents/enterprise_data_platform_project/dbt/seeds/risk_band_seed.csv' (FORMAT CSV, HEADER TRUE, DELIMITER ',')
+        
+
+;
+  

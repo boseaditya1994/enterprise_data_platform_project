@@ -1,0 +1,5 @@
+customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
+CUST-101662,Mario,Mccann,1971-05-22,5896,mario.mccann780@yahoo.com,255-078-6887,Lake Allenberg,MO,81753,Affluent,Self-Employed,2025-06-11,CRM,RELOCATION
+CUST-105836,Jimmy,Oliver,1993-11-03,3393,jimmy.oliver957@gmail.com,760-150-0438,Cindyberg,WV,88095,Mass,Retired,2025-06-11,CRM,RELOCATION
+CUST-106351,Alan,Johnson,1988-11-17,8446,alan.johnson846@gmail.com,816-360-0524,Michaelburgh,ND,12358,Affluent,Self-Employed,2025-06-11,CRM,RELOCATION
+CUST-107097,Alan,Evans,1956-09-05,4985,alan.evans77@gmail.com,288-096-8075,Port Kimberlyshire,DE,15577,Mass,Employed,2025-06-11,CRM,RELOCATION

@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
+CUST-101928,Tracy,Franco,1985-10-01,5133,tracy.franco377@yahoo.com,964-587-6694,Julieland,VI,25445,Mass,Employed,2025-05-25,CRM,RELOCATION
+CUST-102173,Debra,Winters,2005-05-25,2328,debra.winters577@gmail.com,380-419-1716,South Chadstad,VA,72384,Affluent,Employed,2025-05-25,CRM,RELOCATION
+CUST-103554,Dominique,Smith,2000-12-11,8673,dominique.smith313@gmail.com,068-721-7046,Robinsonburgh,GU,03344,Affluent,Employed,2025-05-25,CRM,RELOCATION
+CUST-103717,Philip,Johnson,1995-01-30,6038,philip.johnson920@yahoo.com,028-737-2380,South Luistown,MP,67149,Mass,Retired,2025-05-25,CRM,RELOCATION
+CUST-104657,Amber,Gray,1980-10-25,6165,amber.gray454@gmail.com,859-040-6209,South Michael,ND,63729,Mass,Employed,2025-05-25,CRM,RELOCATION

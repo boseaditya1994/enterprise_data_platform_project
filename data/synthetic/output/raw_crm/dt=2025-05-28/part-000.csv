@@ -1,0 +1,3 @@
+customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
+CUST-106605,Kari,Wright,1953-08-28,1389,kari.wright918@hotmail.com,561-697-1244,Nelsonchester,NY,55281,Mass,Employed,2025-05-28,CRM,RELOCATION
+CUST-106826,Angela,Jones,1966-11-27,4129,angela.jones651@hotmail.com,568-263-2820,Weberport,DC,98513,Mass,Employed,2025-05-28,CRM,RELOCATION

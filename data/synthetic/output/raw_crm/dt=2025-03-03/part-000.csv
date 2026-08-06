@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
+CUST-101862,Jeffery,Garcia,1977-12-21,9383,jeffery.garcia274@hotmail.com,517-696-8064,Lisamouth,VA,36468,Mass,Retired,2025-03-03,CRM,RELOCATION
+CUST-102149,Angela,Tran,1985-12-18,9267,angela.tran515@yahoo.com,227-353-3406,East Katrina,OR,11734,Mass,Employed,2025-03-03,CRM,RELOCATION
+CUST-103181,Margaret,Harrison,1985-07-13,0324,margaret.harrison422@yahoo.com,113-156-8731,Norrisbury,AK,93155,Mass,Employed,2025-03-03,CRM,RELOCATION
+CUST-104704,Felicia,Baker,2000-12-17,0364,felicia.baker325@hotmail.com,443-762-8255,Randyville,FL,61994,Mass,Employed,2025-03-03,CRM,RELOCATION
+CUST-104945,David,Steele,2003-05-16,3000,david.steele37@gmail.com,675-235-6371,Port Elizabeth,DE,03886,Mass,Employed,2025-03-03,CRM,RELOCATION

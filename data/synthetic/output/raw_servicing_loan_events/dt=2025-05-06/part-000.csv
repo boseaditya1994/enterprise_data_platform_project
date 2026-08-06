@@ -1,0 +1,4 @@
+loan_id,event_type,event_date,details
+LN-502761,CHARGE_OFF,2025-05-06,balance=28746.45
+LN-506841,FRAUD_FLAG,2025-05-06,
+LN-509912,FRAUD_FLAG,2025-05-06,
