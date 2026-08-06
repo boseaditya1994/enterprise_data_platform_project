@@ -86,7 +86,6 @@ cd ..
 `which dbt`, `which python3`, and `python3 -m pip show dbt-duckdb` — if
 the last one comes back empty, `dbt` and `pip` are resolving to different
 Pythons. Fastest fix without a venv:
-
 ```bash
 python3 -m pip install --break-system-packages --force-reinstall dbt-core dbt-duckdb
 ```
@@ -116,7 +115,6 @@ cd ..
 
 ```bash
 cd sql/silver/local_execution
-pip install pandas
 python3 identity_resolution_demo.py   # Phase 7's matching-algorithm proof
 cd ../../..
 ```

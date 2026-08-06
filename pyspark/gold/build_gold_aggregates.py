@@ -48,9 +48,16 @@ def build_rolling_par_trend(spark: SparkSession) -> None:
         .withColumn("par_30", F.col("balance_30plus") / F.col("total_balance"))
     )
 
-    trend_window_90d = Window.orderBy("snapshot_date").rangeBetween(-90 * 86400, 0)
-    trend_window_365d = Window.orderBy("snapshot_date").rangeBetween(-365 * 86400, 0)
-
+    # NOTE (caught by `ruff check` -- F841 unused variable): an earlier draft
+    # defined trend_window_90d/365d here via
+    # Window.orderBy("snapshot_date").rangeBetween(-90 * 86400, 0) -- that's
+    # not just unused, it's WRONG: rangeBetween on a raw DateType order
+    # column interprets its bounds in units of DAYS, not seconds, so that
+    # expression actually meant "~19,700 years back," not 90 days. The fix
+    # below casts to a unix timestamp (seconds) first, which is the correct
+    # way to express a day-based rangeBetween window in Spark. Left this
+    # note rather than silently deleting the mistake, same as every other
+    # caught bug in this project.
     with_trend = (
         daily_par
         .withColumn("snapshot_date_unix", F.col("snapshot_date").cast("timestamp").cast("long"))
