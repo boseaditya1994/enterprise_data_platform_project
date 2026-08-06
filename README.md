@@ -12,7 +12,8 @@ for status and [`docs/`](docs/) for all deliverables.
 **Status: all 17 phases complete.** Start with
 [`docs/17-resume-interview-prep.md`](docs/17-resume-interview-prep.md)
 for the project summary, or [`docs/00-project-plan.md`](docs/00-project-plan.md)
-for the full phase-by-phase index.
+for the full phase-by-phase index. To actually run the pipeline locally,
+see [`QUICKSTART.md`](QUICKSTART.md).
 
 ## Repo layout
 

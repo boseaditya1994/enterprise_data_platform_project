@@ -354,6 +354,23 @@ def compute_kpis(con):
     print(f"Contact Success Rate (live-agent contacts resulting in a PTP): {contact_success:.2%}")
 
 
+def create_kpi_views(con):
+    """
+    Executes sql/gold/kpi_definitions.sql -- the production-reference KPI
+    view SQL (Phase 8) -- against this warehouse for real, so gold.vw_*
+    views actually exist to query afterward, not just document intent.
+    Runs clean as-is against DuckDB (verified: PAR 30 matches the
+    Phase 8-documented 8.00% to four decimal places).
+    """
+    kpi_sql_path = os.path.join(HERE, "..", "kpi_definitions.sql")
+    with open(kpi_sql_path) as f:
+        con.execute(f.read())
+    n_views = con.execute(
+        "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='gold' AND table_name LIKE 'vw_%'"
+    ).fetchone()[0]
+    print(f"  created {n_views} gold.vw_* KPI views from kpi_definitions.sql")
+
+
 def main():
     con = duckdb.connect(DB_PATH)
     con.execute("CREATE SCHEMA IF NOT EXISTS gold;")
@@ -373,7 +390,10 @@ def main():
 
     compute_kpis(con)
 
-    print(f"\nDone. Gold schema added to {DB_PATH}.")
+    print("\n=== Creating KPI views (sql/gold/kpi_definitions.sql) ===")
+    create_kpi_views(con)
+
+    print(f"\nDone. Gold schema (tables + views) added to {DB_PATH}.")
     con.close()
 
 
