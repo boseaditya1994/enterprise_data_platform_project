@@ -1,4 +1,0 @@
-loan_id,event_type,event_date,details
-LN-500540,FRAUD_FLAG,2025-04-15,
-LN-501664,SETTLEMENT,2025-04-15,settled_amount=10866.96
-LN-506987,CHARGE_OFF,2025-04-15,balance=20550.00

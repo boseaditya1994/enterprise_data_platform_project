@@ -1,4 +1,0 @@
-customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
-CUST-102840,Raymond,Allen,1958-06-13,9512,raymond.allen499@yahoo.com,896-846-0412,Danielshire,OH,90733,Mass,Employed,2025-03-12,CRM,RELOCATION
-CUST-107132,Angel,Watkins,1981-04-19,2523,angel.watkins869@gmail.com,016-582-6105,Smithfurt,AL,44653,Affluent,Employed,2025-03-12,CRM,RELOCATION
-CUST-107288,Sophia,Wood,1975-07-09,4280,sophia.wood943@hotmail.com,194-744-7336,Robertberg,PR,73750,Private Bank,Employed,2025-03-12,CRM,RELOCATION

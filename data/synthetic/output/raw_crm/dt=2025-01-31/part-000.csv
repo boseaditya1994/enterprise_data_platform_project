@@ -1,6 +1,0 @@
-customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
-CUST-102748,Christopher,Page,1984-11-19,3012,christopher.page534@gmail.com,172-951-2660,Brandonside,ID,56823,Mass,Retired,2025-01-31,CRM,RELOCATION
-CUST-103915,Joshua,Bailey,1963-03-27,2403,joshua.bailey677@hotmail.com,944-442-9737,Kathleenfurt,NY,33072,Mass,Employed,2025-01-31,CRM,RELOCATION
-CUST-105004,James,Garcia,1994-02-13,1574,james.garcia853@hotmail.com,846-175-9265,Port Peterberg,FL,95961,Affluent,Self-Employed,2025-01-31,CRM,RELOCATION
-CUST-106240,Daniel,Shaffer,1977-09-08,9695,daniel.shaffer368@gmail.com,820-178-8375,South Andreamouth,MA,44745,Affluent,Self-Employed,2025-01-31,CRM,RELOCATION
-CUST-106800,Elizabeth,Jensen,1976-05-20,7632,elizabeth.jensen480@hotmail.com,153-825-5346,West Jennifer,AS,72185,Mass,Employed,2025-01-31,CRM,RELOCATION

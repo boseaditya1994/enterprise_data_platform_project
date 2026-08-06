@@ -17,9 +17,9 @@ Usage (customer):
         watermark_col="source_updated_at",
     )
 """
+from delta.tables import DeltaTable
 from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql import functions as F
-from delta.tables import DeltaTable
 
 
 def scd2_merge(

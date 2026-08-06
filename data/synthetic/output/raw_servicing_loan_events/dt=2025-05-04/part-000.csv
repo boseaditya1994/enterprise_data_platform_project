@@ -1,4 +1,0 @@
-loan_id,event_type,event_date,details
-LN-501308,RESTRUCTURE,2025-05-04,new_rate_reduction=0.02;new_term_months=77
-LN-503468,FRAUD_FLAG,2025-05-04,
-LN-506230,SETTLEMENT,2025-05-04,settled_amount=14328.03

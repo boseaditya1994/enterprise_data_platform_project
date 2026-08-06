@@ -1,3 +1,0 @@
-customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
-CUST-101017,Brandon,Wells,1975-01-17,7361,brandon.wells928@gmail.com,236-914-9611,Martinezburgh,NM,17266,Mass,Employed,2025-03-25,CRM,RELOCATION
-CUST-102405,Cody,Mcguire,1973-06-05,4128,cody.mcguire224@hotmail.com,494-624-5540,East Jefferyburgh,PW,12619,Mass,Self-Employed,2025-03-25,CRM,RELOCATION

@@ -1,5 +1,0 @@
-loan_id,event_type,event_date,details
-LN-500611,RESTRUCTURE,2025-04-25,new_rate_reduction=0.02;new_term_months=51
-LN-500746,RESTRUCTURE,2025-04-25,new_rate_reduction=0.02;new_term_months=58
-LN-504020,RESTRUCTURE,2025-04-25,new_rate_reduction=0.02;new_term_months=36
-LN-508393,SETTLEMENT,2025-04-25,settled_amount=10546.09

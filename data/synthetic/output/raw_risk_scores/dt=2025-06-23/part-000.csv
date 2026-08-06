@@ -1,2 +1,0 @@
-loan_id,customer_id,file_date,internal_risk_score,risk_band_code,source_system,fraud_flag
-LN-502232,,2025-06-23,,,RISK_ENGINE,True

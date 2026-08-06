@@ -11,21 +11,21 @@
 -- =============================================================================
 
 CREATE TABLE dbo.pipeline_control (
-    source_name              VARCHAR(50)  NOT NULL PRIMARY KEY,
-    source_system             VARCHAR(30)  NOT NULL,
-    ingestion_pattern          VARCHAR(20)  NOT NULL,   -- 'batch' | 'streaming'
-    source_connection_name    VARCHAR(50)  NOT NULL,    -- linked service name
-    source_path_pattern        VARCHAR(200) NOT NULL,
-    landing_path_pattern       VARCHAR(200) NOT NULL,
-    databricks_notebook_path  VARCHAR(200) NOT NULL,
-    databricks_job_id          VARCHAR(50),
-    schedule_cron              VARCHAR(50)  NOT NULL,   -- informational; actual trigger is tr_daily_schedule
-    max_retries                 INT          NOT NULL DEFAULT 3,
-    retry_interval_seconds      INT          NOT NULL DEFAULT 30,
-    timeout_minutes              INT          NOT NULL DEFAULT 60,
-    freshness_sla_minutes         INT,                    -- alert if not landed within this window
-    is_active                    BIT          NOT NULL DEFAULT 1,
-    depends_on_source            VARCHAR(50)              -- e.g. servicing_daily_status depends on servicing_loans
+    source_name VARCHAR(50) NOT NULL PRIMARY KEY,
+    source_system VARCHAR(30) NOT NULL,
+    ingestion_pattern VARCHAR(20) NOT NULL,   -- 'batch' | 'streaming'
+    source_connection_name VARCHAR(50) NOT NULL,    -- linked service name
+    source_path_pattern VARCHAR(200) NOT NULL,
+    landing_path_pattern VARCHAR(200) NOT NULL,
+    databricks_notebook_path VARCHAR(200) NOT NULL,
+    databricks_job_id VARCHAR(50),
+    schedule_cron VARCHAR(50) NOT NULL,   -- informational; actual trigger is tr_daily_schedule
+    max_retries INT NOT NULL DEFAULT 3,
+    retry_interval_seconds INT NOT NULL DEFAULT 30,
+    timeout_minutes INT NOT NULL DEFAULT 60,
+    freshness_sla_minutes INT,                    -- alert if not landed within this window
+    is_active BIT NOT NULL DEFAULT 1,
+    depends_on_source VARCHAR(50)              -- e.g. servicing_daily_status depends on servicing_loans
 );
 
 INSERT INTO dbo.pipeline_control

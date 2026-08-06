@@ -1,1 +1,0 @@
-select * from "dbt_warehouse"."seeds"."channel_seed"

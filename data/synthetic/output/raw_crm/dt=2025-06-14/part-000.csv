@@ -1,4 +1,0 @@
-customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
-CUST-100472,Melissa,Schmitt,1998-12-22,8595,melissa.schmitt612@gmail.com,179-128-6857,Victoriaborough,OK,04419,Mass,Employed,2025-06-14,CRM,RELOCATION
-CUST-102110,Tonya,Johnson,2001-04-24,1551,tonya.johnson474@yahoo.com,591-004-4364,Port Davidbury,CA,44704,Mass,Employed,2025-06-14,CRM,RELOCATION
-CUST-104981,Brenda,Wright,1985-10-25,0718,brenda.wright672@yahoo.com,060-882-4792,Reneeside,MS,05097,Mass,Employed,2025-06-14,CRM,RELOCATION

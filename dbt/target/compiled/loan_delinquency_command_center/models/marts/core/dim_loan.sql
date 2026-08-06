@@ -1,1 +1,0 @@
-select * from "dbt_warehouse"."int"."int_loan_scd2"

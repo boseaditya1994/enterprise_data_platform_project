@@ -1,8 +1,0 @@
-customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
-CUST-101905,Robyn,Erickson,1978-06-20,4945,robyn.erickson163@hotmail.com,874-587-1207,Gregoryland,VA,96012,Mass,Employed,2025-03-29,CRM,RELOCATION
-CUST-102439,Victoria,Morrison,1969-11-29,2785,victoria.morrison861@yahoo.com,694-239-4383,Kyleburgh,WY,94266,Mass,Self-Employed,2025-03-29,CRM,RELOCATION
-CUST-103078,Isaac,Lopez,1962-08-29,1917,isaac.lopez823@yahoo.com,799-389-5945,New Kellyside,MT,27711,Affluent,Self-Employed,2025-03-29,CRM,RELOCATION
-CUST-103332,Anna,Lozano,2000-03-31,5544,anna.lozano954@gmail.com,816-919-4867,Port Aimeeberg,DE,79330,Affluent,Self-Employed,2025-03-29,CRM,RELOCATION
-CUST-105528,Jennifer,Woods,1953-02-19,1106,jennifer.woods608@hotmail.com,631-429-1851,Lake Douglastown,SD,47962,Mass,Retired,2025-03-29,CRM,RELOCATION
-CUST-106357,Ellen,Jones,1995-07-05,4888,ellen.jones363@hotmail.com,495-134-1306,Michaelshire,AS,74915,Mass,Employed,2025-03-29,CRM,RELOCATION
-CUST-107698,Jason,Johnston,2005-05-08,9328,jason.johnston848@hotmail.com,329-876-0092,Zacharyfurt,IN,72730,Mass,Self-Employed,2025-03-29,CRM,RELOCATION

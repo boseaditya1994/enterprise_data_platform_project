@@ -1,3 +1,0 @@
-loan_id,application_id,primary_customer_id,loan_type,loan_sub_product,origination_date,disbursement_date,origination_amount,interest_rate,loan_term_months,is_secured_flag,collateral_type,due_day_of_month,risk_band_code,source_system
-LN-504544,APP-204920,CUST-102842,Personal,Personal Standard,2024-12-07,2024-12-08,2499.19,0.0826,23,False,None,12,R3,LOAN_SERVICING
-LN-506675,APP-207250,CUST-106643,HELOC,HELOC Standard,2024-12-07,2024-12-07,26908.06,0.0694,84,True,Real Estate,21,R5,LOAN_SERVICING

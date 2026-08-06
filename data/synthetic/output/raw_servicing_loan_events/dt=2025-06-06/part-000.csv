@@ -1,5 +1,0 @@
-loan_id,event_type,event_date,details
-LN-501754,FRAUD_FLAG,2025-06-06,
-LN-502460,RESTRUCTURE,2025-06-06,new_rate_reduction=0.02;new_term_months=36
-LN-507313,RESTRUCTURE,2025-06-06,new_rate_reduction=0.02;new_term_months=83
-LN-507317,RESTRUCTURE,2025-06-06,new_rate_reduction=0.02;new_term_months=158

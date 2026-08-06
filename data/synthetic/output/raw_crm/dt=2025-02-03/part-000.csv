@@ -1,3 +1,0 @@
-customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
-CUST-100095,Derek,Jones,1957-08-10,0319,derek.jones115@hotmail.com,715-518-8442,New Heather,WA,89874,Mass,Retired,2025-02-03,CRM,RELOCATION
-CUST-104743,Brandon,Grant,1954-01-26,7106,brandon.grant958@hotmail.com,870-898-5000,South James,MN,92886,Mass,Employed,2025-02-03,CRM,RELOCATION

@@ -1,3 +1,0 @@
-loan_id,event_type,event_date,details
-LN-501007,RESTRUCTURE,2025-06-27,new_rate_reduction=0.02;new_term_months=133
-LN-503787,CHARGE_OFF,2025-06-27,balance=34356.07

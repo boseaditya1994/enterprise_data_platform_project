@@ -1,4 +1,0 @@
-customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
-CUST-101608,Mary,Rivera,1987-07-18,6179,mary.rivera566@gmail.com,925-822-8280,Lake Stevenburgh,KY,92701,Mass,Employed,2025-02-16,CRM,RELOCATION
-CUST-103578,Sonya,Blake,1979-04-28,2158,sonya.blake212@hotmail.com,768-353-2478,Lake Jonathan,VT,09546,Mass,Employed,2025-02-16,CRM,RELOCATION
-CUST-104649,Charles,Camacho,1949-07-29,8157,charles.camacho503@gmail.com,012-212-5847,Paulport,MI,43125,Affluent,Employed,2025-02-16,CRM,RELOCATION

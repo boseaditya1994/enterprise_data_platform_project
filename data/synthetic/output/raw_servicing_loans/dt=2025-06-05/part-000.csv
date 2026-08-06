@@ -1,8 +1,0 @@
-loan_id,application_id,primary_customer_id,loan_type,loan_sub_product,origination_date,disbursement_date,origination_amount,interest_rate,loan_term_months,is_secured_flag,collateral_type,due_day_of_month,risk_band_code,source_system
-LN-500096,APP-200102,CUST-104077,Personal,Personal Standard,2025-06-05,2025-06-05,16889.31,0.1267,17,False,None,28,R2,LOAN_SERVICING
-LN-504358,APP-204724,CUST-105907,Credit Card,Credit Card Standard,2025-06-05,2025-06-05,16307.3,0.1615,0,False,None,5,R1,LOAN_SERVICING
-LN-506119,APP-206647,CUST-106559,Auto,Auto Standard,2025-06-05,2025-06-06,29813.91,0.0897,46,True,Vehicle,7,R3,LOAN_SERVICING
-LN-506462,APP-207028,CUST-105826,Auto,Auto Standard,2025-06-05,2025-06-06,17132.71,0.0504,65,True,Vehicle,20,R4,LOAN_SERVICING
-LN-506640,APP-207213,CUST-105355,Personal,Personal Standard,2025-06-05,2025-06-07,28505.26,0.0841,58,False,None,10,R3,LOAN_SERVICING
-LN-508189,APP-208881,CUST-102186,Personal,Personal Standard,2025-06-05,2025-06-07,13251.97,0.0914,23,False,None,15,R2,LOAN_SERVICING
-LN-508872,APP-209621,CUST-100620,Auto,Auto Standard,2025-06-05,2025-06-05,29826.79,0.0574,38,True,Vehicle,16,R4,LOAN_SERVICING

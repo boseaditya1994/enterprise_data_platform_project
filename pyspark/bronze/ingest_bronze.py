@@ -24,7 +24,7 @@ from __future__ import annotations
 
 import sys
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 
 import yaml
 from pyspark.sql import DataFrame, SparkSession
@@ -105,13 +105,21 @@ def ingest_table(spark: SparkSession, table_name: str, run_date: str) -> None:
     cfg = registry[table_name]
 
     batch_id = str(uuid.uuid4())
-    start_ts = datetime.utcnow()
+    start_ts = datetime.now(timezone.utc)
 
     landing_path = cfg["landing_path_pattern"].format(date=run_date)
     reader = spark.read.option("header", True) if cfg["file_format"] == "csv" else spark.read
     try:
         raw_df: DataFrame = reader.format(cfg["file_format"]).load(landing_path)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 -- deliberately broad: a missing/
+        # unreadable landing file can raise several different, connector-
+        # and cloud-specific exception types (AnalysisException,
+        # Py4JJavaError wrapping a FileNotFoundException, etc.) depending
+        # on file format and storage backend. The intent here is
+        # specifically "any read failure should log NO_FILE_LANDED and let
+        # Phase 14's freshness check decide if it's actually a problem" --
+        # narrowing to one exception class would silently miss the others
+        # and defeat that purpose.
         _log_run(spark, table_name, batch_id, start_ts, status="NO_FILE_LANDED",
                   detail=f"{landing_path}: {e}", row_count=0, quarantined_count=0)
         if "freshness_sla_days" in cfg:
@@ -166,7 +174,7 @@ def ingest_table(spark: SparkSession, table_name: str, run_date: str) -> None:
 
 
 def _log_run(spark, table_name, batch_id, start_ts, status, detail, row_count, quarantined_count):
-    row = [(table_name, batch_id, start_ts, datetime.utcnow(), status, detail, row_count, quarantined_count)]
+    row = [(table_name, batch_id, start_ts, datetime.now(timezone.utc), status, detail, row_count, quarantined_count)]
     schema = T.StructType([
         T.StructField("table_name", T.StringType()),
         T.StructField("batch_id", T.StringType()),

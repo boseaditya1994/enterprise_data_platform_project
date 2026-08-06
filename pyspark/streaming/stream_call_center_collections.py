@@ -11,11 +11,11 @@ Run as a Databricks Workflows continuous job (one job per source stream,
 per Phase 11's per-table task design so one stream's failure doesn't
 block the other).
 """
-from pyspark.sql import SparkSession, DataFrame
+from delta.tables import DeltaTable
+from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql import types as T
 from pyspark.sql.window import Window
-from delta.tables import DeltaTable
 
 EVENT_HUBS_CONNECTION_SECRET = "{{secrets/eventhubs/collections-connection-string}}"
 CHECKPOINT_ROOT = "/mnt/checkpoints/streaming"

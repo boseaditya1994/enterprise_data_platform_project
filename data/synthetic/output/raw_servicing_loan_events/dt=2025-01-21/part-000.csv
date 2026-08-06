@@ -1,6 +1,0 @@
-loan_id,event_type,event_date,details
-LN-500367,SETTLEMENT,2025-01-21,settled_amount=8637.48
-LN-502972,CHARGE_OFF,2025-01-21,balance=20958.90
-LN-502987,FRAUD_FLAG,2025-01-21,
-LN-503006,CHARGE_OFF,2025-01-21,balance=138778.96
-LN-506121,RESTRUCTURE,2025-01-21,new_rate_reduction=0.02;new_term_months=36

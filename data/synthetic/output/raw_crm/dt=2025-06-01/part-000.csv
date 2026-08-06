@@ -1,5 +1,0 @@
-customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
-CUST-100239,Andrea,Roberts,1951-07-03,2532,andrea.roberts948@gmail.com,397-552-3149,Port Pamela,KS,70358,Private Bank,Employed,2025-06-01,CRM,RELOCATION
-CUST-100625,Catherine,Pittman,2001-02-28,7213,catherine.pittman103@yahoo.com,176-298-3347,Michaelborough,NY,83053,Affluent,Employed,2025-06-01,CRM,RELOCATION
-CUST-105002,Melissa,Morrison,1985-10-28,9887,melissa.morrison135@gmail.com,359-551-0725,Port Amandamouth,MS,21994,Mass,Retired,2025-06-01,CRM,RELOCATION
-CUST-106186,Tracy,Schmidt,1952-02-10,1999,tracy.schmidt501@gmail.com,624-527-6106,North Terri,KS,51393,Mass,Employed,2025-06-01,CRM,RELOCATION

@@ -1,2 +1,0 @@
-payment_id,loan_id,customer_id,payment_date,payment_amount,scheduled_amount,payment_type,payment_method,payment_status,is_reversal_flag,nsf_flag,original_payment_id,effective_date,ingestion_date,is_late_arrival,is_corrupt_record
-PMT-9048263-REV,LN-508384,CUST-105028,2025-06-30,-674.18,674.18,Scheduled,ACH,Reversed,True,False,PMT-9048263,2025-06-30,2025-07-08,True,False

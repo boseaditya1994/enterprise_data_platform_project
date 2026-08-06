@@ -1,4 +1,0 @@
-customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
-CUST-105502,Karen,Weiss,1997-01-09,7314,karen.weiss593@yahoo.com,190-645-7002,North Laura,KS,45590,Mass,Retired,2025-03-15,CRM,RELOCATION
-CUST-106423,Elizabeth,Edwards,1973-03-04,4486,elizabeth.edwards197@gmail.com,858-243-0558,Ronniemouth,OR,84315,Affluent,Retired,2025-03-15,CRM,RELOCATION
-CUST-106726,Carrie,Baker,1971-04-22,1527,carrie.baker967@yahoo.com,967-731-5968,North Courtney,NJ,05565,Affluent,Employed,2025-03-15,CRM,RELOCATION

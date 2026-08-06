@@ -1,7 +1,0 @@
-customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
-CUST-100503,Ashley,Salinas,1994-10-27,7381,ashley.salinas931@yahoo.com,364-027-0116,Hurleyland,IN,80328,Mass,Self-Employed,2025-05-14,CRM,RELOCATION
-CUST-100811,Angela,Ray,1966-10-18,7770,angela.ray69@gmail.com,259-399-3379,Gonzalezport,WV,06866,Mass,Retired,2025-05-14,CRM,RELOCATION
-CUST-101022,Joseph,Ross,1988-01-02,5727,joseph.ross953@gmail.com,906-246-7287,New Krystalport,OK,10565,Affluent,Self-Employed,2025-05-14,CRM,RELOCATION
-CUST-101426,Pamela,Walker,1966-08-28,8972,pamela.walker925@hotmail.com,101-612-5901,Haynestown,IN,03667,Mass,Retired,2025-05-14,CRM,RELOCATION
-CUST-105447,Bryan,Lucero,1992-04-11,3174,bryan.lucero676@yahoo.com,683-053-7894,Schneiderfurt,NV,32115,Mass,Employed,2025-05-14,CRM,RELOCATION
-CUST-107111,Devin,Terry,1986-04-07,8029,devin.terry288@hotmail.com,824-984-3488,East Meganland,TN,32309,Mass,Employed,2025-05-14,CRM,RELOCATION

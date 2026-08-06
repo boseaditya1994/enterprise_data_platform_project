@@ -1,4 +1,0 @@
-payment_id,loan_id,customer_id,payment_date,payment_amount,scheduled_amount,payment_type,payment_method,payment_status,is_reversal_flag,nsf_flag,original_payment_id,effective_date,ingestion_date,is_late_arrival,is_corrupt_record
-PMT-9047739,LN-507326,CUST-103366,2025-06-26,908.89,908.89,Scheduled,ACH,Posted,False,False,,2025-06-26,2025-07-06,True,False
-PMT-9047745,LN-505623,CUST-105944,2025-06-26,986.0,986.0,Scheduled,Check,Posted,False,False,,2025-06-26,2025-07-06,True,False
-PMT-9048037,LN-503139,CUST-105812,2025-06-27,778.57,778.57,Scheduled,Debit Card,Posted,False,False,,2025-06-27,2025-07-06,True,False

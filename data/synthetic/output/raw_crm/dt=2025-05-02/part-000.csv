@@ -1,3 +1,0 @@
-customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
-CUST-102456,Douglas,Brown,1989-09-06,1166,douglas.brown484@hotmail.com,814-207-6817,East Jillside,TX,76251,Mass,Employed,2025-05-02,CRM,RELOCATION
-CUST-105827,Joshua,Smith,1971-01-01,1035,joshua.smith226@hotmail.com,823-145-7611,Vegafurt,PA,93985,Affluent,Employed,2025-05-02,CRM,RELOCATION

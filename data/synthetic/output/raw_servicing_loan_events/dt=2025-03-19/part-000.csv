@@ -1,4 +1,0 @@
-loan_id,event_type,event_date,details
-LN-504231,CHARGE_OFF,2025-03-19,balance=11985.04
-LN-504713,CHARGE_OFF,2025-03-19,balance=31091.86
-LN-506230,CHARGE_OFF,2025-03-19,balance=30946.25

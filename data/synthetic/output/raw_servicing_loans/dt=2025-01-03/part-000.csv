@@ -1,8 +1,0 @@
-loan_id,application_id,primary_customer_id,loan_type,loan_sub_product,origination_date,disbursement_date,origination_amount,interest_rate,loan_term_months,is_secured_flag,collateral_type,due_day_of_month,risk_band_code,source_system
-LN-500465,APP-200496,CUST-103868,Auto,Auto Standard,2025-01-03,2025-01-04,53201.95,0.0635,70,True,Vehicle,9,R3,LOAN_SERVICING
-LN-500665,APP-200714,CUST-100377,Auto,Auto Standard,2025-01-03,2025-01-03,46904.82,0.0711,45,True,Vehicle,13,R4,LOAN_SERVICING
-LN-505363,APP-205826,CUST-101770,Personal,Personal Standard,2025-01-03,2025-01-03,25705.56,0.165,15,False,None,28,R3,LOAN_SERVICING
-LN-507694,APP-208351,CUST-101655,HELOC,HELOC Standard,2025-01-03,2025-01-05,135178.83,0.1,114,True,Real Estate,26,R3,LOAN_SERVICING
-LN-507931,APP-208603,CUST-107804,Auto,Auto Standard,2025-01-03,2025-01-05,47191.65,0.1074,67,True,Vehicle,17,R2,LOAN_SERVICING
-LN-507998,APP-208675,CUST-100726,Personal,Personal Standard,2025-01-03,2025-01-05,12986.81,0.1543,25,False,None,9,R2,LOAN_SERVICING
-LN-509563,APP-210370,CUST-104903,Auto,Auto Standard,2025-01-03,2025-01-04,18006.67,0.0507,48,True,Vehicle,9,R5,LOAN_SERVICING
