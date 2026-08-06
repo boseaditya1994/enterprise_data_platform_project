@@ -1,0 +1,22 @@
+{
+    "name": "tr_daily_schedule",
+    "type": "Microsoft.DataFactory/factories/triggers",
+    "properties": {
+        "type": "ScheduleTrigger",
+        "typeProperties": {
+            "recurrence": {
+                "frequency": "Day",
+                "interval": 1,
+                "startTime": "2025-01-01T06:00:00Z",
+                "timeZone": "UTC"
+            }
+        },
+        "pipelines": [
+            {
+                "pipelineReference": { "referenceName": "pl_master_bronze_ingestion", "type": "PipelineReference" },
+                "parameters": {}
+            }
+        ],
+        "description": "6 AM UTC -- chosen so the full Bronze->Silver->Gold->dbt chain (observed runtime budget: ~2hr for Bronze fan-out + ~45min dbt + ~30min Gold/maintenance, generous headroom) completes well before Phase 1's stated 6 AM local business-day freshness SLA for the FOLLOWING business day's executive dashboard review. Streaming sources are excluded (always-on job, Phase 10) -- this trigger only fires the batch chain."
+    }
+}

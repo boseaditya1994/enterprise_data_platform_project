@@ -1,0 +1,90 @@
+resources:
+  jobs:
+    bronze_ingestion:
+      name: "[${bundle.target}] bronze_ingestion"
+      tasks:
+        - task_key: ingest_source
+          new_cluster:
+            spark_version: "14.3.x-scala2.12"
+            node_type_id: "Standard_DS4_v2"
+            autoscale:
+              min_workers: 2
+              max_workers: ${var.job_cluster_max_workers}
+          notebook_task:
+            notebook_path: ../pyspark/bronze/ingest_bronze.py
+            base_parameters:
+              table_name: "{{job.parameters.table_name}}"
+              run_date: "{{job.parameters.run_date}}"
+      parameters:
+        - name: table_name
+          default: raw_crm
+        - name: run_date
+          default: "{{job.trigger.time.iso_date}}"
+      # Triggered by ADF (Phase 11's pl_ingest_source_generic DatabricksNotebook
+      # activity), not by a Databricks-native schedule -- ADF owns
+      # orchestration end to end (Phase 11 Section 1), this job definition
+      # just needs to EXIST and be callable, not self-schedule.
+
+    bronze_ingestion_smoke_test:
+      name: "[${bundle.target}] bronze_ingestion_smoke_test"
+      tasks:
+        - task_key: ingest_bridge_table
+          new_cluster:
+            spark_version: "14.3.x-scala2.12"
+            node_type_id: "Standard_DS3_v2"     # smallest available -- this job's only purpose is "did the deploy work," not real throughput
+            num_workers: 1
+          notebook_task:
+            notebook_path: ../pyspark/bronze/ingest_bronze.py
+            base_parameters:
+              table_name: raw_servicing_loan_applicant_bridge   # smallest, fastest source (Phase 6 registry) -- same choice ci_adf.yml makes for its own smoke test
+              run_date: "{{job.trigger.time.iso_date}}"
+      # Invoked directly by ci_pyspark.yml's deploy-dev job (`databricks
+      # bundle run bronze_ingestion_smoke_test`) as a post-deploy sanity
+      # check -- confirms the deployed job actually executes against the
+      # dev workspace/cluster config, not just that `bundle deploy`
+      # returned success.
+
+    silver_gold_build:
+      name: "[${bundle.target}] silver_gold_build"
+      tasks:
+        - task_key: silver_customer_scd2
+          new_cluster:
+            spark_version: "14.3.x-scala2.12"
+            node_type_id: "Standard_DS4_v2"
+            num_workers: 2
+          notebook_task:
+            notebook_path: ../pyspark/silver/scd2_merge_deltalake.py
+            base_parameters: { entity: customer }
+        - task_key: silver_collector_scd2
+          depends_on: []   # independent of customer merge, Phase 11's parallel design (pl_silver_gold_orchestration)
+          new_cluster:
+            spark_version: "14.3.x-scala2.12"
+            node_type_id: "Standard_DS4_v2"
+            num_workers: 1
+          notebook_task:
+            notebook_path: ../pyspark/silver/scd2_merge_deltalake.py
+            base_parameters: { entity: collector }
+        - task_key: gold_pyspark_exceptions
+          depends_on:
+            - task_key: silver_customer_scd2
+            - task_key: silver_collector_scd2
+          new_cluster:
+            spark_version: "14.3.x-scala2.12"
+            node_type_id: "Standard_DS4_v2"
+            autoscale: { min_workers: 2, max_workers: "${var.job_cluster_max_workers}" }
+          notebook_task:
+            notebook_path: ../pyspark/gold/build_gold_aggregates.py
+        - task_key: delta_maintenance
+          depends_on:
+            - task_key: gold_pyspark_exceptions
+          new_cluster:
+            spark_version: "14.3.x-scala2.12"
+            node_type_id: "Standard_DS4_v2"
+            num_workers: 2
+          notebook_task:
+            notebook_path: ../pyspark/optimization/optimize_and_maintain.py
+      # This job's task graph is the Databricks-native mirror of
+      # adf/pipelines/pl_silver_gold_orchestration.json's activity chain
+      # (Phase 11) -- ADF's DatabricksNotebook activities call these SAME
+      # task_keys via the Jobs API rather than duplicating cluster/notebook
+      # config in two places.

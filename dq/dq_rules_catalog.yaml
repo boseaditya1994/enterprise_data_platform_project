@@ -1,0 +1,175 @@
+# Enterprise Data Quality Rules Catalog
+#
+# Same metadata-driven principle as pyspark/bronze/schema_registry.yaml
+# (Phase 6) and adf/control_table_ddl.sql (Phase 11): DQ rules are DATA,
+# not hard-coded per-table Python/SQL. dq/run_dq_checks_duckdb.py reads
+# this file and applies every rule generically -- adding a check to an
+# existing table, or a new table entirely, is a YAML edit, not new code.
+#
+# severity:
+#   FAIL      -- blocks promotion to the next layer (Silver->Gold gate);
+#                pipeline run marked failed, on-call paged
+#   WARN      -- logged and visible on the DQ dashboard, does not block
+#   INFO      -- informational only (e.g. outlier counts), never blocks
+
+rules:
+
+  # ===========================================================================
+  # Bronze layer
+  # ===========================================================================
+
+  - table: bronze.raw_payments
+    checks:
+      - type: completeness
+        columns: [payment_id, loan_id, payment_date, payment_amount]
+        null_threshold_pct: 0.0
+        severity: FAIL
+      - type: uniqueness
+        columns: [payment_id]
+        # NOT enforced FAIL here deliberately -- Phase 4/5 scenario #5
+        # intentionally injects ~1% duplicates INTO Bronze; Bronze's job
+        # is to preserve what landed, not reject it. Silver is where
+        # duplicates actually get resolved (dedup, Phase 7).
+        severity: WARN
+      - type: negative_value_check
+        column: payment_amount
+        # Negative IS valid here (reversals) -- this check instead flags
+        # a negative amount on a NON-reversal row specifically.
+        condition: "payment_amount < 0 AND NOT is_reversal_flag"
+        severity: FAIL
+      - type: freshness
+        watermark_column: ingestion_date
+        max_staleness_hours: 30
+        severity: FAIL
+
+  - table: bronze.raw_bureau
+    checks:
+      - type: freshness
+        watermark_column: source_updated_at
+        max_staleness_hours: 840  # 35 days -- matches Phase 6 registry's documented SLA; bureau is EXPECTED to be occasionally absent
+        severity: WARN            # not FAIL -- an absent bureau file is a known, tolerated scenario (Phase 4 #2), not a pipeline defect
+      - type: completeness
+        columns: [customer_id, fico_score]
+        null_threshold_pct: 0.02
+        severity: WARN
+
+  - table: bronze.raw_servicing_daily_status
+    checks:
+      - type: completeness
+        columns: [loan_id, snapshot_date, delinquency_bucket]
+        null_threshold_pct: 0.0
+        severity: FAIL
+      - type: negative_value_check
+        column: outstanding_balance
+        condition: "outstanding_balance < 0"
+        severity: FAIL
+      - type: accepted_values
+        column: delinquency_bucket
+        values: ["Current", "1-29", "30-59", "60-89", "90+", "Charged-off", "Settled"]
+        severity: FAIL
+
+  # ===========================================================================
+  # Silver layer
+  # ===========================================================================
+
+  - table: silver.customer
+    checks:
+      - type: uniqueness
+        columns: [customer_id]
+        condition: "is_current = true"   # only one CURRENT version per customer, not one version total
+        severity: FAIL
+      - type: completeness
+        columns: [customer_id, first_name, last_name]
+        null_threshold_pct: 0.0
+        severity: FAIL
+
+  - table: silver.loan
+    checks:
+      - type: uniqueness
+        columns: [loan_id]
+        condition: "is_current = true"
+        severity: FAIL
+      - type: negative_value_check
+        column: origination_amount
+        condition: "origination_amount < 0"
+        severity: FAIL
+      - type: business_rule
+        name: charge_off_implies_no_longer_current_and_delinquent
+        # A loan can't be charge_off_flag=true while somehow showing as a
+        # brand-new Current loan in the same version -- internal
+        # consistency check, not just a single-column rule.
+        condition: "NOT (charge_off_flag = true AND restructured_flag = true AND settlement_flag = true)"
+        detail: "A loan should not be simultaneously charged-off, restructured, AND settled in one version (settlement should follow charge-off, not coincide with restructuring in the same row)"
+        severity: WARN
+
+  - table: silver.payment
+    checks:
+      - type: uniqueness
+        columns: [payment_id]
+        severity: FAIL   # Silver's whole job is to have resolved Bronze's duplicates by now
+      - type: referential_integrity
+        name: reversal_original_payment_exists
+        detail: "Every is_reversal_flag=true row's original_payment_id must resolve to a real payment"
+        severity: FAIL
+      - type: balance_reconciliation
+        name: total_scheduled_payments_vs_expected
+        detail: "SUM(payment_amount) WHERE payment_type='Scheduled' reconciled against an independent source-system control total (Phase 1 FR-2.2) -- placeholder condition since this portfolio has no separate GL feed to reconcile against; documented as the production hook"
+        severity: INFO
+
+  - table: silver.delinquency
+    checks:
+      - type: uniqueness
+        columns: [loan_id, snapshot_date]
+        severity: FAIL
+      - type: outlier_detection
+        column: outstanding_balance
+        method: iqr
+        iqr_multiplier: 3.0
+        severity: INFO
+
+  - table: silver.contact
+    checks:
+      - type: uniqueness
+        columns: [contact_id]
+        severity: FAIL
+      - type: business_rule
+        name: contact_after_loan_disbursement
+        detail: "A contact should never predate its loan's disbursement date"
+        severity: WARN
+
+  # ===========================================================================
+  # Gold layer
+  # ===========================================================================
+
+  - table: gold.delinquency_fact
+    checks:
+      - type: referential_integrity
+        name: loan_sk_exists_in_dim_loan
+        severity: FAIL
+      - type: referential_integrity
+        name: risk_band_sk_exists_in_dim_risk_band
+        severity: FAIL
+      - type: row_count_reconciliation
+        name: matches_silver_delinquency_row_count
+        detail: "gold.delinquency_fact row count should equal silver.delinquency row count exactly (no fan-out from SCD2 joins -- Phase 8 Section 3.1's regression case)"
+        tolerance_pct: 0.0
+        severity: FAIL
+
+  - table: gold.payment_fact
+    checks:
+      - type: row_count_reconciliation
+        name: payment_join_loss_within_baseline
+        detail: "Phase 8 Section 3.2 / Phase 9's dbt test, re-applied here: known ~1.47% loss from corrupt-record + pre-origination Extra payments. Alert if it drifts materially above baseline."
+        tolerance_pct: 3.0
+        severity: WARN
+
+  - table: gold.promise_to_pay_fact
+    checks:
+      - type: accepted_values
+        column: ptp_status
+        values: ["Open", "Kept", "Broken", "Partial"]
+        severity: FAIL
+      - type: business_rule
+        name: kept_ptp_has_fulfillment_date
+        detail: "ptp_status='Kept' should always have a non-null fulfillment_date"
+        severity: WARN

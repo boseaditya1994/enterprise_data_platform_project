@@ -9,38 +9,51 @@ This repo is being built **phase by phase**. Each phase is complete and
 reviewed before the next begins. See [`docs/00-project-plan.md`](docs/00-project-plan.md)
 for status and [`docs/`](docs/) for all deliverables.
 
+**Status: all 17 phases complete.** Start with
+[`docs/17-resume-interview-prep.md`](docs/17-resume-interview-prep.md)
+for the project summary, or [`docs/00-project-plan.md`](docs/00-project-plan.md)
+for the full phase-by-phase index.
+
 ## Repo layout
 
 ```
 loan-delinquency-command-center/
-├── docs/          # requirements, architecture, data model, runbooks, diagrams, resume material
-├── sql/           # DDL, MERGE statements, views, stored procs
-├── pyspark/       # Databricks/PySpark notebooks — bronze/silver/gold, streaming, CDC, DQ
-├── dbt/           # dbt project — models, sources, snapshots, tests, macros
-├── adf/           # Azure Data Factory pipeline JSON + design docs
-├── snowflake/     # warehouse/schema/task/stream DDL, RBAC, clustering
-├── powerbi/       # dashboard spec, DAX measures, page-by-page design
-├── data/synthetic/# Faker-based synthetic data generators + sample outputs
-├── scripts/       # utility scripts (data gen, DQ checks, orchestration helpers)
-└── tests/         # dbt tests, PySpark unit tests, DQ test fixtures
+├── docs/            # requirements, architecture, data model, runbooks, glossary, resume material (17 phase docs)
+├── data/synthetic/  # Python/Faker synthetic data generator (generator/, samples/); output/ is gitignored, regenerate locally
+├── sql/silver/      # hand-rolled Silver CDC/SCD2 SQL + DuckDB proof-of-concept harness
+├── sql/gold/        # KPI view SQL + DuckDB Gold-build harness
+├── pyspark/         # Databricks/PySpark: bronze ingestion, streaming, silver SCD2, gold, DQ, optimization
+├── dbt/             # dbt project — models, sources, snapshots, seeds, macros, tests (35 models, 40 tests)
+├── adf/             # Azure Data Factory pipeline JSON, control table, Airflow comparison DAG
+├── snowflake/       # warehouse/schema/RBAC/masking DDL + versioned migrations
+├── powerbi/         # TMDL semantic model, DAX measures, RLS roles
+├── dq/              # enterprise DQ rules catalog + executable check runner + HTML dashboard
+├── ops/             # runbook tooling (health_check.py)
+├── resources/, databricks.yml   # Databricks Asset Bundle (job deployment)
+└── .github/workflows/           # CI/CD (dbt, PySpark, ADF, Snowflake migrations, release promotion)
 ```
+
+Every folder above contains real, and in most cases actually-executed,
+artifacts — not just design docs. See `docs/00-project-plan.md` for
+which phase built what, and `docs/17-resume-interview-prep.md` for a
+guided tour of what's most worth reading first.
 
 ## Status
 
 🟢 Phase 1 — Requirements & Business Analysis — **complete**
-⚪ Phase 2 — Architecture
-⚪ Phase 3 — Data Modeling
-⚪ Phase 4 — Dataset Design
-⚪ Phase 5 — Synthetic Data Generation
-⚪ Phase 6 — Bronze Layer
-⚪ Phase 7 — Silver Layer
-⚪ Phase 8 — Gold Layer
-⚪ Phase 9 — dbt Models
-⚪ Phase 10 — Databricks
-⚪ Phase 11 — ADF Pipelines
-⚪ Phase 12 — Snowflake
-⚪ Phase 13 — Power BI
-⚪ Phase 14 — Testing & Data Quality
-⚪ Phase 15 — Deployment & CI/CD
-⚪ Phase 16 — Documentation
-⚪ Phase 17 — Resume & Interview Preparation
+🟢 Phase 2 — Architecture — **complete**
+🟢 Phase 3 — Data Modeling — **complete**
+🟢 Phase 4 — Dataset Design — **complete**
+🟢 Phase 5 — Synthetic Data Generation — **complete**
+🟢 Phase 6 — Bronze Layer — **complete**
+🟢 Phase 7 — Silver Layer — **complete**
+🟢 Phase 8 — Gold Layer — **complete**
+🟢 Phase 9 — dbt Models — **complete**
+🟢 Phase 10 — Databricks — **complete**
+🟢 Phase 11 — ADF Pipelines — **complete**
+🟢 Phase 12 — Snowflake — **complete**
+🟢 Phase 13 — Power BI — **complete**
+🟢 Phase 14 — Testing & Data Quality — **complete**
+🟢 Phase 15 — Deployment & CI/CD — **complete**
+🟢 Phase 16 — Documentation — **complete**
+🟢 Phase 17 — Resume & Interview Preparation — **complete**

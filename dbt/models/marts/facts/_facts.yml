@@ -1,0 +1,65 @@
+version: 2
+
+models:
+  - name: fct_payment
+    description: >
+      One row per payment transaction. See docs/03-data-modeling.md
+      Section 3.1. ~1.5% of staged payments are intentionally excluded
+      (docs/08-gold-layer.md Section 3.2) -- guarded by
+      tests/assert_payment_join_loss_within_baseline.sql.
+    columns:
+      - name: payment_id
+        tests: [not_null, unique]
+      - name: loan_sk
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_loan')
+              field: loan_sk
+      - name: customer_sk
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_sk
+
+  - name: fct_delinquency
+    description: >
+      Daily loan-status snapshot -- one row per loan per day. Grain and
+      denormalized prior_day_bucket/cure_flag/roll_flag match
+      docs/03-data-modeling.md Section 3.2 exactly.
+    columns:
+      - name: loan_sk
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_loan')
+              field: loan_sk
+      - name: risk_band_sk
+        tests: [not_null]
+      - name: delinquency_bucket
+        tests:
+          - accepted_values:
+              values: ['Current', '1-29', '30-59', '60-89', '90+', 'Charged-off', 'Settled']
+
+  - name: fct_contact
+    description: One row per contact attempt/event across Call Center + Collections Platform.
+    columns:
+      - name: contact_id
+        tests: [not_null, unique]
+      - name: loan_sk
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_loan')
+              field: loan_sk
+
+  - name: fct_promise_to_pay
+    description: One row per promise-to-pay commitment.
+    columns:
+      - name: ptp_id
+        tests: [not_null, unique]
+      - name: ptp_status
+        tests:
+          - accepted_values:
+              values: ['Open', 'Kept', 'Broken', 'Partial']

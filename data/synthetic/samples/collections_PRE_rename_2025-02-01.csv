@@ -1,0 +1,11 @@
+contact_id,loan_id,customer_id,contact_date,collector_id,channel_code,contact_direction,contact_outcome,is_rpc_flag,call_duration_seconds,complaint_flag,source_system,is_corrupt_record
+CTC-60000339,LN-500611,CUST-103236,2025-02-01,,SMS,Outbound,Delivered,True,,False,COLLECTIONS_PLATFORM,False
+CTC-60000428,LN-500779,CUST-106487,2025-02-01,,LETTER,Outbound,Delivered,True,,False,COLLECTIONS_PLATFORM,False
+CTC-60000493,LN-500893,CUST-102938,2025-02-01,,EMAIL,Outbound,Delivered,True,,False,COLLECTIONS_PLATFORM,False
+CTC-60000841,LN-501602,CUST-100169,2025-02-01,,SMS,Outbound,Delivered,True,,False,COLLECTIONS_PLATFORM,False
+CTC-60000893,LN-501727,CUST-102226,2025-02-01,,IVR,Outbound,Undeliverable,False,,False,COLLECTIONS_PLATFORM,False
+CTC-60001265,LN-502544,CUST-106451,2025-02-01,,IVR,Outbound,Delivered,True,,False,COLLECTIONS_PLATFORM,False
+CTC-60001300,LN-502592,CUST-106548,2025-02-01,,IVR,Outbound,Delivered,True,,False,COLLECTIONS_PLATFORM,False
+CTC-60001629,LN-503218,CUST-102864,2025-02-01,,EMAIL,Outbound,Delivered,True,,False,COLLECTIONS_PLATFORM,False
+CTC-60001754,LN-503447,CUST-103320,2025-02-01,,SMS,Outbound,Delivered,True,,False,COLLECTIONS_PLATFORM,False
+CTC-60002500,LN-504869,CUST-104845,2025-02-01,,SMS,Outbound,Delivered,True,,False,COLLECTIONS_PLATFORM,False

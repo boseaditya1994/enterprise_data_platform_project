@@ -1,0 +1,122 @@
+{
+    "name": "pl_master_bronze_ingestion",
+    "type": "Microsoft.DataFactory/factories/pipelines",
+    "properties": {
+        "description": "Entry point, triggered daily at 6 AM (tr_daily_schedule). Reads dbo.pipeline_control (adf/control_table_ddl.sql), fans out one pl_ingest_source_generic execution per active BATCH source, then chains into Silver/Gold orchestration once Bronze completes. Streaming sources (raw_call_center, raw_collections, raw_collections_ptp) are NOT included here -- they run continuously via their own always-on job (Phase 10), independent of this daily batch trigger.",
+        "activities": [
+            {
+                "name": "LookupActiveSources",
+                "type": "Lookup",
+                "typeProperties": {
+                    "source": {
+                        "type": "AzureSqlSource",
+                        "sqlReaderQuery": "SELECT * FROM dbo.pipeline_control WHERE is_active = 1 AND ingestion_pattern = 'batch' ORDER BY CASE WHEN depends_on_source IS NULL THEN 0 ELSE 1 END"
+                    },
+                    "dataset": { "referenceName": "ds_control_table", "type": "DatasetReference" },
+                    "firstRowOnly": false
+                }
+            },
+            {
+                "name": "IngestSourcesWithNoDependency",
+                "type": "ForEach",
+                "dependsOn": [{ "activity": "LookupActiveSources", "dependencyConditions": ["Succeeded"] }],
+                "typeProperties": {
+                    "items": {
+                        "value": "@activity('LookupActiveSources').output.value",
+                        "type": "Expression"
+                    },
+                    "isSequential": false,
+                    "batchCount": 4,
+                    "activities": [
+                        {
+                            "name": "ExecuteIngestSourceGeneric",
+                            "type": "IfCondition",
+                            "typeProperties": {
+                                "expression": {
+                                    "value": "@equals(item().depends_on_source, null)",
+                                    "type": "Expression"
+                                },
+                                "ifTrueActivities": [
+                                    {
+                                        "name": "ExecutePl_IngestSourceGeneric",
+                                        "type": "ExecutePipeline",
+                                        "typeProperties": {
+                                            "pipeline": { "referenceName": "pl_ingest_source_generic", "type": "PipelineReference" },
+                                            "parameters": {
+                                                "source_name": "@item().source_name",
+                                                "source_connection_name": "@item().source_connection_name",
+                                                "source_path_pattern": "@item().source_path_pattern",
+                                                "landing_path_pattern": "@item().landing_path_pattern",
+                                                "databricks_notebook_path": "@item().databricks_notebook_path",
+                                                "max_retries": "@item().max_retries",
+                                                "retry_interval_seconds": "@item().retry_interval_seconds",
+                                                "timeout_minutes": "@item().timeout_minutes",
+                                                "run_date": "@formatDateTime(utcnow(), 'yyyy-MM-dd')"
+                                            },
+                                            "waitOnCompletion": true
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "description": "Parallel fan-out (batchCount=4) for sources with no upstream dependency -- e.g. raw_crm, raw_payments, raw_servicing_loans can all land at once. batchCount=4 balances Databricks job-cluster concurrency limits against total pipeline runtime; tuned empirically, not a hard architectural limit."
+            },
+            {
+                "name": "IngestDependentSources",
+                "type": "ForEach",
+                "dependsOn": [{ "activity": "IngestSourcesWithNoDependency", "dependencyConditions": ["Succeeded"] }],
+                "typeProperties": {
+                    "items": {
+                        "value": "@activity('LookupActiveSources').output.value",
+                        "type": "Expression"
+                    },
+                    "isSequential": false,
+                    "batchCount": 4,
+                    "activities": [
+                        {
+                            "name": "ExecuteIngestSourceGenericDependent",
+                            "type": "IfCondition",
+                            "typeProperties": {
+                                "expression": { "value": "@not(equals(item().depends_on_source, null))", "type": "Expression" },
+                                "ifTrueActivities": [
+                                    {
+                                        "name": "ExecutePl_IngestSourceGenericDependent",
+                                        "type": "ExecutePipeline",
+                                        "typeProperties": {
+                                            "pipeline": { "referenceName": "pl_ingest_source_generic", "type": "PipelineReference" },
+                                            "parameters": {
+                                                "source_name": "@item().source_name",
+                                                "source_connection_name": "@item().source_connection_name",
+                                                "source_path_pattern": "@item().source_path_pattern",
+                                                "landing_path_pattern": "@item().landing_path_pattern",
+                                                "databricks_notebook_path": "@item().databricks_notebook_path",
+                                                "max_retries": "@item().max_retries",
+                                                "retry_interval_seconds": "@item().retry_interval_seconds",
+                                                "timeout_minutes": "@item().timeout_minutes",
+                                                "run_date": "@formatDateTime(utcnow(), 'yyyy-MM-dd')"
+                                            },
+                                            "waitOnCompletion": true
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "description": "Second wave: sources whose landing depends on another source having already landed this run (e.g. raw_servicing_daily_status conceptually follows raw_servicing_loans in real dependency terms, per pipeline_control.depends_on_source)."
+            },
+            {
+                "name": "TriggerSilverGoldOrchestration",
+                "type": "ExecutePipeline",
+                "dependsOn": [{ "activity": "IngestDependentSources", "dependencyConditions": ["Succeeded"] }],
+                "typeProperties": {
+                    "pipeline": { "referenceName": "pl_silver_gold_orchestration", "type": "PipelineReference" },
+                    "parameters": { "run_date": "@formatDateTime(utcnow(), 'yyyy-MM-dd')" },
+                    "waitOnCompletion": true
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,46 @@
+# Databricks Asset Bundle -- the modern (2024+) standard for deploying
+# Databricks jobs/notebooks as code, replacing hand-clicked job configs.
+# `databricks bundle deploy --target <env>` is what .github/workflows/
+# ci_pyspark.yml actually runs.
+
+bundle:
+  name: loan_delinquency_command_center
+
+include:
+  - resources/*.yml
+
+targets:
+  dev:
+    mode: development
+    workspace:
+      host: https://adb-loandelinqcc-dev.azuredatabricks.net
+      root_path: /Workspace/dev/${bundle.name}
+    variables:
+      catalog: dev_bronze
+      job_cluster_max_workers: 4
+
+  test:
+    mode: production   # "production" mode = deployed jobs are protected from ad hoc edits, even in the test workspace
+    workspace:
+      host: https://adb-loandelinqcc-test.azuredatabricks.net
+      root_path: /Workspace/test/${bundle.name}
+    variables:
+      catalog: test_bronze
+      job_cluster_max_workers: 6
+
+  prod:
+    mode: production
+    workspace:
+      host: https://adb-loandelinqcc-prod.azuredatabricks.net
+      root_path: /Workspace/prod/${bundle.name}
+    run_as:
+      service_principal_name: sp-loandelinqcc-prod-jobs   # jobs run as a service principal in prod, never a human's identity
+    variables:
+      catalog: prod_bronze
+      job_cluster_max_workers: 8
+
+variables:
+  job_cluster_max_workers:
+    description: Autoscale ceiling, tuned per environment (dev needs less headroom than prod)
+  catalog:
+    description: Unity Catalog name for this environment -- keeps dev/test/prod physically isolated, not just logically namespaced

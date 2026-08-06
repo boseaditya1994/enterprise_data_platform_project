@@ -1,0 +1,333 @@
+// =============================================================================
+// model.tmdl -- Tabular Model Definition Language
+// =============================================================================
+// TMDL is the real, text-based format Power BI Desktop / Tabular Editor /
+// Fabric use to define a semantic model as source-controllable code (the
+// modern replacement for the older bim/JSON format) -- this is what makes
+// the Power BI layer reviewable and diffable in this repo the same way
+// every other phase's artifacts are, rather than an opaque binary .pbix.
+//
+// Source: gold.* tables in Snowflake (Phase 12), via the WH_BI_SERVING
+// warehouse specifically (Phase 12 Section 2 -- isolated from WH_TRANSFORM
+// so a heavy dbt run never queues a dashboard refresh).
+
+model Model
+    culture: en-US
+    defaultPowerBIDataSourceVersion: powerBI_V3
+
+// -----------------------------------------------------------------------------
+// Storage mode: Import for everything EXCEPT dim_customer and fct_delinquency,
+// which are DirectQuery -- Customer Drilldown (docs/13-power-bi.md Section 5)
+// is the one page needing row-level, always-current, PII-bearing detail that
+// an overnight Import refresh shouldn't cache. Composite model (mixing
+// Import + DirectQuery in one model) is a deliberate, narrow exception, not
+// the default -- every other page's aggregate-heavy queries are far faster
+// against an Import cache than round-tripping to Snowflake per interaction.
+// -----------------------------------------------------------------------------
+
+table dim_customer
+    lineageTag: dim-customer-01
+
+    partition dim_customer = m
+        mode: directQuery
+        source =
+            let
+                Source = Snowflake.Databases("loandelinqcc.snowflakecomputing.com", "WH_BI_SERVING"),
+                Db = Source{[Name="LOAN_DELINQUENCY_CC"]}[Data],
+                Marts = Db{[Name="MARTS"]}[Data],
+                DimCustomer = Marts{[Name="DIM_CUSTOMER"]}[Data]
+            in
+                DimCustomer
+
+    column customer_sk
+        dataType: int64
+        isKey: true
+    column customer_id
+        dataType: string
+    column first_name
+        dataType: string
+    column last_name
+        dataType: string
+    column phone_number
+        dataType: string
+        // NOTE: masked at the Snowflake source (Phase 12 masking policies)
+        // for any role other than Collector/Manager/Admin -- Power BI
+        // receives the already-masked value via DirectQuery, doesn't need
+        // its own masking logic duplicated here.
+    column customer_segment
+        dataType: string
+    column is_current
+        dataType: boolean
+
+table dim_loan
+    lineageTag: dim-loan-01
+    partition dim_loan = m
+        mode: import
+        source = Snowflake.Databases(...)  // MARTS.DIM_LOAN, refreshed nightly post-dbt-run (Phase 11's ADF chain)
+
+    column loan_sk
+        dataType: int64
+        isKey: true
+    column loan_id
+        dataType: string
+    column loan_type
+        dataType: string
+    column risk_band_code
+        dataType: string
+    column charge_off_flag
+        dataType: boolean
+    column restructured_flag
+        dataType: boolean
+    column is_current
+        dataType: boolean
+
+table dim_collector
+    lineageTag: dim-collector-01
+    partition dim_collector = m
+        mode: import
+        source = Snowflake.Databases(...)  // MARTS.DIM_COLLECTOR
+
+    column collector_sk
+        dataType: int64
+        isKey: true
+    column collector_id
+        dataType: string
+    column collector_name
+        dataType: string
+    column team_name
+        dataType: string
+    column is_current
+        dataType: boolean
+
+table dim_channel
+    lineageTag: dim-channel-01
+    partition dim_channel = m
+        mode: import
+        source = Snowflake.Databases(...)  // MARTS.DIM_CHANNEL (tiny, static -- full import, no incremental refresh needed)
+
+    column channel_sk
+        dataType: int64
+        isKey: true
+    column channel_code
+        dataType: string
+    column channel_category
+        dataType: string
+
+table dim_risk_band
+    lineageTag: dim-risk-band-01
+    partition dim_risk_band = m
+        mode: import
+        source = Snowflake.Databases(...)  // MARTS.DIM_RISK_BAND
+
+    column risk_band_sk
+        dataType: int64
+        isKey: true
+    column risk_band_code
+        dataType: string
+    column risk_band_name
+        dataType: string
+
+table dim_time
+    lineageTag: dim-time-01
+    partition dim_time = m
+        mode: import
+        source = Snowflake.Databases(...)  // MARTS.DIM_TIME
+
+    column date_sk
+        dataType: int64
+        isKey: true
+    column full_date
+        dataType: dateTime
+    column is_us_bank_holiday
+        dataType: boolean
+    column is_month_end
+        dataType: boolean
+
+    hierarchy 'Calendar Hierarchy'
+        level Year
+        level Quarter
+        level Month
+        level Day
+
+table fct_delinquency
+    lineageTag: fct-delinquency-01
+    partition fct_delinquency = m
+        mode: directQuery
+        source = Snowflake.Databases(...)  // MARTS.FCT_DELINQUENCY -- see composite-model note above; also the largest table (1.5M+ rows at demo scale), a real motivator for DirectQuery here independent of the freshness argument
+
+    column loan_sk
+        dataType: int64
+    column customer_sk
+        dataType: int64
+    column snapshot_date_sk
+        dataType: int64
+    column risk_band_sk
+        dataType: int64
+    column assigned_collector_id
+        dataType: string
+    column bucket_index
+        dataType: int64
+    column delinquency_bucket
+        dataType: string
+    column dpd
+        dataType: int64
+    column prior_day_bucket
+        dataType: string
+    column outstanding_balance
+        dataType: decimal
+    column cure_flag
+        dataType: boolean
+    column roll_flag
+        dataType: boolean
+
+table fct_payment
+    lineageTag: fct-payment-01
+    partition fct_payment = m
+        mode: import
+        source = Snowflake.Databases(...)  // MARTS.FCT_PAYMENT
+
+    column payment_id
+        dataType: string
+        isKey: true
+    column loan_sk
+        dataType: int64
+    column customer_sk
+        dataType: int64
+    column payment_date_sk
+        dataType: int64
+    column channel_sk
+        dataType: int64
+    column payment_amount
+        dataType: decimal
+    column payment_type
+        dataType: string
+
+table fct_contact
+    lineageTag: fct-contact-01
+    partition fct_contact = m
+        mode: import
+        source = Snowflake.Databases(...)  // MARTS.FCT_CONTACT
+
+    column contact_id
+        dataType: string
+        isKey: true
+    column loan_sk
+        dataType: int64
+    column collector_sk
+        dataType: int64
+    column channel_sk
+        dataType: int64
+    column contact_date_sk
+        dataType: int64
+    column contact_outcome
+        dataType: string
+    column is_rpc_flag
+        dataType: boolean
+    column complaint_flag
+        dataType: boolean
+
+table fct_promise_to_pay
+    lineageTag: fct-ptp-01
+    partition fct_promise_to_pay = m
+        mode: import
+        source = Snowflake.Databases(...)  // MARTS.FCT_PROMISE_TO_PAY
+
+    column ptp_id
+        dataType: string
+        isKey: true
+    column loan_sk
+        dataType: int64
+    column collector_sk
+        dataType: int64
+    column contact_id
+        dataType: string
+    column ptp_created_date_sk
+        dataType: int64
+    column ptp_amount
+        dataType: decimal
+    column ptp_status
+        dataType: string
+    column amount_paid_against_ptp
+        dataType: decimal
+
+// -----------------------------------------------------------------------------
+// Relationships -- single-direction, star-schema-correct (Phase 3 Section 4's
+// cardinality table implemented as actual relationship objects). All facts
+// relate to dims many-to-one, filter direction Single (never Both) -- Both-
+// direction filtering across a fact-to-fact path is the classic Power BI
+// performance/ambiguity trap this model deliberately avoids.
+// -----------------------------------------------------------------------------
+relationship fct_delinquency-dim_loan
+    fromColumn: fct_delinquency.loan_sk
+    toColumn: dim_loan.loan_sk
+
+relationship fct_delinquency-dim_customer
+    fromColumn: fct_delinquency.customer_sk
+    toColumn: dim_customer.customer_sk
+
+relationship fct_delinquency-dim_risk_band
+    fromColumn: fct_delinquency.risk_band_sk
+    toColumn: dim_risk_band.risk_band_sk
+
+relationship fct_delinquency-dim_time
+    fromColumn: fct_delinquency.snapshot_date_sk
+    toColumn: dim_time.date_sk
+
+relationship fct_delinquency-dim_collector
+    fromColumn: fct_delinquency.assigned_collector_id
+    toColumn: dim_collector.collector_id
+    // NOTE: joins on the natural key here (assigned_collector_id, not a
+    // surrogate) because Phase 8 Section 3.3's ASOF-attribution produces
+    // a business-key value, not a dim_collector.collector_sk lookup --
+    // documented rather than silently "fixed" by adding a lookup step
+    // this model doesn't otherwise need (Phase 12 Section 6's honesty
+    // precedent: naming a rough edge instead of hiding it).
+
+relationship fct_payment-dim_loan
+    fromColumn: fct_payment.loan_sk
+    toColumn: dim_loan.loan_sk
+
+relationship fct_payment-dim_channel
+    fromColumn: fct_payment.channel_sk
+    toColumn: dim_channel.channel_sk
+
+relationship fct_payment-dim_time
+    fromColumn: fct_payment.payment_date_sk
+    toColumn: dim_time.date_sk
+
+relationship fct_contact-dim_loan
+    fromColumn: fct_contact.loan_sk
+    toColumn: dim_loan.loan_sk
+
+relationship fct_contact-dim_collector
+    fromColumn: fct_contact.collector_sk
+    toColumn: dim_collector.collector_sk
+
+relationship fct_contact-dim_channel
+    fromColumn: fct_contact.channel_sk
+    toColumn: dim_channel.channel_sk
+
+relationship fct_contact-dim_time
+    fromColumn: fct_contact.contact_date_sk
+    toColumn: dim_time.date_sk
+
+relationship fct_promise_to_pay-dim_loan
+    fromColumn: fct_promise_to_pay.loan_sk
+    toColumn: dim_loan.loan_sk
+
+relationship fct_promise_to_pay-dim_collector
+    fromColumn: fct_promise_to_pay.collector_sk
+    toColumn: dim_collector.collector_sk
+
+relationship fct_promise_to_pay-dim_time
+    fromColumn: fct_promise_to_pay.ptp_created_date_sk
+    toColumn: dim_time.date_sk
+
+relationship fct_promise_to_pay-fct_contact
+    fromColumn: fct_promise_to_pay.contact_id
+    toColumn: fct_contact.contact_id
+    // The one fact-to-fact relationship in this model -- deliberate,
+    // matching Phase 3 Section 1's documented contact_fact -> 
+    // promise_to_pay_fact (1 : 0/N) cardinality, needed so [Contact
+    // Success Rate]'s TREATAS pattern (dax_measures.dax) has a real
+    // relationship to traverse rather than a manual virtual join.

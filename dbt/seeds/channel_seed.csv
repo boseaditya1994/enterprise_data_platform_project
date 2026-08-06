@@ -1,0 +1,14 @@
+channel_sk,channel_code,channel_name,channel_category,is_digital_flag,is_outbound_flag
+1,OUTBOUND_CALL,Outbound Agent Call,Live Agent,false,true
+2,INBOUND_CALL,Inbound Customer Call,Live Agent,false,false
+3,SMS,SMS Reminder,Automated,true,true
+4,EMAIL,Email Reminder,Automated,true,true
+5,IVR,Interactive Voice Response,Automated,false,true
+6,LETTER,Collections Letter,Written,false,true
+7,MOBILE_PUSH,Mobile App Push Notification,Digital Self-Serve,true,true
+8,ACH,ACH Payment,Digital Self-Serve,true,false
+9,BRANCH,In-Branch Payment,Live Agent,false,false
+10,DEBIT_CARD,Debit Card Payment,Digital Self-Serve,true,false
+11,CHECK,Mailed Check,Written,false,false
+12,WIRE,Wire Transfer,Digital Self-Serve,true,false
+13,CASH,In-Branch Cash Payment,Live Agent,false,false

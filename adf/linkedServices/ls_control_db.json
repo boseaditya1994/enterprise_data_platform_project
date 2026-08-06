@@ -1,0 +1,21 @@
+{
+    "name": "ls_control_db",
+    "type": "Microsoft.DataFactory/factories/linkedservices",
+    "properties": {
+        "type": "AzureSqlDatabase",
+        "typeProperties": {
+            "connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=@{linkedService().serverName};Initial Catalog=controldb",
+            "servicePrincipalId": "@{linkedService().servicePrincipalId}",
+            "servicePrincipalCredentialType": "ServicePrincipalKey",
+            "servicePrincipalCredential": {
+                "type": "AzureKeyVaultSecret",
+                "store": { "referenceName": "ls_key_vault", "type": "LinkedServiceReference" },
+                "secretName": "control-db-sp-secret"
+            }
+        },
+        "parameters": {
+            "serverName": { "type": "String" },
+            "servicePrincipalId": { "type": "String" }
+        }
+    }
+}

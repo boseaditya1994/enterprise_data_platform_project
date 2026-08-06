@@ -1,0 +1,20 @@
+{
+    "name": "ls_azure_databricks",
+    "type": "Microsoft.DataFactory/factories/linkedservices",
+    "properties": {
+        "type": "AzureDatabricks",
+        "typeProperties": {
+            "domain": "https://adb-loandelinqcc.azuredatabricks.net",
+            "authentication": "MSI",
+            "workspaceResourceId": "/subscriptions/{sub}/resourceGroups/rg-loan-delinq-cc/providers/Microsoft.Databricks/workspaces/adb-loandelinqcc",
+            "newClusterVersion": "14.3.x-scala2.12",
+            "newClusterNumOfWorker": "2:8",
+            "newClusterNodeType": "Standard_DS4_v2",
+            "newClusterSparkConf": {
+                "spark.databricks.delta.optimizeWrite.enabled": "true",
+                "spark.databricks.delta.autoCompact.enabled": "true"
+            }
+        },
+        "description": "Job cluster, not all-purpose -- spins up per run, terminates after (Phase 10 Section 7 cost rationale). Autoscale 2-8 workers sized to Bronze-ingestion volume; heavier jobs (streaming, Gold aggregation) override via activity-level newClusterNumOfWorker."
+    }
+}

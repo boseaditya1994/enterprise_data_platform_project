@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: >
+      Bronze-layer tables, already ingested per the Phase 6 schema registry
+      (pyspark/bronze/schema_registry.yaml) and the metadata-driven
+      ingest_bronze.py job. dbt does NOT ingest Bronze itself -- that's
+      Databricks/ADF's job (Phase 2 architecture) -- dbt's job starts here.
+    schema: bronze
+    tables:
+      - name: raw_crm
+        description: One row per CRM customer attribute-version (Phase 6 registry).
+        columns:
+          - name: customer_id
+            tests: [not_null]
+      - name: raw_collectors_daily
+        description: One row per collector attribute-version (initial load + reorg).
+      - name: raw_servicing_applications
+        description: Loan applications (approved and declined).
+      - name: raw_servicing_loans
+        description: Approved loans, initial origination terms.
+        columns:
+          - name: loan_id
+            tests: [not_null, unique]
+      - name: raw_servicing_daily_status
+        description: One row per loan per snapshot day (delinquency status).
+      - name: raw_servicing_loan_events
+        description: Restructure / charge-off / settlement / fraud lifecycle events.
+      - name: raw_servicing_loan_applicant_bridge
+        description: Joint-applicant links (full-snapshot reference table).
+      - name: raw_payments
+        description: Payment transactions, including reversals/returns/duplicates.
+        columns:
+          - name: payment_id
+            tests: [not_null]
+      - name: raw_call_center
+        description: Call center contact events (streaming source).
+      - name: raw_collections
+        description: Collections Platform contact events (streaming source, schema-drift renamed column).
+      - name: raw_collections_ptp
+        description: Promise-to-pay commitments (streaming source).
+      - name: raw_bureau
+        description: Monthly Credit Bureau FICO refresh (frequently late/missing).
+      - name: raw_risk_scores
+        description: Monthly Risk Engine internal score + fraud events.

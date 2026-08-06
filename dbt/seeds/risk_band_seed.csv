@@ -1,0 +1,8 @@
+risk_band_sk,risk_band_code,risk_band_name,score_range_low,score_range_high
+1,R1,Super Prime,780,850
+2,R2,Prime Plus,740,779
+3,R3,Prime,700,739
+4,R4,Near Prime,660,699
+5,R5,Subprime,620,659
+6,R6,Deep Subprime,580,619
+7,R7,High Risk,300,579

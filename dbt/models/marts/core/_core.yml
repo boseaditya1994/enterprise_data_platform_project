@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: >
+      SCD2 conformed customer dimension. One row per customer per
+      attribute-version. See docs/03-data-modeling.md Section 2.1 and
+      docs/07-silver-layer.md Section 3 (identity resolution) for full
+      design context.
+    columns:
+      - name: customer_sk
+        description: Surrogate key.
+        tests: [not_null, unique]
+      - name: customer_id
+        description: Natural key (golden customer ID).
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  - name: dim_loan
+    description: >
+      SCD2 conformed loan dimension, including lifecycle flags
+      (restructured/charged-off/settled/fraud) derived from the loan
+      events stream. See docs/03-data-modeling.md Section 2.2.
+    columns:
+      - name: loan_sk
+        tests: [not_null, unique]
+      - name: loan_id
+        tests: [not_null]
+      - name: origination_amount
+        tests:
+          - non_negative
+
+  - name: dim_collector
+    description: SCD2 collector roster, including the mid-window reorg (Phase 5 scenario #12).
+    columns:
+      - name: collector_sk
+        tests: [not_null, unique]
+
+  - name: dim_channel
+    description: Conformed contact/payment channel reference (Phase 3 Section 2.5, extended in Phase 8 Section 2).
+    columns:
+      - name: channel_sk
+        tests: [not_null, unique]
+      - name: channel_category
+        tests:
+          - accepted_values:
+              values: ['Live Agent', 'Automated', 'Written', 'Digital Self-Serve']
+
+  - name: dim_risk_band
+    description: Conformed internal risk-band reference (Phase 3 Section 2.6).
+    columns:
+      - name: risk_band_sk
+        tests: [not_null, unique]
+
+  - name: dim_time
+    description: Conformed calendar dimension, 2023-2027, with US bank holiday and month-end flags.
+    columns:
+      - name: date_sk
+        tests: [not_null, unique]

@@ -1,0 +1,47 @@
+name: loan_delinquency_command_center
+version: "1.0.0"
+config-version: 2
+
+profile: loan_delinquency_command_center
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+snapshot-paths: ["snapshots"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  loan_delinquency_command_center:
+    staging:
+      +materialized: view
+      +schema: stg
+    intermediate:
+      +materialized: view
+      +schema: int
+    marts:
+      core:
+        +materialized: table
+        +schema: marts
+      facts:
+        +materialized: table
+        +schema: marts
+      kpis:
+        +materialized: view
+        +schema: marts
+
+seeds:
+  loan_delinquency_command_center:
+    +schema: seeds
+
+snapshots:
+  loan_delinquency_command_center:
+    +target_schema: snapshots
+
+vars:
+  # Flips what "current" means for the CRM snapshot demo (Section on
+  # snapshots in docs/09-dbt-models.md) -- run once with an early cutoff,
+  # once with the full window, to prove dbt snapshot captures the change.
+  crm_current_as_of_ingestion_day: "2025-06-30"

@@ -1,0 +1,15 @@
+{
+    "name": "ls_adls_gen2",
+    "type": "Microsoft.DataFactory/factories/linkedservices",
+    "properties": {
+        "type": "AzureBlobFS",
+        "typeProperties": {
+            "url": "https://loandelinqcc.dfs.core.windows.net",
+            "accountKey": {
+                "type": "AzureKeyVaultSecret",
+                "store": { "referenceName": "ls_key_vault", "type": "LinkedServiceReference" },
+                "secretName": "adls-gen2-account-key"
+            }
+        }
+    }
+}

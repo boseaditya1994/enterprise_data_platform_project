@@ -1,0 +1,234 @@
+// =============================================================================
+// DAX Measures -- Loan Delinquency & Collections Command Center
+// =============================================================================
+// Every measure here is the DAX-native re-expression of the SAME governed
+// KPI definitions from sql/gold/kpi_definitions.sql (Phase 8) and
+// dbt/models/marts/kpis/*.sql (Phase 9) -- three independent implementations
+// of the identical business logic (SQL view, dbt model, DAX measure), which
+// is exactly what "one governed definition, consumed everywhere" (Phase 1's
+// root-cause fix) requires in practice: the BUSINESS LOGIC is identical
+// even though the expression language differs per consuming tool.
+//
+// Model assumption: Power BI imports gold.* tables (star schema, Phase 3)
+// via Import mode for dashboard pages, DirectQuery for the Customer
+// Drilldown page specifically (Section 5 of docs/13-power-bi.md explains
+// why that page alone needs DirectQuery).
+
+// -----------------------------------------------------------------------------
+// Base aggregations (building blocks other measures reference -- defining
+// these once avoids the classic DAX anti-pattern of repeating the same
+// SUM/CALCULATE inside five different ratio measures)
+// -----------------------------------------------------------------------------
+Total Outstanding Balance =
+    SUM ( fct_delinquency[outstanding_balance] )
+
+Balance 30 Plus =
+    CALCULATE (
+        [Total Outstanding Balance],
+        fct_delinquency[bucket_index] >= 1
+    )
+
+Balance 60 Plus =
+    CALCULATE (
+        [Total Outstanding Balance],
+        fct_delinquency[bucket_index] >= 2
+    )
+
+Balance 90 Plus =
+    CALCULATE (
+        [Total Outstanding Balance],
+        fct_delinquency[bucket_index] >= 4
+    )
+
+// -----------------------------------------------------------------------------
+// PAR 30 / 60 / 90
+// -----------------------------------------------------------------------------
+PAR 30 =
+    DIVIDE ( [Balance 30 Plus], [Total Outstanding Balance] )
+
+PAR 60 =
+    DIVIDE ( [Balance 60 Plus], [Total Outstanding Balance] )
+
+PAR 90 =
+    DIVIDE ( [Balance 90 Plus], [Total Outstanding Balance] )
+
+// PAR 30, 90 days ago -- powers the trend arrows on the Executive Summary
+// page (Section 9) without needing a separate historical table.
+PAR 30 (90 Days Prior) =
+    CALCULATE (
+        [PAR 30],
+        DATEADD ( dim_time[full_date], -90, DAY )
+    )
+
+PAR 30 Trend vs 90D =
+    VAR current = [PAR 30]
+    VAR prior = [PAR 30 (90 Days Prior)]
+    RETURN DIVIDE ( current - prior, prior )
+
+// -----------------------------------------------------------------------------
+// Roll Rate / Cure Rate
+// -----------------------------------------------------------------------------
+Delinquent Population =
+    CALCULATE (
+        COUNTROWS ( fct_delinquency ),
+        fct_delinquency[bucket_index] >= 1,
+        NOT ISBLANK ( fct_delinquency[prior_day_bucket] )
+    )
+
+Rolled Count =
+    CALCULATE (
+        COUNTROWS ( fct_delinquency ),
+        fct_delinquency[roll_flag] = TRUE
+    )
+
+Roll Rate =
+    DIVIDE ( [Rolled Count], [Delinquent Population] )
+
+Cured Count =
+    CALCULATE (
+        COUNTROWS ( fct_delinquency ),
+        fct_delinquency[cure_flag] = TRUE
+    )
+
+Delinquent Population Ex Current =
+    CALCULATE (
+        COUNTROWS ( fct_delinquency ),
+        fct_delinquency[prior_day_bucket] <> "Current",
+        NOT ISBLANK ( fct_delinquency[prior_day_bucket] )
+    )
+
+Cure Rate =
+    DIVIDE ( [Cured Count], [Delinquent Population Ex Current] )
+
+// -----------------------------------------------------------------------------
+// Recovery Rate
+// -----------------------------------------------------------------------------
+Recovered Amount =
+    CALCULATE (
+        SUM ( fct_payment[payment_amount] ),
+        fct_payment[payment_type] = "Settlement"
+    )
+
+Charged Off Original Balance =
+    CALCULATE (
+        SUM ( dim_loan[origination_amount] ),
+        dim_loan[charge_off_flag] = TRUE,
+        dim_loan[is_current] = TRUE
+    )
+
+Recovery Rate =
+    DIVIDE ( [Recovered Amount], [Charged Off Original Balance] )
+
+// -----------------------------------------------------------------------------
+// Call Connect Rate / Contact Success Rate
+// -----------------------------------------------------------------------------
+Live Agent Attempts =
+    CALCULATE (
+        COUNTROWS ( fct_contact ),
+        dim_channel[channel_category] = "Live Agent"
+    )
+
+Right Party Contacts =
+    CALCULATE (
+        [Live Agent Attempts],
+        fct_contact[is_rpc_flag] = TRUE
+    )
+
+Call Connect Rate =
+    DIVIDE ( [Right Party Contacts], [Live Agent Attempts] )
+
+Contacts Resulting In PTP =
+    CALCULATE (
+        [Live Agent Attempts],
+        TREATAS ( VALUES ( fct_contact[contact_id] ), fct_promise_to_pay[contact_id] )
+    )
+
+Contact Success Rate =
+    DIVIDE ( [Contacts Resulting In PTP], [Live Agent Attempts] )
+
+// -----------------------------------------------------------------------------
+// Promise-to-Pay Fulfillment Rate
+// -----------------------------------------------------------------------------
+Total PTPs =
+    COUNTROWS ( fct_promise_to_pay )
+
+Kept PTPs =
+    CALCULATE (
+        [Total PTPs],
+        fct_promise_to_pay[ptp_status] = "Kept"
+    )
+
+PTP Fulfillment Rate =
+    DIVIDE ( [Kept PTPs], [Total PTPs] )
+
+// -----------------------------------------------------------------------------
+// Collector Productivity
+// -----------------------------------------------------------------------------
+Kept Dollars Collected =
+    CALCULATE (
+        SUM ( fct_promise_to_pay[amount_paid_against_ptp] ),
+        fct_promise_to_pay[ptp_status] = "Kept"
+    )
+
+Contacts Made =
+    DISTINCTCOUNT ( fct_contact[contact_id] )
+
+// Dollars per contact -- surfaces in the Collector Productivity page as
+// the "quality over quantity" counter-metric to raw contact volume
+// (Phase 1 Section 2.1's stated root-cause problem: "collectors measured
+// by call volume, not $ collected").
+Kept Dollars Per Contact =
+    DIVIDE ( [Kept Dollars Collected], [Contacts Made] )
+
+// -----------------------------------------------------------------------------
+// Average Days Delinquent / Collection Efficiency
+// -----------------------------------------------------------------------------
+Average Days Delinquent =
+    CALCULATE (
+        AVERAGE ( fct_delinquency[dpd] ),
+        fct_delinquency[bucket_index] >= 1,
+        fct_delinquency[bucket_index] <= 4
+    )
+
+Past Due Balance At Risk =
+    CALCULATE (
+        [Total Outstanding Balance],
+        fct_delinquency[prior_day_bucket] <> "Current",
+        NOT ISBLANK ( fct_delinquency[prior_day_bucket] )
+    )
+
+Past Due Balance Cured =
+    CALCULATE (
+        [Total Outstanding Balance],
+        fct_delinquency[prior_day_bucket] <> "Current",
+        fct_delinquency[bucket_index] = 0
+    )
+
+Collection Efficiency =
+    DIVIDE ( [Past Due Balance Cured], [Past Due Balance At Risk] )
+
+// -----------------------------------------------------------------------------
+// Color-logic helper measures (used by conditional formatting rules,
+// Section 3-8's "color logic" column -- centralizing thresholds here
+// instead of hard-coding them per visual keeps every page's red/amber/
+// green bands consistent and changeable in one place)
+// -----------------------------------------------------------------------------
+PAR 30 Status Color =
+    VAR par = [PAR 30]
+    RETURN
+        SWITCH (
+            TRUE,
+            par >= 0.10, "#C0392B",   // red   -- above 10%: exec-escalation threshold
+            par >= 0.07, "#E67E22",   // amber -- 7-10%: elevated, watch
+            "#27AE60"                 // green -- under 7%: in line with Phase 8's observed 8.0% baseline being treated as normal-range, not a hard target
+        )
+
+Roll Rate Status Color =
+    VAR rr = [Roll Rate]
+    RETURN
+        SWITCH (
+            TRUE,
+            rr >= 0.05, "#C0392B",
+            rr >= 0.03, "#E67E22",
+            "#27AE60"
+        )

@@ -1,0 +1,93 @@
+{
+    "name": "pl_ingest_source_generic",
+    "type": "Microsoft.DataFactory/factories/pipelines",
+    "properties": {
+        "description": "The metadata-driven ingestion pattern (Phase 2 Principle 4) at the ADF layer: ONE pipeline definition, parameterized entirely from pipeline_control, serves all 13 sources. Adding an 8th source system is a control-table row, not a new pipeline (same claim Phase 6 makes for the schema registry, now true for orchestration too).",
+        "parameters": {
+            "source_name": { "type": "String" },
+            "source_connection_name": { "type": "String" },
+            "source_path_pattern": { "type": "String" },
+            "landing_path_pattern": { "type": "String" },
+            "databricks_notebook_path": { "type": "String" },
+            "max_retries": { "type": "Int" },
+            "retry_interval_seconds": { "type": "Int" },
+            "timeout_minutes": { "type": "Int" },
+            "run_date": { "type": "String" }
+        },
+        "activities": [
+            {
+                "name": "CopySourceToLanding",
+                "type": "Copy",
+                "typeProperties": {
+                    "source": { "type": "DelimitedTextSource" },
+                    "sink": { "type": "DelimitedTextSink", "copyBehavior": "PreserveHierarchy" },
+                    "enableStaging": false
+                },
+                "inputs": [{
+                    "referenceName": "ds_generic_delimited", "type": "DatasetReference",
+                    "parameters": { "filePath": "@replace(pipeline().parameters.source_path_pattern, '{date}', pipeline().parameters.run_date)" }
+                }],
+                "outputs": [{
+                    "referenceName": "ds_generic_delimited", "type": "DatasetReference",
+                    "parameters": { "filePath": "@replace(pipeline().parameters.landing_path_pattern, '{date}', pipeline().parameters.run_date)" }
+                }],
+                "policy": {
+                    "timeout": "@concat('0.', string(div(pipeline().parameters.timeout_minutes, 60)), ':', string(mod(pipeline().parameters.timeout_minutes, 60)), ':00')",
+                    "retry": "@pipeline().parameters.max_retries",
+                    "retryIntervalInSeconds": "@pipeline().parameters.retry_interval_seconds",
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "description": "Retry/timeout policy comes from pipeline_control per source (Phase 11 design point: raw_payments gets max_retries=5/retryInterval=60s since payment-file SFTP drops are the flakiest source observed; raw_servicing_loan_applicant_bridge gets a much shorter timeout since it's a tiny weekly file). Not a single global retry policy applied uniformly."
+            },
+            {
+                "name": "IngestToBronzeDelta",
+                "type": "DatabricksNotebook",
+                "dependsOn": [{ "activity": "CopySourceToLanding", "dependencyConditions": ["Succeeded"] }],
+                "typeProperties": {
+                    "notebookPath": "@pipeline().parameters.databricks_notebook_path",
+                    "baseParameters": {
+                        "table_name": "@pipeline().parameters.source_name",
+                        "run_date": "@pipeline().parameters.run_date"
+                    }
+                },
+                "linkedServiceName": { "referenceName": "ls_azure_databricks", "type": "LinkedServiceReference" },
+                "policy": {
+                    "timeout": "01:00:00",
+                    "retry": 1,
+                    "retryIntervalInSeconds": 60
+                },
+                "description": "Calls pyspark/bronze/ingest_bronze.py (Phase 6) -- this is where schema-drift classification, audit-column addition, and quarantine routing actually happen. Retry=1 here (not the source's configured retry count) because Databricks Notebook activity failures are usually code/cluster issues, not transient network blips like the Copy activity -- retrying 5x on a real bug just burns cluster time."
+            },
+            {
+                "name": "LogRunSuccess",
+                "type": "SqlServerStoredProcedure",
+                "dependsOn": [{ "activity": "IngestToBronzeDelta", "dependencyConditions": ["Succeeded"] }],
+                "typeProperties": {
+                    "storedProcedureName": "dbo.usp_log_pipeline_run",
+                    "storedProcedureParameters": {
+                        "source_name": { "value": "@pipeline().parameters.source_name", "type": "String" },
+                        "run_date": { "value": "@pipeline().parameters.run_date", "type": "String" },
+                        "status": { "value": "SUCCESS", "type": "String" },
+                        "pipeline_run_id": { "value": "@pipeline().RunId", "type": "String" }
+                    }
+                },
+                "linkedServiceName": { "referenceName": "ls_control_db", "type": "LinkedServiceReference" }
+            },
+            {
+                "name": "LogRunFailureAndAlert",
+                "type": "WebActivity",
+                "dependsOn": [{ "activity": "IngestToBronzeDelta", "dependencyConditions": ["Failed"] }],
+                "typeProperties": {
+                    "url": "@{pipeline().globalParameters.teamsWebhookUrl}",
+                    "method": "POST",
+                    "body": {
+                        "value": "@json(concat('{\"text\": \"🔴 Bronze ingestion FAILED for ', pipeline().parameters.source_name, ' (run_date=', pipeline().parameters.run_date, ', pipeline_run_id=', pipeline().RunId, '). See ADF monitoring for error detail.\"}'))",
+                        "type": "Expression"
+                    }
+                },
+                "description": "Pages the data-eng on-call channel directly -- Phase 6 Section 5's 'never silently break' principle applied at the orchestration layer, not just inside the Databricks job."
+            }
+        ]
+    }
+}

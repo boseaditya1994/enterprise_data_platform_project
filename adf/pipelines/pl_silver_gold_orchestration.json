@@ -1,0 +1,124 @@
+{
+    "name": "pl_silver_gold_orchestration",
+    "type": "Microsoft.DataFactory/factories/pipelines",
+    "properties": {
+        "description": "Runs after ALL Bronze sources land (pl_master_bronze_ingestion's final activity). Chains: Silver SCD2 merges (Databricks) -> dbt run (Silver staging through Gold marts + KPIs, Phase 9) -> PySpark Gold exceptions (Phase 10 Section 4: rolling trend, collections worklist) -> Delta maintenance (Phase 10 Section 6). Each stage gates the next via a Succeeded dependency -- Gold must never build on a Silver run that didn't actually complete.",
+        "parameters": {
+            "run_date": { "type": "String" }
+        },
+        "activities": [
+            {
+                "name": "SilverCustomerScd2Merge",
+                "type": "DatabricksNotebook",
+                "typeProperties": {
+                    "notebookPath": "/Repos/prod/pyspark/silver/scd2_merge_deltalake.py",
+                    "baseParameters": { "entity": "customer", "run_date": "@pipeline().parameters.run_date" }
+                },
+                "linkedServiceName": { "referenceName": "ls_azure_databricks", "type": "LinkedServiceReference" },
+                "policy": { "timeout": "00:30:00", "retry": 1, "retryIntervalInSeconds": 60 }
+            },
+            {
+                "name": "SilverCollectorScd2Merge",
+                "type": "DatabricksNotebook",
+                "typeProperties": {
+                    "notebookPath": "/Repos/prod/pyspark/silver/scd2_merge_deltalake.py",
+                    "baseParameters": { "entity": "collector", "run_date": "@pipeline().parameters.run_date" }
+                },
+                "linkedServiceName": { "referenceName": "ls_azure_databricks", "type": "LinkedServiceReference" },
+                "policy": { "timeout": "00:15:00", "retry": 1, "retryIntervalInSeconds": 60 },
+                "description": "Runs in parallel with SilverCustomerScd2Merge (no dependsOn between them) -- independent entities, no reason to serialize."
+            },
+            {
+                "name": "SilverLoanWindowedRebuild",
+                "type": "DatabricksNotebook",
+                "typeProperties": {
+                    "notebookPath": "/Repos/prod/sql/silver/02_loan_scd2_merge.sql",
+                    "baseParameters": { "run_date": "@pipeline().parameters.run_date" }
+                },
+                "linkedServiceName": { "referenceName": "ls_azure_databricks", "type": "LinkedServiceReference" },
+                "policy": { "timeout": "00:30:00", "retry": 1, "retryIntervalInSeconds": 60 },
+                "description": "Windowed full-history rebuild (Phase 7 Section 2) -- also independent of the other two Silver merges, runs in parallel."
+            },
+            {
+                "name": "TriggerDbtRun",
+                "type": "WebActivity",
+                "dependsOn": [
+                    { "activity": "SilverCustomerScd2Merge", "dependencyConditions": ["Succeeded"] },
+                    { "activity": "SilverCollectorScd2Merge", "dependencyConditions": ["Succeeded"] },
+                    { "activity": "SilverLoanWindowedRebuild", "dependencyConditions": ["Succeeded"] }
+                ],
+                "typeProperties": {
+                    "url": "https://cloud.getdbt.com/api/v2/accounts/{account_id}/jobs/{job_id}/run/",
+                    "method": "POST",
+                    "headers": { "Authorization": "Bearer @{pipeline().globalParameters.dbtCloudApiToken}" },
+                    "body": { "cause": "Triggered by pl_silver_gold_orchestration" }
+                },
+                "description": "Fires the dbt Cloud job covering staging -> intermediate -> marts (Phase 9's 35 models, 40 tests). dbt Cloud's own job UI/API is the source of truth for THIS stage's step-by-step status; ADF just gates on overall success and surfaces failure the same way as every other activity below."
+            },
+            {
+                "name": "PollDbtRunStatus",
+                "type": "Until",
+                "dependsOn": [{ "activity": "TriggerDbtRun", "dependencyConditions": ["Succeeded"] }],
+                "typeProperties": {
+                    "expression": { "value": "@or(equals(variables('dbtRunStatus'), 'success'), equals(variables('dbtRunStatus'), 'error'))", "type": "Expression" },
+                    "timeout": "00:45:00",
+                    "activities": [
+                        {
+                            "name": "CheckDbtRunStatus",
+                            "type": "WebActivity",
+                            "typeProperties": {
+                                "url": "@concat('https://cloud.getdbt.com/api/v2/accounts/{account_id}/runs/', activity('TriggerDbtRun').output.data.id, '/')",
+                                "method": "GET",
+                                "headers": { "Authorization": "Bearer @{pipeline().globalParameters.dbtCloudApiToken}" }
+                            }
+                        },
+                        { "name": "Wait30s", "type": "Wait", "typeProperties": { "waitTimeInSeconds": 30 } }
+                    ]
+                },
+                "description": "dbt Cloud's trigger API is fire-and-forget; this poll loop is the standard pattern for making ADF actually wait on and gate downstream Gold work on dbt's real completion status, not just 'the trigger call succeeded'."
+            },
+            {
+                "name": "GoldPySparkExceptions",
+                "type": "DatabricksNotebook",
+                "dependsOn": [{ "activity": "PollDbtRunStatus", "dependencyConditions": ["Succeeded"] }],
+                "typeProperties": {
+                    "notebookPath": "/Repos/prod/pyspark/gold/build_gold_aggregates.py",
+                    "baseParameters": { "run_date": "@pipeline().parameters.run_date" }
+                },
+                "linkedServiceName": { "referenceName": "ls_azure_databricks", "type": "LinkedServiceReference" },
+                "policy": { "timeout": "00:30:00", "retry": 1, "retryIntervalInSeconds": 60 },
+                "description": "Phase 10 Section 4's two documented exceptions (rolling PAR trend, collections worklist) -- runs AFTER dbt's Gold marts exist, since both read from Silver, not from dbt's Gold output, but conceptually belong in the same post-dbt wave for monitoring clarity."
+            },
+            {
+                "name": "DeltaMaintenance",
+                "type": "DatabricksNotebook",
+                "dependsOn": [{ "activity": "GoldPySparkExceptions", "dependencyConditions": ["Succeeded"] }],
+                "typeProperties": {
+                    "notebookPath": "/Repos/prod/pyspark/optimization/optimize_and_maintain.py",
+                    "baseParameters": {}
+                },
+                "linkedServiceName": { "referenceName": "ls_azure_databricks", "type": "LinkedServiceReference" },
+                "policy": { "timeout": "00:45:00", "retry": 1, "retryIntervalInSeconds": 60 },
+                "description": "OPTIMIZE/ZORDER/VACUUM (Phase 10 Section 6) runs LAST, after every write for the day has happened -- optimizing mid-run would just get undone by the next write."
+            },
+            {
+                "name": "AlertOnAnyFailure",
+                "type": "WebActivity",
+                "dependsOn": [
+                    { "activity": "TriggerDbtRun", "dependencyConditions": ["Failed"] },
+                    { "activity": "PollDbtRunStatus", "dependencyConditions": ["Failed"] },
+                    { "activity": "GoldPySparkExceptions", "dependencyConditions": ["Failed"] },
+                    { "activity": "DeltaMaintenance", "dependencyConditions": ["Failed"] }
+                ],
+                "typeProperties": {
+                    "url": "@{pipeline().globalParameters.teamsWebhookUrl}",
+                    "method": "POST",
+                    "body": {
+                        "value": "@json(concat('{\"text\": \"🔴 Silver/Gold orchestration failed at run_date=', pipeline().parameters.run_date, '. Check ADF monitoring.\"}'))",
+                        "type": "Expression"
+                    }
+                }
+            }
+        ]
+    }
+}

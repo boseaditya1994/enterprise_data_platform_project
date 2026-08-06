@@ -1,0 +1,96 @@
+// =============================================================================
+// Row-Level Security (RLS) Roles -- Power BI Desktop "Manage Roles"
+// =============================================================================
+// Deliberately mirrors the Snowflake role model 1:1 (snowflake/07_rbac_roles.sql,
+// snowflake/08_row_access_policies.sql) rather than inventing a separate
+// Power BI-only access model -- the same person's Snowflake role and Power BI
+// role should always answer "what can this person see" identically,
+// regardless of which tool they're looking at.
+//
+// IMPORTANT: for Import-mode tables (every page except Customer Drilldown,
+// see docs/13-power-bi.md Section 5), RLS filters the IMPORTED data cache,
+// re-evaluated per session against the viewer's identity (via
+// USERPRINCIPALNAME() mapped through the same collector_team_map table
+// Snowflake's row access policy uses -- one mapping table, two engines
+// reading it, not two definitions of "who's on which team" to keep in sync).
+
+// -----------------------------------------------------------------------------
+// Role: Executive
+// -----------------------------------------------------------------------------
+// Table filter applied: fct_delinquency, fct_payment, fct_contact,
+// fct_promise_to_pay, dim_customer -- ALL set to FALSE (no rows visible).
+// Mirrors Snowflake's ROLE_EXECUTIVE having no GRANT on MARTS at all
+// (Phase 12 Section 5) -- executives only ever see the pre-aggregated KPI
+// table/measures above, never a row-level fact or a customer record.
+//
+//   dim_customer:      FALSE
+//   fct_delinquency:   FALSE
+//   fct_payment:       FALSE
+//   fct_contact:       FALSE
+//   fct_promise_to_pay: FALSE
+//
+// (KPI summary tables/measures remain fully visible -- RLS is applied to
+// the underlying fact/dim tables only, matching exactly which Snowflake
+// schema ROLE_EXECUTIVE was granted vs. denied.)
+
+// -----------------------------------------------------------------------------
+// Role: Collections Manager
+// -----------------------------------------------------------------------------
+// dim_collector filter:
+[team_name] =
+    LOOKUPVALUE (
+        collector_team_map[team_name],
+        collector_team_map[snowflake_username], USERPRINCIPALNAME(),
+        collector_team_map[role_type], "MANAGER"
+    )
+
+// fct_delinquency filter (relationship: fct_delinquency -> dim_collector via
+// assigned_collector_id, single-direction -- the RLS filter on dim_collector
+// above propagates automatically to every fact table related to it, so NO
+// separate filter expression is needed on fct_delinquency/fct_contact/
+// fct_promise_to_pay themselves. This is the whole point of filtering the
+// DIMENSION rather than repeating the filter logic on every fact table --
+// same "define once" principle as the DAX base-measure pattern above.)
+
+// -----------------------------------------------------------------------------
+// Role: Collector
+// -----------------------------------------------------------------------------
+// dim_collector filter:
+[collector_id] =
+    LOOKUPVALUE (
+        collector_team_map[collector_id],
+        collector_team_map[snowflake_username], USERPRINCIPALNAME(),
+        collector_team_map[role_type], "COLLECTOR"
+    )
+
+// Same propagation-through-relationship note as Collections Manager above --
+// a collector assigned this role sees ONLY their own accounts across every
+// page, enforced once at the dim_collector table.
+
+// -----------------------------------------------------------------------------
+// Role: Compliance Auditor
+// -----------------------------------------------------------------------------
+// No row filter (full visibility, matching Snowflake's ROLE_COMPLIANCE_AUDITOR
+// grant on all tables) -- BUT every PII visual/table in this workbook uses a
+// measure-level check to blank out phone/email/SSN fields for this role,
+// since Power BI RLS operates on ROWS, not columns; column-level protection
+// for PII (matching Snowflake's masking policies, Phase 12 Section 9) is
+// implemented via Object-Level Security (OLS, via Tabular Editor -- not
+// natively configurable in Power BI Desktop's RLS UI) restricting this
+// role's visibility of phone_number/email/ssn_last4 columns entirely.
+
+// -----------------------------------------------------------------------------
+// Testing RLS: "View As Role" checklist (run before every publish)
+// -----------------------------------------------------------------------------
+// 1. View As "Collector" + a specific test collector_id -> confirm EVERY
+//    page's visuals show only that collector's assigned accounts, and the
+//    Executive Summary page (Section 9) shows either blank or an
+//    access-denied state (that page's visuals are bound to the KPI tables
+//    a Collector role also can't see under the matching Snowflake grants --
+//    consistency check between the two systems' access models).
+// 2. View As "Executive" -> confirm zero rows render on any fact-bound
+//    visual; only KPI-table-bound visuals (Executive Summary, Portfolio
+//    Overview) show data.
+// 3. View As "Collections Manager" -> confirm the visible account set
+//    matches exactly the collectors on record for that manager's team in
+//    collector_team_map, no more, no less.

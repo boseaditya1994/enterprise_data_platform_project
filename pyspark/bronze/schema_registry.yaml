@@ -1,0 +1,329 @@
+# Bronze Schema Registry
+#
+# Single source of truth for metadata-driven Bronze ingestion (Phase 2
+# Principle 4). docs/06-bronze-layer.md's schema tables are generated FROM
+# this file's intent (kept in sync by hand here since this is a portfolio
+# repo, not a live system) -- in production this file (or its DB-table
+# equivalent) is what pyspark/bronze/ingest_bronze.py actually reads at
+# runtime to decide how to ingest each source, detect drift, and route
+# quarantine.
+#
+# Field meanings:
+#   landing_path_pattern   - where ADF/Event Hubs lands raw files (Phase 2 Section 3)
+#   file_format            - source file format as landed
+#   partition_col          - Bronze Delta partition column
+#   natural_key            - business key(s) used for downstream Silver CDC merge (Phase 7)
+#   watermark_col          - column Silver's merge logic treats as "source updated at"
+#   cdc_strategy           - append_only (immutable event) | upsert (mutable entity, needs merge)
+#   expected_columns       - column: spark_type -- the CONTRACT; additions beyond this
+#                             are schema evolution (allowed), removals/type changes/renames
+#                             are schema drift (quarantine + alert)
+#   retention_days         - Bronze retention policy (Phase 3 Section 3.2 note, Phase 16 detail)
+#   allow_additive_drift   - whether new nullable columns auto-merge (mergeSchema) or quarantine
+
+tables:
+
+  raw_crm:
+    source_system: CRM
+    landing_path_pattern: "landing/crm/dt={date}/*.csv"
+    file_format: csv
+    partition_col: source_updated_at
+    natural_key: [customer_id]
+    watermark_col: source_updated_at
+    cdc_strategy: upsert
+    retention_days: 2555   # 7 years -- GLBA customer-record retention norm
+    allow_additive_drift: true
+    expected_columns:
+      customer_id: string
+      first_name: string
+      last_name: string
+      date_of_birth: date
+      ssn_last4: string
+      email: string
+      phone_number: string
+      mailing_city: string
+      mailing_state: string
+      mailing_zip: string
+      customer_segment: string
+      employment_status: string
+      source_updated_at: timestamp
+      source_system: string
+      change_reason: string
+
+  raw_collectors_daily:
+    source_system: COLLECTIONS_PLATFORM
+    landing_path_pattern: "landing/collectors/dt={date}/*.csv"
+    file_format: csv
+    partition_col: source_updated_at
+    natural_key: [collector_id]
+    watermark_col: source_updated_at
+    cdc_strategy: upsert
+    retention_days: 1095   # 3 years
+    allow_additive_drift: true
+    expected_columns:
+      collector_id: string
+      collector_name: string
+      hire_date: date
+      team_name: string
+      collector_level: string
+      manager_name: string
+      is_active_flag: boolean
+      source_updated_at: timestamp
+      change_reason: string
+
+  raw_servicing_applications:
+    source_system: RISK_ENGINE
+    landing_path_pattern: "landing/servicing_applications/dt={date}/*.csv"
+    file_format: csv
+    partition_col: application_date
+    natural_key: [application_id]
+    watermark_col: decision_date
+    cdc_strategy: append_only
+    retention_days: 2555
+    allow_additive_drift: true
+    expected_columns:
+      application_id: string
+      customer_id: string
+      loan_type: string
+      requested_amount: decimal(18,2)
+      risk_band_code_at_decision: string
+      application_date: timestamp
+      decision: string
+      decision_date: timestamp
+      source_system: string
+
+  raw_servicing_loans:
+    source_system: LOAN_SERVICING
+    landing_path_pattern: "landing/servicing_loans/dt={date}/*.csv"
+    file_format: csv
+    partition_col: origination_date
+    natural_key: [loan_id]
+    watermark_col: origination_date
+    cdc_strategy: upsert
+    retention_days: 2555
+    allow_additive_drift: true
+    expected_columns:
+      loan_id: string
+      application_id: string
+      primary_customer_id: string
+      loan_type: string
+      loan_sub_product: string
+      origination_date: timestamp
+      disbursement_date: timestamp
+      origination_amount: decimal(18,2)
+      interest_rate: decimal(6,4)
+      loan_term_months: int
+      is_secured_flag: boolean
+      collateral_type: string
+      due_day_of_month: int
+      risk_band_code: string
+      source_system: string
+      # loan_purpose_code intentionally NOT listed here -- see raw_servicing_daily_status
+      # for the additive-schema-drift example; this table's contract is unaffected.
+
+  raw_servicing_daily_status:
+    source_system: LOAN_SERVICING
+    landing_path_pattern: "landing/servicing_daily_status/dt={date}/*.csv"
+    file_format: csv
+    partition_col: snapshot_date
+    natural_key: [loan_id, snapshot_date]
+    watermark_col: snapshot_date
+    cdc_strategy: append_only   # one immutable row per loan per day
+    retention_days: 2555
+    allow_additive_drift: true  # loan_purpose_code appears 2025-03-02 -- additive, auto-merges
+    expected_columns:
+      loan_id: string
+      customer_id: string
+      snapshot_date: date
+      bucket_index: int
+      dpd: int
+      restructured_flag: boolean
+      fraud_flag: boolean
+      outstanding_balance: decimal(18,2)
+      delinquency_bucket: string
+
+  raw_servicing_loan_events:
+    source_system: LOAN_SERVICING
+    landing_path_pattern: "landing/servicing_loan_events/dt={date}/*.csv"
+    file_format: csv
+    partition_col: event_date
+    natural_key: [loan_id, event_type, event_date]
+    watermark_col: event_date
+    cdc_strategy: append_only
+    retention_days: 2555
+    allow_additive_drift: true
+    expected_columns:
+      loan_id: string
+      event_type: string
+      event_date: timestamp
+      details: string
+
+  raw_servicing_loan_applicant_bridge:
+    source_system: LOAN_SERVICING
+    landing_path_pattern: "landing/servicing_loan_applicant_bridge/full_snapshot.csv"
+    file_format: csv
+    partition_col: null   # small reference table, full-snapshot overwrite each run
+    natural_key: [loan_id, customer_id]
+    watermark_col: null
+    cdc_strategy: full_snapshot_overwrite
+    retention_days: 365   # only latest snapshot matters; history not required
+    allow_additive_drift: true
+    expected_columns:
+      loan_id: string
+      customer_id: string
+      applicant_role: string
+
+  raw_payments:
+    source_system: PAYMENT_SYSTEM
+    landing_path_pattern: "landing/payments/dt={date}/*.csv"
+    file_format: csv
+    partition_col: ingestion_date   # NOTE: partitioned by arrival, not effective_date -- see Section 4.1 of docs/06
+    natural_key: [payment_id]
+    watermark_col: effective_date
+    cdc_strategy: upsert   # reversals correct an existing payment_id lineage via original_payment_id
+    retention_days: 2555
+    allow_additive_drift: true
+    expected_columns:
+      payment_id: string
+      loan_id: string
+      customer_id: string
+      payment_date: timestamp
+      payment_amount: decimal(18,2)
+      scheduled_amount: decimal(18,2)
+      payment_type: string
+      payment_method: string
+      payment_status: string
+      is_reversal_flag: boolean
+      nsf_flag: boolean
+      original_payment_id: string
+      effective_date: timestamp
+      ingestion_date: timestamp
+      is_late_arrival: boolean
+      is_corrupt_record: boolean
+
+  raw_call_center:
+    source_system: CALL_CENTER
+    landing_path_pattern: "streaming/call_center/dt={date}/*.json"   # Event Hubs -> Structured Streaming sink, Phase 2 Section 4.2
+    file_format: json
+    partition_col: contact_date
+    natural_key: [contact_id]
+    watermark_col: contact_date
+    cdc_strategy: append_only
+    retention_days: 1095
+    allow_additive_drift: true
+    expected_columns:
+      contact_id: string
+      loan_id: string
+      customer_id: string
+      contact_date: timestamp
+      collector_id: string
+      channel_code: string
+      contact_direction: string
+      contact_outcome: string
+      is_rpc_flag: boolean
+      call_duration_seconds: int
+      complaint_flag: boolean
+      source_system: string
+      is_corrupt_record: boolean
+
+  raw_collections:
+    source_system: COLLECTIONS_PLATFORM
+    landing_path_pattern: "streaming/collections/dt={date}/*.json"
+    file_format: json
+    partition_col: contact_date
+    natural_key: [contact_id]
+    watermark_col: contact_date
+    cdc_strategy: append_only
+    retention_days: 1095
+    allow_additive_drift: true
+    # NOTE: collector_id -> collector_ref_id breaking rename effective 2025-04-11.
+    # This is a RENAME, not an addition -- allow_additive_drift does NOT cover it.
+    # ingest_bronze.py must detect the old expected column's absence + flag for
+    # schema-drift quarantine/alert (Phase 2 Section 4.3) rather than silently
+    # treating collector_ref_id as an unrelated new column.
+    expected_columns:
+      contact_id: string
+      loan_id: string
+      customer_id: string
+      contact_date: timestamp
+      collector_id: string   # registry's CURRENT contract before the 2025-04-11 rename
+      channel_code: string
+      contact_direction: string
+      contact_outcome: string
+      is_rpc_flag: boolean
+      call_duration_seconds: int
+      complaint_flag: boolean
+      source_system: string
+      is_corrupt_record: boolean
+    known_drift_events:
+      - date: "2025-04-11"
+        type: breaking_rename
+        detail: "collector_id renamed to collector_ref_id"
+        resolution: "registry updated to alias collector_ref_id -> collector_id at Bronze->Silver boundary (Phase 7)"
+
+  raw_collections_ptp:
+    source_system: COLLECTIONS_PLATFORM
+    landing_path_pattern: "streaming/collections_ptp/dt={date}/*.json"
+    file_format: json
+    partition_col: ptp_created_date
+    natural_key: [ptp_id]
+    watermark_col: ptp_created_date
+    cdc_strategy: upsert   # ptp_status transitions Open -> Kept/Broken/Partial over time
+    retention_days: 1095
+    allow_additive_drift: true
+    expected_columns:
+      ptp_id: string
+      loan_id: string
+      customer_id: string
+      contact_id: string
+      collector_ref_id: string   # registry's CURRENT contract before the 2025-04-11 rename (same source event as raw_collections)
+      ptp_created_date: timestamp
+      ptp_promised_date: date
+      ptp_amount: decimal(18,2)
+      ptp_status: string
+      amount_paid_against_ptp: decimal(18,2)
+      fulfillment_date: date
+    known_drift_events:
+      - date: "2025-04-11"
+        type: breaking_rename
+        detail: "collector_ref_id renamed to collector_id"
+        resolution: "same underlying source event as raw_collections -- BEFORE 2025-04-11 the raw file actually carries collector_id, not collector_ref_id; registry lists the post-rename name as the baseline here on purpose to show drift detection works symmetrically in either direction, not just forward-in-time"
+
+  raw_bureau:
+    source_system: CREDIT_BUREAU
+    landing_path_pattern: "landing/bureau/dt={date}/*.csv"
+    file_format: csv
+    partition_col: source_updated_at
+    natural_key: [customer_id, file_date]
+    watermark_col: source_updated_at
+    cdc_strategy: append_only
+    retention_days: 1095
+    allow_additive_drift: true
+    freshness_sla_days: 35   # alert if no file lands within 35 days (Phase 14) -- covers monthly cadence + normal lateness
+    expected_columns:
+      customer_id: string
+      file_date: date
+      source_updated_at: timestamp
+      fico_score: int
+      risk_band_code: string
+      is_late_arrival: boolean
+      source_system: string
+
+  raw_risk_scores:
+    source_system: RISK_ENGINE
+    landing_path_pattern: "landing/risk_scores/dt={date}/*.csv"
+    file_format: csv
+    partition_col: file_date
+    natural_key: [loan_id, file_date]
+    watermark_col: file_date
+    cdc_strategy: append_only
+    retention_days: 1095
+    allow_additive_drift: true
+    expected_columns:
+      loan_id: string
+      customer_id: string
+      file_date: date
+      internal_risk_score: int
+      risk_band_code: string
+      source_system: string
+      fraud_flag: boolean
