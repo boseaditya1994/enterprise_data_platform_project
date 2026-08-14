@@ -1,0 +1,2 @@
+loan_id,event_type,event_date,details
+LN-507632,RESTRUCTURE,2025-01-05,new_rate_reduction=0.02;new_term_months=44

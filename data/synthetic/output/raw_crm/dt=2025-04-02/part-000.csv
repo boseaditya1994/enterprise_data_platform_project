@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
+CUST-100879,Erika,Hull,1988-03-16,0126,erika.hull510@hotmail.com,910-245-1091,East Jamesview,OR,81739,Mass,Employed,2025-04-02,CRM,RELOCATION
+CUST-104149,Christopher,Haley,1955-09-28,8748,christopher.haley989@hotmail.com,419-447-4690,Baileyberg,FL,79955,Mass,Self-Employed,2025-04-02,CRM,RELOCATION
+CUST-104789,Kiara,Stephens,1995-11-20,5134,kiara.stephens338@gmail.com,019-594-0874,Joelview,CO,44885,Mass,Employed,2025-04-02,CRM,RELOCATION
+CUST-106096,Christopher,Jones,1960-03-09,3823,christopher.jones229@yahoo.com,316-917-3398,Conwayside,PW,48776,Affluent,Employed,2025-04-02,CRM,RELOCATION
+CUST-106522,Brittney,Davies,1966-09-08,5692,brittney.davies648@hotmail.com,676-592-9667,Brendanmouth,NM,83691,Mass,Employed,2025-04-02,CRM,RELOCATION

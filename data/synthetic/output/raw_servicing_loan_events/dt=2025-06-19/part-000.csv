@@ -1,0 +1,4 @@
+loan_id,event_type,event_date,details
+LN-503462,SETTLEMENT,2025-06-19,settled_amount=45790.90
+LN-503884,CHARGE_OFF,2025-06-19,balance=35954.68
+LN-506243,CHARGE_OFF,2025-06-19,balance=20850.28

@@ -1,0 +1,4 @@
+loan_id,event_type,event_date,details
+LN-501015,SETTLEMENT,2025-05-01,settled_amount=3614.22
+LN-504917,CHARGE_OFF,2025-05-01,balance=5567.66
+LN-509576,RESTRUCTURE,2025-05-01,new_rate_reduction=0.02;new_term_months=77

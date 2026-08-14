@@ -1,0 +1,3 @@
+loan_id,event_type,event_date,details
+LN-501545,CHARGE_OFF,2025-01-24,balance=2026.01
+LN-508252,FRAUD_FLAG,2025-01-24,

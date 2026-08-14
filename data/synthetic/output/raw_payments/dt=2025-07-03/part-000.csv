@@ -1,0 +1,10 @@
+payment_id,loan_id,customer_id,payment_date,payment_amount,scheduled_amount,payment_type,payment_method,payment_status,is_reversal_flag,nsf_flag,original_payment_id,effective_date,ingestion_date,is_late_arrival,is_corrupt_record
+PMT-9046700,LN-508622,CUST-102752,2025-06-23,746.48,746.48,Scheduled,ACH,Posted,False,False,,2025-06-23,2025-07-03,True,False
+PMT-9046708,LN-503890,CUST-101034,2025-06-23,679.71,679.71,Scheduled,Debit Card,Posted,False,False,,2025-06-23,2025-07-03,True,False
+PMT-9046777,LN-503390,CUST-101830,2025-06-23,470.07,470.07,Scheduled,ACH,Posted,False,False,,2025-06-23,2025-07-03,True,False
+PMT-9047016,LN-500378,CUST-100940,2025-06-24,1260.69,1260.69,Scheduled,ACH,Posted,False,False,,2025-06-24,2025-07-03,True,False
+PMT-9047062,LN-505534,CUST-103876,2025-06-24,2226.74,2226.74,Scheduled,ACH,Posted,False,False,,2025-06-24,2025-07-03,True,False
+PMT-9047272,LN-502443,CUST-100839,2025-06-25,483.62,483.62,Scheduled,Debit Card,Posted,False,False,,2025-06-25,2025-07-03,True,False
+PMT-9047443,LN-500281,CUST-101221,2025-06-25,64.9,64.9,Scheduled,ACH,Posted,False,False,,2025-06-25,2025-07-03,True,False
+PMT-9047691,LN-501133,CUST-103326,2025-06-26,231.83,231.83,Scheduled,ACH,Posted,False,False,,2025-06-26,2025-07-03,True,False
+PMT-9048231,LN-504661,CUST-106510,2025-06-28,321.6,321.6,Scheduled,ACH,Posted,False,False,,2025-06-28,2025-07-03,True,False
