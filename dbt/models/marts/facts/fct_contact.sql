@@ -2,7 +2,7 @@ select
     ct.contact_id,
     l.loan_sk,
     cu.customer_sk,
-    cast(strftime(ct.contact_date, '%Y%m%d') as integer) as contact_date_sk,
+    cast({{ "to_char(ct.contact_date, 'YYYYMMDD')" if target.type == 'snowflake' else "strftime(ct.contact_date, '%Y%m%d')" }} as integer) as contact_date_sk,
     col.collector_sk,
     ch.channel_sk,
     ct.contact_direction,

@@ -4,15 +4,15 @@ select
     cu.customer_sk,
     p.contact_id,
     col.collector_sk,
-    cast(strftime(p.ptp_created_date, '%Y%m%d') as integer) as ptp_created_date_sk,
-    cast(strftime(p.ptp_promised_date, '%Y%m%d') as integer) as ptp_promised_date_sk,
+    cast({{ "to_char(p.ptp_created_date, 'YYYYMMDD')" if target.type == 'snowflake' else "strftime(p.ptp_created_date, '%Y%m%d')" }} as integer) as ptp_created_date_sk,
+    cast({{ "to_char(p.ptp_promised_date, 'YYYYMMDD')" if target.type == 'snowflake' else "strftime(p.ptp_promised_date, '%Y%m%d')" }} as integer) as ptp_promised_date_sk,
     p.ptp_amount,
     p.ptp_status,
     p.amount_paid_against_ptp,
     case when p.fulfillment_date is not null
-         then cast(strftime(p.fulfillment_date, '%Y%m%d') as integer) end as fulfillment_date_sk,
+         then cast({{ "to_char(p.fulfillment_date, 'YYYYMMDD')" if target.type == 'snowflake' else "strftime(p.fulfillment_date, '%Y%m%d')" }} as integer) end as fulfillment_date_sk,
     case when p.fulfillment_date is not null
-         then date_diff('day', p.ptp_created_date, p.fulfillment_date) end as days_to_fulfillment
+         then {{ "datediff(day, p.ptp_created_date, p.fulfillment_date)" if target.type == 'snowflake' else "date_diff('day', p.ptp_created_date, p.fulfillment_date)" }} end as days_to_fulfillment
 from {{ ref('stg_collections__ptp') }} p
 join {{ ref('dim_loan') }} l
     on l.loan_id = p.loan_id

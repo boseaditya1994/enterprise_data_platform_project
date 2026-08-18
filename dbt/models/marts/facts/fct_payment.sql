@@ -2,7 +2,7 @@ select
     p.payment_id,
     l.loan_sk,
     c.customer_sk,
-    cast(strftime(p.payment_date, '%Y%m%d') as integer) as payment_date_sk,
+    cast({{ "to_char(p.payment_date, 'YYYYMMDD')" if target.type == 'snowflake' else "strftime(p.payment_date, '%Y%m%d')" }} as integer) as payment_date_sk,
     ch.channel_sk,
     p.payment_amount,
     p.scheduled_amount,
