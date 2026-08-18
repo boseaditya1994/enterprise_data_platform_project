@@ -1,10 +1,17 @@
-# Local execution profile (DuckDB stand-in for Snowflake -- see docs/09-dbt-models.md
-# Section 1 for why; production profile would target Snowflake per Phase 12).
-# Run dbt commands from this directory with:  DBT_PROFILES_DIR=. dbt <command>
 loan_delinquency_command_center:
   target: dev
   outputs:
     dev:
       type: duckdb
       path: dbt_warehouse.duckdb
+      threads: 4
+    snowflake:
+      type: snowflake
+      account: nwzinzy-bs92383
+      user: BOSEADITYA1994
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      role: ACCOUNTADMIN
+      warehouse: COMPUTE_WH
+      database: LOAN_DELINQUENCY_CC_DBT
+      schema: dbt_default
       threads: 4

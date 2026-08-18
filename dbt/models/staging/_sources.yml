@@ -7,7 +7,8 @@ sources:
       (pyspark/bronze/schema_registry.yaml) and the metadata-driven
       ingest_bronze.py job. dbt does NOT ingest Bronze itself -- that's
       Databricks/ADF's job (Phase 2 architecture) -- dbt's job starts here.
-    schema: bronze
+    database: LOAN_DELINQUENCY_CC
+    schema: STAGING
     tables:
       - name: raw_crm
         description: One row per CRM customer attribute-version (Phase 6 registry).

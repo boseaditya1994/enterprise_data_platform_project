@@ -1,14 +1,19 @@
 with days as (
+    {% if target.type == 'snowflake' -%}
+    select dateadd(day, seq4(), '2023-01-01') as full_date
+    from table(generator(rowcount => 1826))
+    {%- else -%}
     select unnest(generate_series(date '2023-01-01', date '2027-12-31', interval 1 day)) as full_date
+    {%- endif %}
 )
 
 select
-    cast(strftime(full_date, '%Y%m%d') as integer) as date_sk,
+    cast({{ "to_char(full_date, 'YYYYMMDD')" if target.type == 'snowflake' else "strftime(full_date, '%Y%m%d')" }} as integer) as date_sk,
     full_date,
     dayname(full_date) as day_of_week_name,
     extract(day from full_date) as day_of_month,
-    extract(doy from full_date) as day_of_year,
-    extract(week from full_date) as week_of_year,
+    {{ "dayofyear(full_date)" if target.type == 'snowflake' else "extract(doy from full_date)" }} as day_of_year,
+    {{ "weekofyear(full_date)" if target.type == 'snowflake' else "extract(week from full_date)" }} as week_of_year,
     extract(month from full_date) as month_number,
     monthname(full_date) as month_name,
     extract(quarter from full_date) as quarter,

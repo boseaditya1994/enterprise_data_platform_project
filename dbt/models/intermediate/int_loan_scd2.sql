@@ -17,11 +17,11 @@ flags_as_of as (
     select
         cp.loan_id,
         cp.effective_date,
-        coalesce(bool_or(e.event_type = 'RESTRUCTURE' and e.event_date <= cp.effective_date), false) as restructured_flag,
-        coalesce(bool_or(e.event_type = 'CHARGE_OFF'  and e.event_date <= cp.effective_date), false) as charge_off_flag,
+        coalesce(boolor_agg(e.event_type = 'RESTRUCTURE' and e.event_date <= cp.effective_date), false) as restructured_flag,
+        coalesce(boolor_agg(e.event_type = 'CHARGE_OFF'  and e.event_date <= cp.effective_date), false) as charge_off_flag,
         min(case when e.event_type = 'CHARGE_OFF' and e.event_date <= cp.effective_date then e.event_date end) as charge_off_date,
-        coalesce(bool_or(e.event_type = 'SETTLEMENT' and e.event_date <= cp.effective_date), false) as settlement_flag,
-        coalesce(bool_or(e.event_type = 'FRAUD_FLAG'  and e.event_date <= cp.effective_date), false) as fraud_flag
+        coalesce(boolor_agg(e.event_type = 'SETTLEMENT' and e.event_date <= cp.effective_date), false) as settlement_flag,
+        coalesce(boolor_agg(e.event_type = 'FRAUD_FLAG'  and e.event_date <= cp.effective_date), false) as fraud_flag
     from change_points cp
     left join {{ ref('stg_servicing__loan_events') }} e on e.loan_id = cp.loan_id
     group by cp.loan_id, cp.effective_date

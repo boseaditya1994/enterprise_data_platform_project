@@ -4,6 +4,23 @@ with contacts_with_collector as (
     where collector_id is not null
 ),
 
+last_touch_collector as (
+    select loan_id, snapshot_date, collector_id
+    from (
+        select
+            d.loan_id, d.snapshot_date, c.collector_id,
+            row_number() over (
+                partition by d.loan_id, d.snapshot_date
+                order by c.contact_date desc
+            ) as rn
+        from {{ ref('int_delinquency_with_flags') }} d
+        join contacts_with_collector c
+            on c.loan_id = d.loan_id
+           and c.contact_date <= d.snapshot_date
+    )
+    where rn = 1
+),
+
 base as (
     select
         d.loan_id, d.customer_id, d.snapshot_date, d.bucket_index, d.delinquency_bucket,
@@ -21,12 +38,11 @@ base as (
 
 select
     b.loan_id, b.loan_sk, b.customer_sk,
-    cast(strftime(b.snapshot_date, '%Y%m%d') as integer) as snapshot_date_sk,
+    cast({{ "to_char(b.snapshot_date, 'YYYYMMDD')" if target.type == 'snowflake' else "strftime(b.snapshot_date, '%Y%m%d')" }} as integer) as snapshot_date_sk,
     rb.risk_band_sk,
-    cwc.collector_id as assigned_collector_id,
+    lc.collector_id as assigned_collector_id,
     b.bucket_index, b.delinquency_bucket, b.dpd, b.prior_day_bucket,
     b.outstanding_balance, b.cure_flag, b.roll_flag, b.restructured_flag, b.fraud_flag
 from base b
 join {{ ref('dim_risk_band') }} rb on rb.risk_band_code = b.risk_band_code
-asof left join contacts_with_collector cwc
-    on cwc.loan_id = b.loan_id and b.snapshot_date >= cwc.contact_date
+left join last_touch_collector lc on lc.loan_id = b.loan_id and lc.snapshot_date = b.snapshot_date
