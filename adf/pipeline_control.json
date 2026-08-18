@@ -1,0 +1,50 @@
+[
+    {
+        "table_name": "raw_payments",
+        "run_date": "2025-01-15"
+    },
+    {
+        "table_name": "raw_collectors_daily",
+        "run_date": "2025-01-01"
+    },
+    {
+        "table_name": "raw_crm",
+        "run_date": "2025-01-01"
+    },
+    {
+        "table_name": "raw_bureau",
+        "run_date": "2025-01-03"
+    },
+    {
+        "table_name": "raw_call_center",
+        "run_date": "2025-01-01"
+    },
+    {
+        "table_name": "raw_collections",
+        "run_date": "2025-01-01"
+    },
+    {
+        "table_name": "raw_collections_ptp",
+        "run_date": "2025-01-01"
+    },
+    {
+        "table_name": "raw_servicing_loans",
+        "run_date": "2024-01-05"
+    },
+    {
+        "table_name": "raw_servicing_daily_status",
+        "run_date": "2025-01-01"
+    },
+    {
+        "table_name": "raw_servicing_loan_events",
+        "run_date": "2025-01-02"
+    },
+    {
+        "table_name": "raw_servicing_applications",
+        "run_date": "2024-01-03"
+    },
+    {
+        "table_name": "raw_risk_scores",
+        "run_date": "2025-01-02"
+    }
+]
