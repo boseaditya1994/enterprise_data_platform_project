@@ -1,0 +1,3 @@
+loan_id,event_type,event_date,details
+LN-503006,SETTLEMENT,2025-03-11,settled_amount=55657.54
+LN-508155,SETTLEMENT,2025-03-11,settled_amount=5216.67

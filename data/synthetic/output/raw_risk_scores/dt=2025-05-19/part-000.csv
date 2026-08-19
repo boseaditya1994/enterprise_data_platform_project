@@ -1,0 +1,4 @@
+loan_id,customer_id,file_date,internal_risk_score,risk_band_code,source_system,fraud_flag
+LN-501048,,2025-05-19,,,RISK_ENGINE,True
+LN-506831,,2025-05-19,,,RISK_ENGINE,True
+LN-508150,,2025-05-19,,,RISK_ENGINE,True

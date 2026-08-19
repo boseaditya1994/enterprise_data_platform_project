@@ -1,0 +1,9 @@
+loan_id,application_id,primary_customer_id,loan_type,loan_sub_product,origination_date,disbursement_date,origination_amount,interest_rate,loan_term_months,is_secured_flag,collateral_type,due_day_of_month,risk_band_code,source_system
+LN-500355,APP-200379,CUST-104021,Personal,Personal Standard,2024-01-06,2024-01-08,21762.71,0.1869,26,False,None,9,R3,LOAN_SERVICING
+LN-500804,APP-200864,CUST-107848,Personal,Personal Standard,2024-01-06,2024-01-06,18211.69,0.1315,42,False,None,16,R3,LOAN_SERVICING
+LN-501486,APP-201600,CUST-107447,Auto,Auto Standard,2024-01-06,2024-01-08,46400.45,0.0669,67,True,Vehicle,14,R5,LOAN_SERVICING
+LN-502603,APP-202824,CUST-107345,Auto,Auto Standard,2024-01-06,2024-01-08,17671.27,0.0932,54,True,Vehicle,3,R1,LOAN_SERVICING
+LN-502974,APP-203220,CUST-104211,Auto,Auto Standard,2024-01-06,2024-01-08,52711.16,0.045,60,True,Vehicle,6,R5,LOAN_SERVICING
+LN-503482,APP-203778,CUST-107043,Credit Card,Credit Card Standard,2024-01-06,2024-01-07,2936.85,0.1684,0,False,None,5,R2,LOAN_SERVICING
+LN-505144,APP-205589,CUST-101294,Credit Card,Credit Card Standard,2024-01-06,2024-01-08,19691.76,0.2412,0,False,None,6,R5,LOAN_SERVICING
+LN-506843,APP-207430,CUST-101945,Auto,Auto Standard,2024-01-06,2024-01-06,54355.13,0.055,55,True,Vehicle,21,R6,LOAN_SERVICING

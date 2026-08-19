@@ -1,0 +1,4 @@
+loan_id,event_type,event_date,details
+LN-500849,FRAUD_FLAG,2025-01-20,
+LN-506580,SETTLEMENT,2025-01-20,settled_amount=10197.59
+LN-507954,SETTLEMENT,2025-01-20,settled_amount=14539.91

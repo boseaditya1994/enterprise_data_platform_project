@@ -1,0 +1,5 @@
+customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
+CUST-100157,Nicholas,Jones,1993-09-10,6570,nicholas.jones925@gmail.com,684-577-5901,Robertmouth,CT,56027,Affluent,Employed,2025-05-13,CRM,RELOCATION
+CUST-102542,Christopher,Mills,1947-11-06,0208,christopher.mills688@gmail.com,557-694-1513,Robertsburgh,OH,21781,Mass,Employed,2025-05-13,CRM,RELOCATION
+CUST-107244,Shane,Thomas,1977-06-16,4346,shane.thomas933@hotmail.com,623-455-7594,West Jermainebury,MT,07314,Mass,Employed,2025-05-13,CRM,RELOCATION
+CUST-107864,Jody,Snyder,1989-03-08,5203,jody.snyder422@gmail.com,077-188-2027,North Tanner,NY,15271,Mass,Employed,2025-05-13,CRM,RELOCATION

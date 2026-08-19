@@ -1,0 +1,6 @@
+customer_id,first_name,last_name,date_of_birth,ssn_last4,email,phone_number,mailing_city,mailing_state,mailing_zip,customer_segment,employment_status,source_updated_at,source_system,change_reason
+CUST-102609,Robert,Castaneda,1983-04-05,8305,robert.castaneda229@hotmail.com,707-839-3132,West Matthew,MD,13762,Mass,Employed,2025-06-17,CRM,RELOCATION
+CUST-103187,Brenda,Johnston,1968-06-13,5326,brenda.johnston690@gmail.com,898-046-6171,Moonport,MT,29492,Mass,Employed,2025-06-17,CRM,RELOCATION
+CUST-105199,Adam,Terrell,1958-10-13,9070,adam.terrell895@hotmail.com,459-992-7466,New Clarencebury,SC,09145,Mass,Employed,2025-06-17,CRM,RELOCATION
+CUST-106487,Janice,Long,1951-04-18,2112,janice.long297@gmail.com,056-907-6476,Martinezland,AZ,64262,Private Bank,Employed,2025-06-17,CRM,RELOCATION
+CUST-107839,Duane,Lopez,1974-07-19,4786,duane.lopez685@hotmail.com,574-310-0028,South Ashleyside,WA,69890,Affluent,Employed,2025-06-17,CRM,RELOCATION
