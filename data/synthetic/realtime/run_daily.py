@@ -33,6 +33,7 @@ def run_daily(state_dir: str, landing_dir: str, target_date: pd.Timestamp,
                               "run extract_seed_state.sql against Snowflake first.")
         print(f"Cold start: seeding from {seed_state_path}")
         state = pd.read_csv(seed_state_path)
+        state.columns = state.columns.str.lower()
         pending_ptps = pd.DataFrame(columns=EMPTY_PENDING_PTPS_COLUMNS)
     else:
         state, pending_ptps, last_date = loaded
@@ -42,6 +43,8 @@ def run_daily(state_dir: str, landing_dir: str, target_date: pd.Timestamp,
                               f"{last_date.date()} -- refusing to re-simulate or skip backwards.")
 
     roster = pd.read_csv(seed_roster_path) if seed_roster_path else None
+    if roster is not None:
+        roster.columns = roster.columns.str.lower()
     if roster is None:
         roster_path = os.path.join(state_dir, "collector_roster.csv")
         if not os.path.exists(roster_path):
