@@ -66,14 +66,25 @@ def trigger_databricks_ingest(run_date: str, notebook_path: str = "/Workspace/Us
 
 
 def trigger_snowflake_copy(run_date: str):
-    """Runs COPY INTO scoped to just today's new partition, reusing the exact
-    ERROR_ON_COLUMN_COUNT_MISMATCH fix and MATCH_BY_COLUMN_NAME pattern proven earlier today."""
+    """Runs COPY INTO scoped to just today's new partition. Uses key-pair auth
+    (not password) so this can run unattended -- MFA has no way to approve
+    an automated, unattended run."""
     import snowflake.connector
+    from cryptography.hazmat.primitives import serialization
+
+    with open(os.environ["SNOWFLAKE_PRIVATE_KEY_PATH"], "rb") as key_file:
+        p_key = serialization.load_pem_private_key(key_file.read(), password=None)
+
+    pkb = p_key.private_bytes(
+        encoding=serialization.Encoding.DER,
+        format=serialization.PrivateFormat.PKCS8,
+        encryption_algorithm=serialization.NoEncryption(),
+    )
 
     conn = snowflake.connector.connect(
         account=os.environ["SNOWFLAKE_ACCOUNT"],
         user=os.environ["SNOWFLAKE_USER"],
-        password=os.environ["SNOWFLAKE_PASSWORD"],
+        private_key=pkb,
         role="ACCOUNTADMIN",
         warehouse="COMPUTE_WH",
         database="LOAN_DELINQUENCY_CC",

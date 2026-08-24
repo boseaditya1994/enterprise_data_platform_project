@@ -9,7 +9,7 @@ loan_delinquency_command_center:
       type: snowflake
       account: nwzinzy-bs92383
       user: BOSEADITYA1994
-      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH') }}"
       role: ACCOUNTADMIN
       warehouse: COMPUTE_WH
       database: LOAN_DELINQUENCY_CC_DBT

@@ -1,0 +1,1 @@
+select * from "dbt_warehouse"."seeds"."risk_band_seed"

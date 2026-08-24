@@ -30,7 +30,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pandas numpy pyyaml azure-storage-blob requests snowflake-connector-python dbt-core dbt-snowflake
+          pip install pandas numpy pyyaml azure-storage-blob requests snowflake-connector-python cryptography dbt-core dbt-snowflake
 
       - name: Determine today's simulation date
         id: date
@@ -64,13 +64,20 @@ jobs:
               --use-azure
           fi
 
+      - name: Write Snowflake private key
+        env:
+          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+        run: |
+          echo "$SNOWFLAKE_PRIVATE_KEY" > /tmp/snowflake_key.p8
+          chmod 600 /tmp/snowflake_key.p8
+
       - name: Trigger downstream ingestion (Databricks -> Snowflake -> dbt)
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
           SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+          SNOWFLAKE_PRIVATE_KEY_PATH: /tmp/snowflake_key.p8
         run: |
           cd data/synthetic/realtime
           python3 trigger_downstream.py "${{ steps.date.outputs.run_date }}"

@@ -1,0 +1,78 @@
+==================== 2026-08-24T07:21:46.843882Z | 00000000-0000-0000-0000-000000000000 ====================
+==================== 2026-08-24T07:21:46.853775Z | 9887f4af-2862-44d9-b0d3-42d1a9b145ed ====================
+07:21:46.854576 [info ]: Starting dbt LSP server
+07:21:46.855940 [info ]: Connecting to LSP client on port 8000
+07:21:46.860490 [info ]: Successfully connected to LSP client
+07:21:46.860992 [info ]: Creating LSP service...
+07:21:46.871487 [info ]: Creating LSP server...
+07:21:46.871513 [info ]: Starting LSP server...
+07:21:46.964848 [info ]: Loading profiles.yml
+07:21:47.095058 [info ]: Started loading project
+07:21:47.106935 [info ]: Loading profiles.yml
+07:21:47.135931 [debug]:    Started loading packages
+07:21:47.150433 [debug]:     Loaded [  0.01s] packages
+07:21:47.163354 [info ]: Finished loading project [  0.07s]
+07:21:47.172840 [info ]: Started parsing
+07:21:47.254193 [debug]: Finished parsing models/marts/core/_core.yml [  0.01s]
+07:21:47.255006 [debug]: Finished parsing models/marts/facts/_facts.yml [  0.00s]
+07:21:47.256286 [debug]: Finished parsing models/staging/_sources.yml [  0.00s]
+07:21:47.309517 [debug]: Finished parsing snapshots\snap_crm_current_demo.sql [  0.02s]
+07:21:47.321693 [debug]: Finished parsing models/intermediate/int_collector_scd2.sql [  0.01s]
+07:21:47.322590 [debug]: Finished parsing models/intermediate/int_customer_scd2.sql [  0.00s]
+07:21:47.323569 [debug]: Finished parsing models/intermediate/int_delinquency_with_flags.sql [  0.00s]
+07:21:47.324679 [debug]: Finished parsing models/intermediate/int_loan_scd2.sql [  0.00s]
+07:21:47.325482 [debug]: Finished parsing models/marts/core/dim_channel.sql [  0.00s]
+07:21:47.326040 [debug]: Finished parsing models/marts/core/dim_collector.sql [  0.00s]
+07:21:47.326454 [debug]: Finished parsing models/marts/core/dim_customer.sql [  0.00s]
+07:21:47.326897 [debug]: Finished parsing models/marts/core/dim_loan.sql [  0.00s]
+07:21:47.327358 [debug]: Finished parsing models/marts/core/dim_risk_band.sql [  0.00s]
+07:21:47.328844 [debug]: Finished parsing models/marts/core/dim_time.sql [  0.00s]
+07:21:47.329905 [debug]: Finished parsing models/marts/facts/fct_contact.sql [  0.00s]
+07:21:47.330646 [debug]: Finished parsing models/marts/facts/fct_delinquency.sql [  0.00s]
+07:21:47.331385 [debug]: Finished parsing models/marts/facts/fct_payment.sql [  0.00s]
+07:21:47.332162 [debug]: Finished parsing models/marts/facts/fct_promise_to_pay.sql [  0.00s]
+07:21:47.332611 [debug]: Finished parsing models/marts/kpis/kpi_avg_days_delinquent.sql [  0.00s]
+07:21:47.333053 [debug]: Finished parsing models/marts/kpis/kpi_call_connect_rate.sql [  0.00s]
+07:21:47.333675 [debug]: Finished parsing models/marts/kpis/kpi_collection_efficiency.sql [  0.00s]
+07:21:47.334340 [debug]: Finished parsing models/marts/kpis/kpi_collector_productivity.sql [  0.00s]
+07:21:47.334747 [debug]: Finished parsing models/marts/kpis/kpi_contact_success_rate.sql [  0.00s]
+07:21:47.335155 [debug]: Finished parsing models/marts/kpis/kpi_cure_rate_daily.sql [  0.00s]
+07:21:47.335734 [debug]: Finished parsing models/marts/kpis/kpi_par_by_date.sql [  0.00s]
+07:21:47.336114 [debug]: Finished parsing models/marts/kpis/kpi_ptp_fulfillment_rate.sql [  0.00s]
+07:21:47.336536 [debug]: Finished parsing models/marts/kpis/kpi_recovery_rate.sql [  0.00s]
+07:21:47.336923 [debug]: Finished parsing models/marts/kpis/kpi_roll_rate_daily.sql [  0.00s]
+07:21:47.337686 [debug]: Finished parsing models/staging/bureau/stg_bureau__scores.sql [  0.00s]
+07:21:47.338281 [debug]: Finished parsing models/staging/collections/stg_collections__contacts.sql [  0.00s]
+07:21:47.338654 [debug]: Finished parsing models/staging/collections/stg_collections__ptp.sql [  0.00s]
+07:21:47.339024 [debug]: Finished parsing models/staging/collectors/stg_collectors__roster.sql [  0.00s]
+07:21:47.339429 [debug]: Finished parsing models/staging/crm/stg_crm__customers.sql [  0.00s]
+07:21:47.341332 [debug]: Finished parsing models/staging/crm/stg_crm__customers_current_simulated.sql [  0.00s]
+07:21:47.342218 [debug]: Finished parsing models/staging/payments/stg_payments__payments.sql [  0.00s]
+07:21:47.342648 [debug]: Finished parsing models/staging/risk/stg_risk__scores.sql [  0.00s]
+07:21:47.343132 [debug]: Finished parsing models/staging/servicing/stg_servicing__daily_status.sql [  0.00s]
+07:21:47.343509 [debug]: Finished parsing models/staging/servicing/stg_servicing__loan_events.sql [  0.00s]
+07:21:47.345053 [debug]: Finished parsing models/staging/servicing/stg_servicing__loans.sql [  0.00s]
+07:21:47.363772 [debug]: Finished parsing tests/assert_no_orphaned_reversals.sql [  0.00s]
+07:21:47.364805 [debug]: Finished parsing tests/assert_payment_join_loss_within_baseline.sql [  0.00s]
+07:21:47.502141 [info ]: Finished parsing [  0.33s]
+07:21:47.506578 [info ]: Cached model count updated: 35 models (estimate)
+07:21:47.506596 [info ]: Cached model count updated: 35 models (accurate)
+07:21:47.509059 [info ]: Started scheduling
+07:21:47.514166 [info ]: Finished scheduling [  0.01s]
+07:21:47.514208 [debug]: Compilation - 0 nodes selected: {}
+07:21:47.515760 [warn ]: [NoNodesForSelectionCriteria (dbt1092)]: The selection criterion '' does not match any enabled nodes
+07:21:47.516317 [warn ]: [NoNodesSelected (dbt1601)]: Nothing to do. Try checking your model configs and model specification args
+07:21:47.516972 [info ]: Started scheduling
+07:21:47.519044 [info ]: Finished scheduling [  0.00s]
+07:21:47.522557 [debug]: Initializing schema store with entry: Selected("snapshot.loan_delinquency_command_center.snap_crm_current_demo") and interval: None
+07:21:47.522836 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_call_center" }) and interval: None
+07:21:47.522866 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_collections" }) and interval: None
+07:21:47.522885 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_payments" }) and interval: None
+07:21:47.522904 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_risk_scores" }) and interval: None
+07:21:47.522921 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_collections_ptp" }) and interval: None
+07:21:47.522936 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_servicing_loan_events" }) and interval: None
+07:21:47.522954 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_crm" }) and interval: None
+07:21:47.522974 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_servicing_loans" }) and interval: None
+07:21:47.522991 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_collectors_daily" }) and interval: None
+07:21:47.523008 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_bureau" }) and interval: None
+07:21:47.523026 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_servicing_daily_status" }) and interval: None
