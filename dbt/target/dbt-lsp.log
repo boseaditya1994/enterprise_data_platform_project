@@ -76,3 +76,652 @@
 07:21:47.522991 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_collectors_daily" }) and interval: None
 07:21:47.523008 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_bureau" }) and interval: None
 07:21:47.523026 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_servicing_daily_status" }) and interval: None
+07:21:48.387293 [debug]: Platform credentials expired, skipping remote license (run `dbt login` to refresh)
+07:21:48.955709 [debug]: Requesting trial license from https://cloud.getdbt.com/api/private/trial-licenses/
+07:21:49.794830 [debug]: Trial license retrieved
+07:21:50.039901 [debug]: License loaded from trial license server
+07:21:50.480509 [info ]: Started building task graph
+07:21:50.483005 [info ]: Finished building task graph [  0.00s]
+07:21:50.566054 [info ]: Started scheduling
+07:21:50.566199 [info ]: Finished scheduling [  0.00s]
+07:21:50.567231 [info ]: Cached model count updated: 35 models (accurate)
+07:21:52.234663 [info ]: Started loading project
+07:21:52.235218 [info ]: Loading profiles.yml
+07:21:52.266623 [info ]: Cached model count updated: 35 models (estimate)
+07:21:52.266649 [info ]: Cached model count updated: 35 models (accurate)
+07:21:52.266735 [info ]: Started scheduling
+07:21:52.267034 [info ]: Finished scheduling [  0.00s]
+07:21:52.267056 [debug]: Compilation - 38 nodes selected: {"model.loan_delinquency_command_center.dim_channel", "model.loan_delinquency_command_center.dim_collector", "model.loan_delinquency_command_center.dim_customer", "model.loan_delinquency_command_center.dim_loan", "model.loan_delinquency_command_center.dim_risk_band", "model.loan_delinquency_command_center.dim_time", "model.loan_delinquency_command_center.fct_contact", "model.loan_delinquency_command_center.fct_delinquency", "model.loan_delinquency_command_center.fct_payment", "model.loan_delinquency_command_center.fct_promise_to_pay", "model.loan_delinquency_command_center.int_collector_scd2", "model.loan_delinquency_command_center.int_customer_scd2", "model.loan_delinquency_command_center.int_delinquency_with_flags", "model.loan_delinquency_command_center.int_loan_scd2", "model.loan_delinquency_command_center.kpi_avg_days_delinquent", "model.loan_delinquency_command_center.kpi_call_connect_rate", "model.loan_delinquency_command_center.kpi_collection_efficiency", "model.loan_delinquency_command_center.kpi_collector_productivity", "model.loan_delinquency_command_center.kpi_contact_success_rate", "model.loan_delinquency_command_center.kpi_cure_rate_daily", "model.loan_delinquency_command_center.kpi_par_by_date", "model.loan_delinquency_command_center.kpi_ptp_fulfillment_rate", "model.loan_delinquency_command_center.kpi_recovery_rate", "model.loan_delinquency_command_center.kpi_roll_rate_daily", "model.loan_delinquency_command_center.stg_bureau__scores", "model.loan_delinquency_command_center.stg_collections__contacts", "model.loan_delinquency_command_center.stg_collections__ptp", "model.loan_delinquency_command_center.stg_collectors__roster", "model.loan_delinquency_command_center.stg_crm__customers", "model.loan_delinquency_command_center.stg_crm__customers_current_simulated", "model.loan_delinquency_command_center.stg_payments__payments", "model.loan_delinquency_command_center.stg_risk__scores", "model.loan_delinquency_command_center.stg_servicing__daily_status", "model.loan_delinquency_command_center.stg_servicing__loan_events", "model.loan_delinquency_command_center.stg_servicing__loans", "seed.loan_delinquency_command_center.channel_seed", "seed.loan_delinquency_command_center.risk_band_seed", "snapshot.loan_delinquency_command_center.snap_crm_current_demo"}
+07:21:52.273320 [info ]: Started building task graph
+07:21:52.276037 [info ]: Finished building task graph [  0.00s]
+07:21:52.276317 [info ]: Finished loading project [  0.04s]
+07:21:52.312938 [info ]: Started rendering (38 nodes)
+07:21:52.313620 [info ]: Started snapshot snapshots.snap_crm_current_demo
+07:21:52.313652 [debug]: Started rendering snapshot snapshots.snap_crm_current_demo
+07:21:52.314435 [info ]: Started model stg.stg_risk__scores
+07:21:52.314452 [debug]: Started rendering model stg.stg_risk__scores
+07:21:52.314468 [info ]: Started model stg.stg_crm__customers_current_simulated
+07:21:52.314475 [debug]: Started rendering model stg.stg_crm__customers_current_simulated
+07:21:52.314484 [info ]: Started model stg.stg_bureau__scores
+07:21:52.314490 [debug]: Started rendering model stg.stg_bureau__scores
+07:21:52.314501 [info ]: Started model marts.kpi_roll_rate_daily
+07:21:52.314507 [debug]: Started rendering model marts.kpi_roll_rate_daily
+07:21:52.314516 [info ]: Started model marts.kpi_recovery_rate
+07:21:52.314520 [debug]: Started rendering model marts.kpi_recovery_rate
+07:21:52.314527 [info ]: Started model marts.kpi_ptp_fulfillment_rate
+07:21:52.314533 [debug]: Started rendering model marts.kpi_ptp_fulfillment_rate
+07:21:52.314540 [info ]: Started model marts.kpi_par_by_date
+07:21:52.314546 [debug]: Started rendering model marts.kpi_par_by_date
+07:21:52.314553 [info ]: Started model marts.kpi_cure_rate_daily
+07:21:52.314558 [debug]: Started rendering model marts.kpi_cure_rate_daily
+07:21:52.314565 [info ]: Started model marts.kpi_contact_success_rate
+07:21:52.314571 [debug]: Started rendering model marts.kpi_contact_success_rate
+07:21:52.314578 [info ]: Started model marts.kpi_collector_productivity
+07:21:52.314581 [debug]: Started rendering model marts.kpi_collector_productivity
+07:21:52.314589 [info ]: Started model marts.kpi_collection_efficiency
+07:21:52.314592 [debug]: Started rendering model marts.kpi_collection_efficiency
+07:21:52.314599 [info ]: Started model marts.kpi_call_connect_rate
+07:21:52.314605 [debug]: Started rendering model marts.kpi_call_connect_rate
+07:21:52.314612 [info ]: Started model marts.kpi_avg_days_delinquent
+07:21:52.314616 [debug]: Started rendering model marts.kpi_avg_days_delinquent
+07:21:52.314622 [info ]: Started model marts.fct_promise_to_pay
+07:21:52.314626 [debug]: Started rendering model marts.fct_promise_to_pay
+07:21:52.314635 [info ]: Started model stg.stg_collections__ptp
+07:21:52.314639 [debug]: Started rendering model stg.stg_collections__ptp
+07:21:52.314645 [info ]: Started model marts.fct_payment
+07:21:52.314650 [debug]: Started rendering model marts.fct_payment
+07:21:52.314657 [info ]: Started model stg.stg_payments__payments
+07:21:52.314662 [debug]: Started rendering model stg.stg_payments__payments
+07:21:52.314669 [info ]: Started model marts.fct_delinquency
+07:21:52.314673 [debug]: Started rendering model marts.fct_delinquency
+07:21:52.314679 [info ]: Started model int.int_delinquency_with_flags
+07:21:52.314682 [debug]: Started rendering model int.int_delinquency_with_flags
+07:21:52.314688 [info ]: Started model stg.stg_servicing__daily_status
+07:21:52.314692 [debug]: Started rendering model stg.stg_servicing__daily_status
+07:21:52.314699 [info ]: Started model marts.fct_contact
+07:21:52.314704 [debug]: Started rendering model marts.fct_contact
+07:21:52.314710 [info ]: Started model stg.stg_collections__contacts
+07:21:52.314714 [debug]: Started rendering model stg.stg_collections__contacts
+07:21:52.314721 [info ]: Started model marts.dim_time
+07:21:52.314725 [debug]: Started rendering model marts.dim_time
+07:21:52.314732 [info ]: Started model marts.dim_risk_band
+07:21:52.314735 [debug]: Started rendering model marts.dim_risk_band
+07:21:52.314744 [info ]: Started seed seeds.risk_band_seed
+07:21:52.314749 [debug]: Started rendering seed seeds.risk_band_seed
+07:21:52.314755 [info ]: Started model marts.dim_loan
+07:21:52.314759 [debug]: Started rendering model marts.dim_loan
+07:21:52.314766 [info ]: Started model int.int_loan_scd2
+07:21:52.314770 [debug]: Started rendering model int.int_loan_scd2
+07:21:52.314776 [info ]: Started model stg.stg_servicing__loans
+07:21:52.314781 [debug]: Started rendering model stg.stg_servicing__loans
+07:21:52.314789 [info ]: Started model stg.stg_servicing__loan_events
+07:21:52.314792 [debug]: Started rendering model stg.stg_servicing__loan_events
+07:21:52.314799 [info ]: Started model marts.dim_customer
+07:21:52.314803 [debug]: Started rendering model marts.dim_customer
+07:21:52.314810 [info ]: Started model int.int_customer_scd2
+07:21:52.314815 [debug]: Started rendering model int.int_customer_scd2
+07:21:52.314822 [info ]: Started model stg.stg_crm__customers
+07:21:52.314826 [debug]: Started rendering model stg.stg_crm__customers
+07:21:52.314833 [info ]: Started model marts.dim_collector
+07:21:52.314837 [debug]: Started rendering model marts.dim_collector
+07:21:52.314842 [info ]: Started model int.int_collector_scd2
+07:21:52.314846 [debug]: Started rendering model int.int_collector_scd2
+07:21:52.315040 [info ]: Started model stg.stg_collectors__roster
+07:21:52.315055 [debug]: Started rendering model stg.stg_collectors__roster
+07:21:52.315068 [info ]: Started model marts.dim_channel
+07:21:52.315075 [debug]: Started rendering model marts.dim_channel
+07:21:52.315083 [info ]: Started seed seeds.channel_seed
+07:21:52.315088 [debug]: Started rendering seed seeds.channel_seed
+07:21:52.318358 [debug]: Finished rendering [  0.00s] seed seeds.channel_seed [success]
+07:21:52.318382 [info ]:  Succeeded [  0.00s] seed  seeds.channel_seed (table)
+07:21:52.318937 [debug]: Finished rendering [  0.00s] seed seeds.risk_band_seed [success]
+07:21:52.318947 [info ]:  Succeeded [  0.00s] seed  seeds.risk_band_seed (table)
+07:21:52.333178 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_collectors__roster at target\.lsp\compiled\loan_delinquency_command_center\models\staging\collectors\stg_collectors__roster.sql
+07:21:52.333343 [debug]: Compiled SQL for node model.loan_delinquency_command_center.int_collector_scd2 at target\.lsp\compiled\loan_delinquency_command_center\models\intermediate\int_collector_scd2.sql
+07:21:52.333344 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_roll_rate_daily at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_roll_rate_daily.sql
+07:21:52.333391 [debug]: Compiled SQL for node snapshot.loan_delinquency_command_center.snap_crm_current_demo at target\.lsp\compiled\loan_delinquency_command_center\snapshots\snap_crm_current_demo.sql\snap_crm_current_demo.sql
+07:21:52.333461 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_crm__customers at target\.lsp\compiled\loan_delinquency_command_center\models\staging\crm\stg_crm__customers.sql
+07:21:52.333579 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_collections__ptp at target\.lsp\compiled\loan_delinquency_command_center\models\staging\collections\stg_collections__ptp.sql
+07:21:52.335060 [debug]: Finished rendering [  0.02s] model stg.stg_collectors__roster [success]
+07:21:52.336040 [info ]: Started analyzing (36 nodes)
+07:21:52.336057 [debug]: Started analyzing model stg.stg_collectors__roster
+07:21:52.336348 [debug]: Finished rendering [  0.02s] model int.int_collector_scd2 [success]
+07:21:52.336364 [debug]: Started analyzing model int.int_collector_scd2
+07:21:52.336376 [debug]: Finished rendering [  0.02s] model marts.kpi_roll_rate_daily [success]
+07:21:52.336385 [debug]: Started analyzing model marts.kpi_roll_rate_daily
+07:21:52.336395 [debug]: Finished rendering [  0.02s] snapshot snapshots.snap_crm_current_demo [success]
+07:21:52.336692 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_collector_productivity at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_collector_productivity.sql
+07:21:52.336761 [debug]: Compiled SQL for node model.loan_delinquency_command_center.dim_channel at target\.lsp\compiled\loan_delinquency_command_center\models\marts\core\dim_channel.sql
+07:21:52.337199 [debug]: Started analyzing snapshot snapshots.snap_crm_current_demo
+07:21:52.337233 [debug]: Finished rendering [  0.02s] model stg.stg_crm__customers [success]
+07:21:52.337245 [debug]: Started analyzing model stg.stg_crm__customers
+07:21:52.337258 [debug]: Finished rendering [  0.02s] model stg.stg_collections__ptp [success]
+07:21:52.337265 [debug]: Started analyzing model stg.stg_collections__ptp
+07:21:52.337273 [debug]: Finished rendering [  0.02s] model marts.kpi_collector_productivity [success]
+07:21:52.337279 [debug]: Started analyzing model marts.kpi_collector_productivity
+07:21:52.337288 [debug]: Finished rendering [  0.02s] model marts.dim_channel [success]
+07:21:52.337294 [debug]: Started analyzing model marts.dim_channel
+07:21:52.338541 [debug]: Compiled SQL for node model.loan_delinquency_command_center.dim_time at target\.lsp\compiled\loan_delinquency_command_center\models\marts\core\dim_time.sql
+07:21:52.338631 [debug]: Finished rendering [  0.02s] model marts.dim_time [success]
+07:21:52.338650 [debug]: Started analyzing model marts.dim_time
+07:21:52.339275 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_call_connect_rate at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_call_connect_rate.sql
+07:21:52.339369 [debug]: Finished rendering [  0.02s] model marts.kpi_call_connect_rate [success]
+07:21:52.339389 [debug]: Started analyzing model marts.kpi_call_connect_rate
+07:21:52.339488 [debug]: Compiled SQL for node model.loan_delinquency_command_center.dim_risk_band at target\.lsp\compiled\loan_delinquency_command_center\models\marts\core\dim_risk_band.sql
+07:21:52.339645 [debug]: Finished rendering [  0.02s] model marts.dim_risk_band [success]
+07:21:52.339900 [debug]: Compiled SQL for node model.loan_delinquency_command_center.dim_loan at target\.lsp\compiled\loan_delinquency_command_center\models\marts\core\dim_loan.sql
+07:21:52.339956 [debug]: Started analyzing model marts.dim_risk_band
+07:21:52.340552 [debug]: Finished rendering [  0.03s] model marts.dim_loan [success]
+07:21:52.340637 [debug]: Started analyzing model marts.dim_loan
+07:21:52.340724 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_collection_efficiency at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_collection_efficiency.sql
+07:21:52.340867 [debug]: Finished rendering [  0.03s] model marts.kpi_collection_efficiency [success]
+07:21:52.340889 [debug]: Started analyzing model marts.kpi_collection_efficiency
+07:21:52.341769 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_contact_success_rate at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_contact_success_rate.sql
+07:21:52.341944 [debug]: Finished rendering [  0.03s] model marts.kpi_contact_success_rate [success]
+07:21:52.341965 [debug]: Started analyzing model marts.kpi_contact_success_rate
+07:21:52.343040 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_cure_rate_daily at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_cure_rate_daily.sql
+07:21:52.343107 [debug]: Compiled SQL for node model.loan_delinquency_command_center.dim_collector at target\.lsp\compiled\loan_delinquency_command_center\models\marts\core\dim_collector.sql
+07:21:52.343239 [debug]: Finished rendering [  0.03s] model marts.kpi_cure_rate_daily [success]
+07:21:52.343258 [debug]: Started analyzing model marts.kpi_cure_rate_daily
+07:21:52.343302 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_ptp_fulfillment_rate at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_ptp_fulfillment_rate.sql
+07:21:52.343492 [debug]: Finished rendering [  0.03s] model marts.dim_collector [success]
+07:21:52.343513 [debug]: Started analyzing model marts.dim_collector
+07:21:52.343749 [debug]: Finished rendering [  0.03s] model marts.kpi_ptp_fulfillment_rate [success]
+07:21:52.343769 [debug]: Started analyzing model marts.kpi_ptp_fulfillment_rate
+07:21:52.344428 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_par_by_date at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_par_by_date.sql
+07:21:52.344938 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_recovery_rate at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_recovery_rate.sql
+07:21:52.345584 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_avg_days_delinquent at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_avg_days_delinquent.sql
+07:21:52.347161 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_risk__scores at target\.lsp\compiled\loan_delinquency_command_center\models\staging\risk\stg_risk__scores.sql
+07:21:52.347588 [debug]: Finished rendering [  0.03s] model marts.kpi_par_by_date [success]
+07:21:52.347872 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_payments__payments at target\.lsp\compiled\loan_delinquency_command_center\models\staging\payments\stg_payments__payments.sql
+07:21:52.348809 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_bureau__scores at target\.lsp\compiled\loan_delinquency_command_center\models\staging\bureau\stg_bureau__scores.sql
+07:21:52.348981 [debug]: Compiled SQL for node model.loan_delinquency_command_center.dim_customer at target\.lsp\compiled\loan_delinquency_command_center\models\marts\core\dim_customer.sql
+07:21:52.349606 [debug]: Compiled SQL for node model.loan_delinquency_command_center.fct_delinquency at target\.lsp\compiled\loan_delinquency_command_center\models\marts\facts\fct_delinquency.sql
+07:21:52.349805 [debug]: Started analyzing model marts.kpi_par_by_date
+07:21:52.350776 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_collections__contacts at target\.lsp\compiled\loan_delinquency_command_center\models\staging\collections\stg_collections__contacts.sql
+07:21:52.351698 [debug]: Compiled SQL for node model.loan_delinquency_command_center.int_loan_scd2 at target\.lsp\compiled\loan_delinquency_command_center\models\intermediate\int_loan_scd2.sql
+07:21:52.351979 [debug]: Compiled SQL for node model.loan_delinquency_command_center.fct_payment at target\.lsp\compiled\loan_delinquency_command_center\models\marts\facts\fct_payment.sql
+07:21:52.352486 [debug]: Compiled SQL for node model.loan_delinquency_command_center.fct_promise_to_pay at target\.lsp\compiled\loan_delinquency_command_center\models\marts\facts\fct_promise_to_pay.sql
+07:21:52.352510 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_crm__customers_current_simulated at target\.lsp\compiled\loan_delinquency_command_center\models\staging\crm\stg_crm__customers_current_simulated.sql
+07:21:52.352879 [debug]: Compiled SQL for node model.loan_delinquency_command_center.fct_contact at target\.lsp\compiled\loan_delinquency_command_center\models\marts\facts\fct_contact.sql
+07:21:52.353125 [debug]: Compiled SQL for node model.loan_delinquency_command_center.int_delinquency_with_flags at target\.lsp\compiled\loan_delinquency_command_center\models\intermediate\int_delinquency_with_flags.sql
+07:21:52.353269 [debug]: Compiled SQL for node model.loan_delinquency_command_center.int_customer_scd2 at target\.lsp\compiled\loan_delinquency_command_center\models\intermediate\int_customer_scd2.sql
+07:21:52.355447 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_servicing__loan_events at target\.lsp\compiled\loan_delinquency_command_center\models\staging\servicing\stg_servicing__loan_events.sql
+07:21:52.356956 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_servicing__daily_status at target\.lsp\compiled\loan_delinquency_command_center\models\staging\servicing\stg_servicing__daily_status.sql
+07:21:52.358245 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_servicing__loans at target\.lsp\compiled\loan_delinquency_command_center\models\staging\servicing\stg_servicing__loans.sql
+07:21:52.433747 [debug]: Finished analyzing [  0.09s] model marts.dim_risk_band [success]
+07:21:52.433780 [info ]:  Succeeded [  0.12s] model marts.dim_risk_band (table)
+07:21:52.433809 [debug]: Finished analyzing [  0.10s] model marts.dim_channel [success]
+07:21:52.433815 [info ]:  Succeeded [  0.12s] model marts.dim_channel (table)
+07:21:52.433829 [debug]: Finished rendering [  0.12s] model marts.kpi_recovery_rate [success]
+07:21:52.433845 [debug]: Started analyzing model marts.kpi_recovery_rate
+07:21:52.433860 [debug]: Finished rendering [  0.12s] model marts.kpi_avg_days_delinquent [success]
+07:21:52.433867 [debug]: Started analyzing model marts.kpi_avg_days_delinquent
+07:21:52.433876 [debug]: Finished rendering [  0.12s] model stg.stg_risk__scores [success]
+07:21:52.433881 [debug]: Started analyzing model stg.stg_risk__scores
+07:21:52.433889 [debug]: Finished rendering [  0.12s] model stg.stg_payments__payments [success]
+07:21:52.433895 [debug]: Started analyzing model stg.stg_payments__payments
+07:21:52.433903 [debug]: Finished rendering [  0.12s] model stg.stg_bureau__scores [success]
+07:21:52.433908 [debug]: Started analyzing model stg.stg_bureau__scores
+07:21:52.433917 [debug]: Finished rendering [  0.12s] model marts.dim_customer [success]
+07:21:52.433922 [debug]: Started analyzing model marts.dim_customer
+07:21:52.433929 [debug]: Finished rendering [  0.12s] model marts.fct_delinquency [success]
+07:21:52.433934 [debug]: Started analyzing model marts.fct_delinquency
+07:21:52.433942 [debug]: Finished rendering [  0.12s] model stg.stg_collections__contacts [success]
+07:21:52.433947 [debug]: Started analyzing model stg.stg_collections__contacts
+07:21:52.433959 [debug]: Finished rendering [  0.12s] model int.int_loan_scd2 [success]
+07:21:52.433965 [debug]: Started analyzing model int.int_loan_scd2
+07:21:52.433972 [debug]: Finished rendering [  0.12s] model marts.fct_payment [success]
+07:21:52.433976 [debug]: Started analyzing model marts.fct_payment
+07:21:52.433984 [debug]: Finished rendering [  0.12s] model marts.fct_promise_to_pay [success]
+07:21:52.433989 [debug]: Started analyzing model marts.fct_promise_to_pay
+07:21:52.433997 [debug]: Finished rendering [  0.12s] model stg.stg_crm__customers_current_simulated [success]
+07:21:52.434004 [debug]: Started analyzing model stg.stg_crm__customers_current_simulated
+07:21:52.434012 [debug]: Finished rendering [  0.12s] model marts.fct_contact [success]
+07:21:52.434016 [debug]: Started analyzing model marts.fct_contact
+07:21:52.434025 [debug]: Finished rendering [  0.12s] model int.int_delinquency_with_flags [success]
+07:21:52.434031 [debug]: Started analyzing model int.int_delinquency_with_flags
+07:21:52.434038 [debug]: Finished rendering [  0.12s] model int.int_customer_scd2 [success]
+07:21:52.434044 [debug]: Started analyzing model int.int_customer_scd2
+07:21:52.434051 [debug]: Finished rendering [  0.12s] model stg.stg_servicing__loan_events [success]
+07:21:52.434055 [debug]: Started analyzing model stg.stg_servicing__loan_events
+07:21:52.434061 [debug]: Finished rendering [  0.12s] model stg.stg_servicing__daily_status [success]
+07:21:52.434066 [debug]: Started analyzing model stg.stg_servicing__daily_status
+07:21:52.434073 [debug]: Finished rendering [  0.12s] model stg.stg_servicing__loans [success]
+07:21:52.434078 [info ]: Finished rendering [  0.12s] (38 nodes, 0 skipped, 0 errors)
+07:21:52.434083 [debug]: Started analyzing model stg.stg_servicing__loans
+07:21:52.434090 [debug]: Finished analyzing [  0.09s] model marts.dim_loan [success]
+07:21:52.434094 [info ]:  Succeeded [  0.12s] model marts.dim_loan (table)
+07:21:52.434102 [debug]: Finished analyzing [  0.09s] model marts.dim_collector [success]
+07:21:52.434108 [info ]:  Succeeded [  0.12s] model marts.dim_collector (table)
+07:21:52.434116 [debug]: Finished analyzing [  0.10s] snapshot snapshots.snap_crm_current_demo [success]
+07:21:52.434121 [info ]:  Succeeded [  0.12s] snapshot snapshots.snap_crm_current_demo (snapshot)
+07:21:52.434130 [debug]: Finished analyzing [  0.10s] model stg.stg_crm__customers [success]
+07:21:52.434134 [info ]:  Succeeded [  0.12s] model stg.stg_crm__customers (view)
+07:21:52.434141 [debug]: Finished analyzing [  0.10s] model stg.stg_collectors__roster [success]
+07:21:52.434145 [info ]:  Succeeded [  0.12s] model stg.stg_collectors__roster (view)
+07:21:52.435915 [debug]: Finished analyzing [  0.00s] model stg.stg_risk__scores [success]
+07:21:52.435930 [info ]:  Succeeded [  0.12s] model stg.stg_risk__scores (view)
+07:21:52.436633 [debug]: Finished analyzing [  0.00s] model marts.dim_customer [success]
+07:21:52.436646 [info ]:  Succeeded [  0.12s] model marts.dim_customer (table)
+07:21:52.441564 [debug]: Finished analyzing [  0.10s] model stg.stg_collections__ptp [success]
+07:21:52.441653 [info ]:  Succeeded [  0.13s] model stg.stg_collections__ptp (view)
+07:21:52.442224 [debug]: Finished analyzing [  0.10s] model marts.kpi_ptp_fulfillment_rate [success]
+07:21:52.442275 [info ]:  Succeeded [  0.13s] model marts.kpi_ptp_fulfillment_rate (view)
+07:21:52.454720 [debug]: Finished analyzing [  0.12s] model marts.kpi_call_connect_rate [success]
+07:21:52.454762 [info ]:  Succeeded [  0.14s] model marts.kpi_call_connect_rate (view)
+07:21:52.454812 [debug]: Finished analyzing [  0.02s] model stg.stg_servicing__daily_status [success]
+07:21:52.454826 [info ]:  Succeeded [  0.14s] model stg.stg_servicing__daily_status (view)
+07:21:52.456816 [debug]: Finished analyzing [  0.12s] model marts.kpi_collector_productivity [success]
+07:21:52.456847 [info ]:  Succeeded [  0.14s] model marts.kpi_collector_productivity (view)
+07:21:52.457474 [debug]: Finished analyzing [  0.12s] model marts.kpi_roll_rate_daily [success]
+07:21:52.457618 [info ]:  Succeeded [  0.14s] model marts.kpi_roll_rate_daily (view)
+07:21:52.458215 [debug]: Finished analyzing [  0.11s] model marts.kpi_cure_rate_daily [success]
+07:21:52.458247 [info ]:  Succeeded [  0.14s] model marts.kpi_cure_rate_daily (view)
+07:21:52.459287 [debug]: Finished analyzing [  0.03s] model marts.kpi_recovery_rate [success]
+07:21:52.459319 [info ]:  Succeeded [  0.14s] model marts.kpi_recovery_rate (view)
+07:21:52.459536 [debug]: Finished analyzing [  0.03s] model stg.stg_bureau__scores [success]
+07:21:52.459559 [info ]:  Succeeded [  0.14s] model stg.stg_bureau__scores (view)
+07:21:52.462604 [debug]: Finished analyzing [  0.11s] model marts.kpi_par_by_date [success]
+07:21:52.462636 [info ]:  Succeeded [  0.14s] model marts.kpi_par_by_date (view)
+07:21:52.464675 [debug]: Finished analyzing [  0.03s] model marts.kpi_avg_days_delinquent [success]
+07:21:52.464702 [info ]:  Succeeded [  0.15s] model marts.kpi_avg_days_delinquent (view)
+07:21:52.465881 [debug]: Finished analyzing [  0.12s] model marts.kpi_collection_efficiency [success]
+07:21:52.465906 [info ]:  Succeeded [  0.15s] model marts.kpi_collection_efficiency (view)
+07:21:52.470531 [debug]: Finished analyzing [  0.04s] model stg.stg_servicing__loan_events [success]
+07:21:52.470567 [info ]:  Succeeded [  0.15s] model stg.stg_servicing__loan_events (view)
+07:21:52.472305 [debug]: Finished analyzing [  0.04s] model stg.stg_servicing__loans [success]
+07:21:52.472334 [info ]:  Succeeded [  0.16s] model stg.stg_servicing__loans (view)
+07:21:52.484934 [debug]: Finished analyzing [  0.14s] model marts.kpi_contact_success_rate [success]
+07:21:52.485086 [info ]:  Succeeded [  0.17s] model marts.kpi_contact_success_rate (view)
+07:21:52.485498 [debug]: Finished analyzing [  0.05s] model marts.fct_payment [success]
+07:21:52.485520 [info ]:  Succeeded [  0.17s] model marts.fct_payment (table)
+07:21:52.486758 [debug]: Finished analyzing [  0.05s] model stg.stg_crm__customers_current_simulated [success]
+07:21:52.486779 [info ]:  Succeeded [  0.17s] model stg.stg_crm__customers_current_simulated (view)
+07:21:52.486803 [debug]: Finished analyzing [  0.05s] model stg.stg_payments__payments [success]
+07:21:52.486812 [info ]:  Succeeded [  0.17s] model stg.stg_payments__payments (view)
+07:21:52.487430 [debug]: Finished analyzing [  0.05s] model int.int_customer_scd2 [success]
+07:21:52.487447 [info ]:  Succeeded [  0.17s] model int.int_customer_scd2 (table)
+07:21:52.488093 [debug]: Finished analyzing [  0.05s] model marts.fct_contact [success]
+07:21:52.488116 [info ]:  Succeeded [  0.17s] model marts.fct_contact (table)
+07:21:52.490844 [debug]: Finished analyzing [  0.06s] model int.int_delinquency_with_flags [success]
+07:21:52.490871 [info ]:  Succeeded [  0.17s] model int.int_delinquency_with_flags (table)
+07:21:52.491138 [debug]: Finished analyzing [  0.15s] model int.int_collector_scd2 [success]
+07:21:52.491186 [info ]:  Succeeded [  0.17s] model int.int_collector_scd2 (table)
+07:21:52.494544 [debug]: Finished analyzing [  0.06s] model stg.stg_collections__contacts [success]
+07:21:52.494564 [info ]:  Succeeded [  0.18s] model stg.stg_collections__contacts (view)
+07:21:52.500984 [debug]: Finished analyzing [  0.07s] model marts.fct_promise_to_pay [success]
+07:21:52.501019 [info ]:  Succeeded [  0.18s] model marts.fct_promise_to_pay (table)
+07:21:52.504297 [debug]: Finished analyzing [  0.17s] model marts.dim_time [success]
+07:21:52.504327 [info ]:  Succeeded [  0.19s] model marts.dim_time (table)
+07:21:52.507804 [debug]: Finished analyzing [  0.07s] model marts.fct_delinquency [success]
+07:21:52.507826 [info ]:  Succeeded [  0.19s] model marts.fct_delinquency (table)
+07:21:52.510604 [debug]: Finished analyzing [  0.08s] model int.int_loan_scd2 [success]
+07:21:52.510638 [info ]: Finished analyzing [  0.17s] (36 nodes, 0 skipped, 0 errors)
+07:21:52.510656 [info ]:  Succeeded [  0.20s] model int.int_loan_scd2 (table)
+07:21:52.518889 [info ]: Started scheduling
+07:21:52.519041 [info ]: Finished scheduling [  0.00s]
+07:21:52.519277 [info ]: Cached model count updated: 35 models (accurate)
+07:22:01.992272 [info ]: Started loading project
+07:22:01.992876 [info ]: Loading profiles.yml
+07:22:01.994810 [info ]: Cached model count updated: 35 models (accurate)
+07:22:01.994890 [info ]: Finished loading project [  0.00s]
+07:22:03.691752 [info ]: Started loading project
+07:22:03.692289 [info ]: Loading profiles.yml
+07:22:03.692666 [info ]: Finished loading project [  0.00s]
+07:22:03.692682 [info ]: Cached model count updated: 35 models (accurate)
+07:22:07.492267 [info ]: Started loading project
+07:22:07.492800 [info ]: Loading profiles.yml
+07:22:07.500357 [info ]: Started loading project
+07:22:07.500797 [info ]: Loading profiles.yml
+07:22:07.500857 [info ]: Finished loading project [  0.01s]
+07:22:07.505656 [debug]:    Started loading packages
+07:22:07.511624 [debug]:     Loaded [  0.01s] packages
+07:22:07.512185 [info ]: Finished loading project [  0.01s]
+07:22:07.512355 [info ]: Started parsing
+07:22:07.538170 [debug]: Finished parsing models/marts/core/_core.yml [  0.00s]
+07:22:07.538478 [debug]: Finished parsing models/marts/facts/_facts.yml [  0.00s]
+07:22:07.538796 [debug]: Finished parsing models/staging/_sources.yml [  0.00s]
+07:22:07.543453 [debug]: Finished parsing snapshots\snap_crm_current_demo.sql [  0.00s]
+07:22:07.544049 [debug]: Finished parsing models/intermediate/int_collector_scd2.sql [  0.00s]
+07:22:07.544461 [debug]: Finished parsing models/intermediate/int_customer_scd2.sql [  0.00s]
+07:22:07.545125 [debug]: Finished parsing models/intermediate/int_delinquency_with_flags.sql [  0.00s]
+07:22:07.545944 [debug]: Finished parsing models/intermediate/int_loan_scd2.sql [  0.00s]
+07:22:07.547360 [debug]: Finished parsing models/marts/core/dim_channel.sql [  0.00s]
+07:22:07.547833 [debug]: Finished parsing models/marts/core/dim_collector.sql [  0.00s]
+07:22:07.548451 [debug]: Finished parsing models/marts/core/dim_customer.sql [  0.00s]
+07:22:07.548975 [debug]: Finished parsing models/marts/core/dim_loan.sql [  0.00s]
+07:22:07.549581 [debug]: Finished parsing models/marts/core/dim_risk_band.sql [  0.00s]
+07:22:07.550097 [debug]: Finished parsing models/marts/core/dim_time.sql [  0.00s]
+07:22:07.550744 [debug]: Finished parsing models/marts/facts/fct_contact.sql [  0.00s]
+07:22:07.551383 [debug]: Finished parsing models/marts/facts/fct_delinquency.sql [  0.00s]
+07:22:07.551972 [debug]: Finished parsing models/marts/facts/fct_payment.sql [  0.00s]
+07:22:07.552565 [debug]: Finished parsing models/marts/facts/fct_promise_to_pay.sql [  0.00s]
+07:22:07.552906 [debug]: Finished parsing models/marts/kpis/kpi_avg_days_delinquent.sql [  0.00s]
+07:22:07.553223 [debug]: Finished parsing models/marts/kpis/kpi_call_connect_rate.sql [  0.00s]
+07:22:07.553728 [debug]: Finished parsing models/marts/kpis/kpi_collection_efficiency.sql [  0.00s]
+07:22:07.554112 [debug]: Finished parsing models/marts/kpis/kpi_collector_productivity.sql [  0.00s]
+07:22:07.554591 [debug]: Finished parsing models/marts/kpis/kpi_contact_success_rate.sql [  0.00s]
+07:22:07.555000 [debug]: Finished parsing models/marts/kpis/kpi_cure_rate_daily.sql [  0.00s]
+07:22:07.555379 [debug]: Finished parsing models/marts/kpis/kpi_par_by_date.sql [  0.00s]
+07:22:07.555673 [debug]: Finished parsing models/marts/kpis/kpi_ptp_fulfillment_rate.sql [  0.00s]
+07:22:07.556354 [debug]: Finished parsing models/marts/kpis/kpi_recovery_rate.sql [  0.00s]
+07:22:07.556761 [debug]: Finished parsing models/marts/kpis/kpi_roll_rate_daily.sql [  0.00s]
+07:22:07.557092 [debug]: Finished parsing models/staging/bureau/stg_bureau__scores.sql [  0.00s]
+07:22:07.557916 [debug]: Finished parsing models/staging/collections/stg_collections__contacts.sql [  0.00s]
+07:22:07.558394 [debug]: Finished parsing models/staging/collections/stg_collections__ptp.sql [  0.00s]
+07:22:07.559081 [debug]: Finished parsing models/staging/collectors/stg_collectors__roster.sql [  0.00s]
+07:22:07.559458 [debug]: Finished parsing models/staging/crm/stg_crm__customers.sql [  0.00s]
+07:22:07.559892 [debug]: Finished parsing models/staging/crm/stg_crm__customers_current_simulated.sql [  0.00s]
+07:22:07.560275 [debug]: Finished parsing models/staging/payments/stg_payments__payments.sql [  0.00s]
+07:22:07.560629 [debug]: Finished parsing models/staging/risk/stg_risk__scores.sql [  0.00s]
+07:22:07.560977 [debug]: Finished parsing models/staging/servicing/stg_servicing__daily_status.sql [  0.00s]
+07:22:07.561319 [debug]: Finished parsing models/staging/servicing/stg_servicing__loan_events.sql [  0.00s]
+07:22:07.561810 [debug]: Finished parsing models/staging/servicing/stg_servicing__loans.sql [  0.00s]
+07:22:07.578106 [debug]: Finished parsing tests/assert_no_orphaned_reversals.sql [  0.00s]
+07:22:07.578453 [debug]: Finished parsing tests/assert_payment_join_loss_within_baseline.sql [  0.00s]
+07:22:07.751255 [info ]: Finished parsing [  0.24s]
+07:22:07.753074 [info ]: Cached model count updated: 35 models (estimate)
+07:22:07.753093 [info ]: Cached model count updated: 35 models (accurate)
+07:22:07.753168 [info ]: Started scheduling
+07:22:07.753257 [info ]: Finished scheduling [  0.00s]
+07:22:07.753270 [debug]: Compilation - 0 nodes selected: {}
+07:22:07.753288 [warn ]: [NoNodesForSelectionCriteria (dbt1092)]: The selection criterion '' does not match any enabled nodes
+07:22:07.753310 [warn ]: [NoNodesSelected (dbt1601)]: Nothing to do. Try checking your model configs and model specification args
+07:22:07.753378 [info ]: Started scheduling
+07:22:07.753675 [info ]: Finished scheduling [  0.00s]
+07:22:07.753786 [debug]: Initializing schema store with entry: Selected("snapshot.loan_delinquency_command_center.snap_crm_current_demo") and interval: None
+07:22:07.753826 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_call_center" }) and interval: None
+07:22:07.753853 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_crm" }) and interval: None
+07:22:07.753876 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_collections" }) and interval: None
+07:22:07.753896 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_collections_ptp" }) and interval: None
+07:22:07.753917 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_payments" }) and interval: None
+07:22:07.753937 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_bureau" }) and interval: None
+07:22:07.753960 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_collectors_daily" }) and interval: None
+07:22:07.753979 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_risk_scores" }) and interval: None
+07:22:07.753998 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_servicing_daily_status" }) and interval: None
+07:22:07.754019 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_servicing_loan_events" }) and interval: None
+07:22:07.754034 [debug]: Initializing schema store with entry: Frontier(CanonicalFqn { catalog: "LOAN_DELINQUENCY_CC", schema: "STAGING", table: "raw_servicing_loans" }) and interval: None
+07:22:07.757653 [info ]: Started building task graph
+07:22:07.757697 [info ]: Finished building task graph [  0.00s]
+07:22:07.768154 [info ]: Started scheduling
+07:22:07.768261 [info ]: Finished scheduling [  0.00s]
+07:22:07.771967 [info ]: Cached model count updated: 35 models (accurate)
+07:22:07.924670 [info ]: Loading profiles.yml
+07:22:09.410233 [info ]: Started loading project
+07:22:09.410713 [info ]: Loading profiles.yml
+07:22:09.436930 [info ]: Cached model count updated: 35 models (estimate)
+07:22:09.436954 [info ]: Cached model count updated: 35 models (accurate)
+07:22:09.437033 [info ]: Started scheduling
+07:22:09.437345 [info ]: Finished scheduling [  0.00s]
+07:22:09.437369 [debug]: Compilation - 38 nodes selected: {"model.loan_delinquency_command_center.dim_channel", "model.loan_delinquency_command_center.dim_collector", "model.loan_delinquency_command_center.dim_customer", "model.loan_delinquency_command_center.dim_loan", "model.loan_delinquency_command_center.dim_risk_band", "model.loan_delinquency_command_center.dim_time", "model.loan_delinquency_command_center.fct_contact", "model.loan_delinquency_command_center.fct_delinquency", "model.loan_delinquency_command_center.fct_payment", "model.loan_delinquency_command_center.fct_promise_to_pay", "model.loan_delinquency_command_center.int_collector_scd2", "model.loan_delinquency_command_center.int_customer_scd2", "model.loan_delinquency_command_center.int_delinquency_with_flags", "model.loan_delinquency_command_center.int_loan_scd2", "model.loan_delinquency_command_center.kpi_avg_days_delinquent", "model.loan_delinquency_command_center.kpi_call_connect_rate", "model.loan_delinquency_command_center.kpi_collection_efficiency", "model.loan_delinquency_command_center.kpi_collector_productivity", "model.loan_delinquency_command_center.kpi_contact_success_rate", "model.loan_delinquency_command_center.kpi_cure_rate_daily", "model.loan_delinquency_command_center.kpi_par_by_date", "model.loan_delinquency_command_center.kpi_ptp_fulfillment_rate", "model.loan_delinquency_command_center.kpi_recovery_rate", "model.loan_delinquency_command_center.kpi_roll_rate_daily", "model.loan_delinquency_command_center.stg_bureau__scores", "model.loan_delinquency_command_center.stg_collections__contacts", "model.loan_delinquency_command_center.stg_collections__ptp", "model.loan_delinquency_command_center.stg_collectors__roster", "model.loan_delinquency_command_center.stg_crm__customers", "model.loan_delinquency_command_center.stg_crm__customers_current_simulated", "model.loan_delinquency_command_center.stg_payments__payments", "model.loan_delinquency_command_center.stg_risk__scores", "model.loan_delinquency_command_center.stg_servicing__daily_status", "model.loan_delinquency_command_center.stg_servicing__loan_events", "model.loan_delinquency_command_center.stg_servicing__loans", "seed.loan_delinquency_command_center.channel_seed", "seed.loan_delinquency_command_center.risk_band_seed", "snapshot.loan_delinquency_command_center.snap_crm_current_demo"}
+07:22:09.439821 [info ]: Started building task graph
+07:22:09.440050 [info ]: Finished building task graph [  0.00s]
+07:22:09.440128 [info ]: Finished loading project [  0.03s]
+07:22:09.444180 [info ]: Started rendering (38 nodes)
+07:22:09.444208 [info ]: Started snapshot snapshots.snap_crm_current_demo
+07:22:09.444221 [debug]: Started rendering snapshot snapshots.snap_crm_current_demo
+07:22:09.444240 [info ]: Started model stg.stg_risk__scores
+07:22:09.444247 [debug]: Started rendering model stg.stg_risk__scores
+07:22:09.444256 [info ]: Started model stg.stg_crm__customers_current_simulated
+07:22:09.444262 [debug]: Started rendering model stg.stg_crm__customers_current_simulated
+07:22:09.444270 [info ]: Started model stg.stg_bureau__scores
+07:22:09.444274 [debug]: Started rendering model stg.stg_bureau__scores
+07:22:09.444281 [info ]: Started model marts.kpi_roll_rate_daily
+07:22:09.444286 [debug]: Started rendering model marts.kpi_roll_rate_daily
+07:22:09.444298 [info ]: Started model marts.kpi_recovery_rate
+07:22:09.444304 [debug]: Started rendering model marts.kpi_recovery_rate
+07:22:09.444311 [info ]: Started model marts.kpi_ptp_fulfillment_rate
+07:22:09.444314 [debug]: Started rendering model marts.kpi_ptp_fulfillment_rate
+07:22:09.444322 [info ]: Started model marts.kpi_par_by_date
+07:22:09.444333 [debug]: Started rendering model marts.kpi_par_by_date
+07:22:09.444339 [info ]: Started model marts.kpi_cure_rate_daily
+07:22:09.444343 [debug]: Started rendering model marts.kpi_cure_rate_daily
+07:22:09.444348 [info ]: Started model marts.kpi_contact_success_rate
+07:22:09.444352 [debug]: Started rendering model marts.kpi_contact_success_rate
+07:22:09.444358 [info ]: Started model marts.kpi_collector_productivity
+07:22:09.444361 [debug]: Started rendering model marts.kpi_collector_productivity
+07:22:09.444368 [info ]: Started model marts.kpi_collection_efficiency
+07:22:09.444372 [debug]: Started rendering model marts.kpi_collection_efficiency
+07:22:09.444379 [info ]: Started model marts.kpi_call_connect_rate
+07:22:09.444382 [debug]: Started rendering model marts.kpi_call_connect_rate
+07:22:09.444388 [info ]: Started model marts.kpi_avg_days_delinquent
+07:22:09.444391 [debug]: Started rendering model marts.kpi_avg_days_delinquent
+07:22:09.444397 [info ]: Started model marts.fct_promise_to_pay
+07:22:09.444401 [debug]: Started rendering model marts.fct_promise_to_pay
+07:22:09.444409 [info ]: Started model stg.stg_collections__ptp
+07:22:09.444413 [debug]: Started rendering model stg.stg_collections__ptp
+07:22:09.444420 [info ]: Started model marts.fct_payment
+07:22:09.444426 [debug]: Started rendering model marts.fct_payment
+07:22:09.444432 [info ]: Started model stg.stg_payments__payments
+07:22:09.444436 [debug]: Started rendering model stg.stg_payments__payments
+07:22:09.444451 [info ]: Started model marts.fct_delinquency
+07:22:09.444456 [debug]: Started rendering model marts.fct_delinquency
+07:22:09.444462 [info ]: Started model int.int_delinquency_with_flags
+07:22:09.444465 [debug]: Started rendering model int.int_delinquency_with_flags
+07:22:09.444472 [info ]: Started model stg.stg_servicing__daily_status
+07:22:09.444475 [debug]: Started rendering model stg.stg_servicing__daily_status
+07:22:09.444482 [info ]: Started model marts.fct_contact
+07:22:09.444486 [debug]: Started rendering model marts.fct_contact
+07:22:09.444493 [info ]: Started model stg.stg_collections__contacts
+07:22:09.444496 [debug]: Started rendering model stg.stg_collections__contacts
+07:22:09.444502 [info ]: Started model marts.dim_time
+07:22:09.444506 [debug]: Started rendering model marts.dim_time
+07:22:09.444512 [info ]: Started model marts.dim_risk_band
+07:22:09.444517 [debug]: Started rendering model marts.dim_risk_band
+07:22:09.444525 [info ]: Started seed seeds.risk_band_seed
+07:22:09.444530 [debug]: Started rendering seed seeds.risk_band_seed
+07:22:09.444537 [info ]: Started model marts.dim_loan
+07:22:09.444541 [debug]: Started rendering model marts.dim_loan
+07:22:09.444547 [info ]: Started model int.int_loan_scd2
+07:22:09.444551 [debug]: Started rendering model int.int_loan_scd2
+07:22:09.444557 [info ]: Started model stg.stg_servicing__loans
+07:22:09.444563 [debug]: Started rendering model stg.stg_servicing__loans
+07:22:09.444576 [info ]: Started model stg.stg_servicing__loan_events
+07:22:09.444585 [debug]: Started rendering model stg.stg_servicing__loan_events
+07:22:09.444591 [info ]: Started model marts.dim_customer
+07:22:09.444596 [debug]: Started rendering model marts.dim_customer
+07:22:09.444603 [info ]: Started model int.int_customer_scd2
+07:22:09.444614 [debug]: Started rendering model int.int_customer_scd2
+07:22:09.444621 [info ]: Started model stg.stg_crm__customers
+07:22:09.444624 [debug]: Started rendering model stg.stg_crm__customers
+07:22:09.444630 [info ]: Started model marts.dim_collector
+07:22:09.444633 [debug]: Started rendering model marts.dim_collector
+07:22:09.444639 [info ]: Started model int.int_collector_scd2
+07:22:09.444656 [debug]: Started rendering model int.int_collector_scd2
+07:22:09.444663 [info ]: Started model stg.stg_collectors__roster
+07:22:09.444666 [debug]: Started rendering model stg.stg_collectors__roster
+07:22:09.444672 [info ]: Started model marts.dim_channel
+07:22:09.444676 [debug]: Started rendering model marts.dim_channel
+07:22:09.444683 [info ]: Started seed seeds.channel_seed
+07:22:09.444686 [debug]: Started rendering seed seeds.channel_seed
+07:22:09.444743 [debug]: Finished rendering [  0.00s] seed seeds.risk_band_seed [success]
+07:22:09.444760 [info ]:  Succeeded [-------] seed  seeds.risk_band_seed (table)
+07:22:09.444884 [debug]: Finished rendering [  0.00s] seed seeds.channel_seed [success]
+07:22:09.444894 [info ]:  Succeeded [-------] seed  seeds.channel_seed (table)
+07:22:09.445593 [debug]: Compiled SQL for node snapshot.loan_delinquency_command_center.snap_crm_current_demo at target\.lsp\compiled\loan_delinquency_command_center\snapshots\snap_crm_current_demo.sql\snap_crm_current_demo.sql
+07:22:09.445661 [debug]: Finished rendering [  0.00s] snapshot snapshots.snap_crm_current_demo [success]
+07:22:09.445691 [info ]: Started analyzing (36 nodes)
+07:22:09.445698 [debug]: Started analyzing snapshot snapshots.snap_crm_current_demo
+07:22:09.445875 [debug]: Finished analyzing [  0.00s] snapshot snapshots.snap_crm_current_demo [success]
+07:22:09.445884 [info ]:  Succeeded [  0.00s] snapshot snapshots.snap_crm_current_demo (snapshot)
+07:22:09.446698 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_bureau__scores at target\.lsp\compiled\loan_delinquency_command_center\models\staging\bureau\stg_bureau__scores.sql
+07:22:09.446715 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_crm__customers_current_simulated at target\.lsp\compiled\loan_delinquency_command_center\models\staging\crm\stg_crm__customers_current_simulated.sql
+07:22:09.446794 [debug]: Finished rendering [  0.00s] model stg.stg_bureau__scores [success]
+07:22:09.446816 [debug]: Started analyzing model stg.stg_bureau__scores
+07:22:09.446828 [debug]: Finished rendering [  0.00s] model stg.stg_crm__customers_current_simulated [success]
+07:22:09.446835 [debug]: Started analyzing model stg.stg_crm__customers_current_simulated
+07:22:09.447023 [debug]: Finished analyzing [  0.00s] model stg.stg_bureau__scores [success]
+07:22:09.447037 [info ]:  Succeeded [  0.00s] model stg.stg_bureau__scores (view)
+07:22:09.447110 [debug]: Finished analyzing [  0.00s] model stg.stg_crm__customers_current_simulated [success]
+07:22:09.447118 [info ]:  Succeeded [  0.00s] model stg.stg_crm__customers_current_simulated (view)
+07:22:09.448727 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_recovery_rate at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_recovery_rate.sql
+07:22:09.448803 [debug]: Finished rendering [  0.00s] model marts.kpi_recovery_rate [success]
+07:22:09.448824 [debug]: Started analyzing model marts.kpi_recovery_rate
+07:22:09.449122 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_contact_success_rate at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_contact_success_rate.sql
+07:22:09.449380 [debug]: Finished rendering [  0.01s] model marts.kpi_contact_success_rate [success]
+07:22:09.449397 [debug]: Started analyzing model marts.kpi_contact_success_rate
+07:22:09.449599 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_cure_rate_daily at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_cure_rate_daily.sql
+07:22:09.449668 [debug]: Finished analyzing [  0.00s] model marts.kpi_recovery_rate [success]
+07:22:09.449680 [info ]:  Succeeded [  0.00s] model marts.kpi_recovery_rate (view)
+07:22:09.449759 [debug]: Finished rendering [  0.01s] model marts.kpi_cure_rate_daily [success]
+07:22:09.449770 [debug]: Started analyzing model marts.kpi_cure_rate_daily
+07:22:09.450187 [debug]: Finished analyzing [  0.00s] model marts.kpi_contact_success_rate [success]
+07:22:09.450201 [info ]:  Succeeded [  0.01s] model marts.kpi_contact_success_rate (view)
+07:22:09.450410 [debug]: Finished analyzing [  0.00s] model marts.kpi_cure_rate_daily [success]
+07:22:09.450422 [info ]:  Succeeded [  0.01s] model marts.kpi_cure_rate_daily (view)
+07:22:09.450956 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_collector_productivity at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_collector_productivity.sql
+07:22:09.450999 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_collection_efficiency at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_collection_efficiency.sql
+07:22:09.451076 [debug]: Finished rendering [  0.01s] model marts.kpi_collector_productivity [success]
+07:22:09.451095 [debug]: Started analyzing model marts.kpi_collector_productivity
+07:22:09.451141 [debug]: Finished rendering [  0.01s] model marts.kpi_collection_efficiency [success]
+07:22:09.451157 [debug]: Started analyzing model marts.kpi_collection_efficiency
+07:22:09.451895 [debug]: Finished analyzing [  0.00s] model marts.kpi_collection_efficiency [success]
+07:22:09.451918 [info ]:  Succeeded [  0.01s] model marts.kpi_collection_efficiency (view)
+07:22:09.452120 [debug]: Finished analyzing [  0.00s] model marts.kpi_collector_productivity [success]
+07:22:09.452135 [info ]:  Succeeded [  0.01s] model marts.kpi_collector_productivity (view)
+07:22:09.452260 [debug]: Compiled SQL for node model.loan_delinquency_command_center.fct_promise_to_pay at target\.lsp\compiled\loan_delinquency_command_center\models\marts\facts\fct_promise_to_pay.sql
+07:22:09.452295 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_avg_days_delinquent at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_avg_days_delinquent.sql
+07:22:09.452410 [debug]: Finished rendering [  0.01s] model marts.fct_promise_to_pay [success]
+07:22:09.452427 [debug]: Started analyzing model marts.fct_promise_to_pay
+07:22:09.452748 [debug]: Finished rendering [  0.01s] model marts.kpi_avg_days_delinquent [success]
+07:22:09.452765 [debug]: Started analyzing model marts.kpi_avg_days_delinquent
+07:22:09.453052 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_collections__ptp at target\.lsp\compiled\loan_delinquency_command_center\models\staging\collections\stg_collections__ptp.sql
+07:22:09.453488 [debug]: Finished analyzing [  0.00s] model marts.kpi_avg_days_delinquent [success]
+07:22:09.453500 [info ]:  Succeeded [  0.01s] model marts.kpi_avg_days_delinquent (view)
+07:22:09.453560 [debug]: Finished rendering [  0.01s] model stg.stg_collections__ptp [success]
+07:22:09.453570 [debug]: Started analyzing model stg.stg_collections__ptp
+07:22:09.453575 [debug]: Compiled SQL for node model.loan_delinquency_command_center.fct_payment at target\.lsp\compiled\loan_delinquency_command_center\models\marts\facts\fct_payment.sql
+07:22:09.453688 [debug]: Finished analyzing [  0.00s] model stg.stg_collections__ptp [success]
+07:22:09.453695 [info ]:  Succeeded [  0.01s] model stg.stg_collections__ptp (view)
+07:22:09.453734 [debug]: Finished rendering [  0.01s] model marts.fct_payment [success]
+07:22:09.453743 [debug]: Started analyzing model marts.fct_payment
+07:22:09.453946 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_payments__payments at target\.lsp\compiled\loan_delinquency_command_center\models\staging\payments\stg_payments__payments.sql
+07:22:09.455209 [debug]: Finished rendering [  0.01s] model stg.stg_payments__payments [success]
+07:22:09.455229 [debug]: Started analyzing model stg.stg_payments__payments
+07:22:09.455410 [debug]: Finished analyzing [  0.00s] model stg.stg_payments__payments [success]
+07:22:09.455418 [info ]:  Succeeded [  0.01s] model stg.stg_payments__payments (view)
+07:22:09.456576 [debug]: Compiled SQL for node model.loan_delinquency_command_center.int_delinquency_with_flags at target\.lsp\compiled\loan_delinquency_command_center\models\intermediate\int_delinquency_with_flags.sql
+07:22:09.456701 [debug]: Finished analyzing [  0.00s] model marts.fct_promise_to_pay [success]
+07:22:09.456716 [info ]:  Succeeded [  0.01s] model marts.fct_promise_to_pay (table)
+07:22:09.456816 [debug]: Finished rendering [  0.01s] model int.int_delinquency_with_flags [success]
+07:22:09.456829 [debug]: Started analyzing model int.int_delinquency_with_flags
+07:22:09.457127 [debug]: Finished analyzing [  0.00s] model marts.fct_payment [success]
+07:22:09.457140 [info ]:  Succeeded [  0.01s] model marts.fct_payment (table)
+07:22:09.457466 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_servicing__daily_status at target\.lsp\compiled\loan_delinquency_command_center\models\staging\servicing\stg_servicing__daily_status.sql
+07:22:09.457607 [debug]: Finished rendering [  0.01s] model stg.stg_servicing__daily_status [success]
+07:22:09.457624 [debug]: Started analyzing model stg.stg_servicing__daily_status
+07:22:09.457762 [debug]: Finished analyzing [  0.00s] model stg.stg_servicing__daily_status [success]
+07:22:09.457771 [info ]:  Succeeded [  0.01s] model stg.stg_servicing__daily_status (view)
+07:22:09.458192 [debug]: Finished analyzing [  0.00s] model int.int_delinquency_with_flags [success]
+07:22:09.458206 [info ]:  Succeeded [  0.01s] model int.int_delinquency_with_flags (table)
+07:22:09.458253 [debug]: Compiled SQL for node model.loan_delinquency_command_center.fct_delinquency at target\.lsp\compiled\loan_delinquency_command_center\models\marts\facts\fct_delinquency.sql
+07:22:09.458336 [debug]: Compiled SQL for node model.loan_delinquency_command_center.int_loan_scd2 at target\.lsp\compiled\loan_delinquency_command_center\models\intermediate\int_loan_scd2.sql
+07:22:09.458824 [debug]: Finished rendering [  0.01s] model marts.fct_delinquency [success]
+07:22:09.458843 [debug]: Started analyzing model marts.fct_delinquency
+07:22:09.459143 [debug]: Compiled SQL for node model.loan_delinquency_command_center.dim_time at target\.lsp\compiled\loan_delinquency_command_center\models\marts\core\dim_time.sql
+07:22:09.459490 [debug]: Finished rendering [  0.01s] model int.int_loan_scd2 [success]
+07:22:09.459509 [debug]: Started analyzing model int.int_loan_scd2
+07:22:09.460003 [debug]: Finished rendering [  0.02s] model marts.dim_time [success]
+07:22:09.460022 [debug]: Started analyzing model marts.dim_time
+07:22:09.461641 [debug]: Finished analyzing [  0.00s] model marts.dim_time [success]
+07:22:09.461656 [info ]:  Succeeded [  0.02s] model marts.dim_time (table)
+07:22:09.462049 [debug]: Finished analyzing [  0.00s] model int.int_loan_scd2 [success]
+07:22:09.462066 [info ]:  Succeeded [  0.02s] model int.int_loan_scd2 (table)
+07:22:09.462262 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_collections__contacts at target\.lsp\compiled\loan_delinquency_command_center\models\staging\collections\stg_collections__contacts.sql
+07:22:09.462527 [debug]: Finished rendering [  0.02s] model stg.stg_collections__contacts [success]
+07:22:09.462556 [debug]: Started analyzing model stg.stg_collections__contacts
+07:22:09.462989 [debug]: Finished analyzing [  0.00s] model stg.stg_collections__contacts [success]
+07:22:09.463000 [info ]:  Succeeded [  0.02s] model stg.stg_collections__contacts (view)
+07:22:09.463274 [debug]: Compiled SQL for node model.loan_delinquency_command_center.dim_risk_band at target\.lsp\compiled\loan_delinquency_command_center\models\marts\core\dim_risk_band.sql
+07:22:09.463345 [debug]: Finished analyzing [  0.00s] model marts.fct_delinquency [success]
+07:22:09.463358 [info ]:  Succeeded [  0.02s] model marts.fct_delinquency (table)
+07:22:09.463379 [debug]: Finished rendering [  0.02s] model marts.dim_risk_band [success]
+07:22:09.463388 [debug]: Started analyzing model marts.dim_risk_band
+07:22:09.463470 [debug]: Finished analyzing [  0.00s] model marts.dim_risk_band [success]
+07:22:09.463479 [info ]:  Succeeded [  0.02s] model marts.dim_risk_band (table)
+07:22:09.463853 [debug]: Compiled SQL for node model.loan_delinquency_command_center.dim_loan at target\.lsp\compiled\loan_delinquency_command_center\models\marts\core\dim_loan.sql
+07:22:09.463932 [debug]: Finished rendering [  0.02s] model marts.dim_loan [success]
+07:22:09.463958 [debug]: Started analyzing model marts.dim_loan
+07:22:09.464059 [debug]: Finished analyzing [  0.00s] model marts.dim_loan [success]
+07:22:09.464067 [info ]:  Succeeded [  0.02s] model marts.dim_loan (table)
+07:22:09.464332 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_servicing__loan_events at target\.lsp\compiled\loan_delinquency_command_center\models\staging\servicing\stg_servicing__loan_events.sql
+07:22:09.464434 [debug]: Finished rendering [  0.02s] model stg.stg_servicing__loan_events [success]
+07:22:09.464452 [debug]: Started analyzing model stg.stg_servicing__loan_events
+07:22:09.464597 [debug]: Finished analyzing [  0.00s] model stg.stg_servicing__loan_events [success]
+07:22:09.464605 [info ]:  Succeeded [  0.02s] model stg.stg_servicing__loan_events (view)
+07:22:09.464730 [debug]: Compiled SQL for node model.loan_delinquency_command_center.dim_customer at target\.lsp\compiled\loan_delinquency_command_center\models\marts\core\dim_customer.sql
+07:22:09.464835 [debug]: Finished rendering [  0.02s] model marts.dim_customer [success]
+07:22:09.464851 [debug]: Started analyzing model marts.dim_customer
+07:22:09.464934 [debug]: Finished analyzing [  0.00s] model marts.dim_customer [success]
+07:22:09.464940 [info ]:  Succeeded [  0.02s] model marts.dim_customer (table)
+07:22:09.465248 [debug]: Compiled SQL for node model.loan_delinquency_command_center.int_customer_scd2 at target\.lsp\compiled\loan_delinquency_command_center\models\intermediate\int_customer_scd2.sql
+07:22:09.465359 [debug]: Finished rendering [  0.02s] model int.int_customer_scd2 [success]
+07:22:09.465375 [debug]: Started analyzing model int.int_customer_scd2
+07:22:09.465674 [debug]: Finished analyzing [  0.00s] model int.int_customer_scd2 [success]
+07:22:09.465689 [info ]:  Succeeded [  0.02s] model int.int_customer_scd2 (table)
+07:22:09.465703 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_crm__customers at target\.lsp\compiled\loan_delinquency_command_center\models\staging\crm\stg_crm__customers.sql
+07:22:09.465766 [debug]: Finished rendering [  0.02s] model stg.stg_crm__customers [success]
+07:22:09.465777 [debug]: Started analyzing model stg.stg_crm__customers
+07:22:09.465990 [debug]: Finished analyzing [  0.00s] model stg.stg_crm__customers [success]
+07:22:09.466000 [info ]:  Succeeded [  0.02s] model stg.stg_crm__customers (view)
+07:22:09.466131 [debug]: Compiled SQL for node model.loan_delinquency_command_center.int_collector_scd2 at target\.lsp\compiled\loan_delinquency_command_center\models\intermediate\int_collector_scd2.sql
+07:22:09.466284 [debug]: Finished rendering [  0.02s] model int.int_collector_scd2 [success]
+07:22:09.466301 [debug]: Started analyzing model int.int_collector_scd2
+07:22:09.466507 [debug]: Finished analyzing [  0.00s] model int.int_collector_scd2 [success]
+07:22:09.466520 [info ]:  Succeeded [  0.02s] model int.int_collector_scd2 (table)
+07:22:09.466573 [debug]: Compiled SQL for node model.loan_delinquency_command_center.dim_channel at target\.lsp\compiled\loan_delinquency_command_center\models\marts\core\dim_channel.sql
+07:22:09.466757 [debug]: Finished rendering [  0.02s] model marts.dim_channel [success]
+07:22:09.466777 [debug]: Started analyzing model marts.dim_channel
+07:22:09.466875 [debug]: Finished analyzing [  0.00s] model marts.dim_channel [success]
+07:22:09.466883 [info ]:  Succeeded [  0.02s] model marts.dim_channel (table)
+07:22:09.467177 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_risk__scores at target\.lsp\compiled\loan_delinquency_command_center\models\staging\risk\stg_risk__scores.sql
+07:22:09.467298 [debug]: Finished rendering [  0.02s] model stg.stg_risk__scores [success]
+07:22:09.467316 [debug]: Started analyzing model stg.stg_risk__scores
+07:22:09.467425 [debug]: Finished analyzing [  0.00s] model stg.stg_risk__scores [success]
+07:22:09.467433 [info ]:  Succeeded [  0.02s] model stg.stg_risk__scores (view)
+07:22:09.467730 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_par_by_date at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_par_by_date.sql
+07:22:09.467794 [debug]: Finished rendering [  0.02s] model marts.kpi_par_by_date [success]
+07:22:09.467811 [debug]: Started analyzing model marts.kpi_par_by_date
+07:22:09.468113 [debug]: Compiled SQL for node model.loan_delinquency_command_center.fct_contact at target\.lsp\compiled\loan_delinquency_command_center\models\marts\facts\fct_contact.sql
+07:22:09.468526 [debug]: Finished rendering [  0.02s] model marts.fct_contact [success]
+07:22:09.468542 [debug]: Started analyzing model marts.fct_contact
+07:22:09.468690 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_servicing__loans at target\.lsp\compiled\loan_delinquency_command_center\models\staging\servicing\stg_servicing__loans.sql
+07:22:09.468837 [debug]: Finished analyzing [  0.00s] model marts.kpi_par_by_date [success]
+07:22:09.468851 [info ]:  Succeeded [  0.02s] model marts.kpi_par_by_date (view)
+07:22:09.468918 [debug]: Finished rendering [  0.02s] model stg.stg_servicing__loans [success]
+07:22:09.468930 [debug]: Started analyzing model stg.stg_servicing__loans
+07:22:09.469038 [debug]: Compiled SQL for node model.loan_delinquency_command_center.stg_collectors__roster at target\.lsp\compiled\loan_delinquency_command_center\models\staging\collectors\stg_collectors__roster.sql
+07:22:09.469122 [debug]: Finished analyzing [  0.00s] model stg.stg_servicing__loans [success]
+07:22:09.469134 [info ]:  Succeeded [  0.02s] model stg.stg_servicing__loans (view)
+07:22:09.469243 [debug]: Finished rendering [  0.02s] model stg.stg_collectors__roster [success]
+07:22:09.469259 [debug]: Started analyzing model stg.stg_collectors__roster
+07:22:09.469367 [debug]: Finished analyzing [  0.00s] model stg.stg_collectors__roster [success]
+07:22:09.469375 [info ]:  Succeeded [  0.02s] model stg.stg_collectors__roster (view)
+07:22:09.469551 [debug]: Compiled SQL for node model.loan_delinquency_command_center.dim_collector at target\.lsp\compiled\loan_delinquency_command_center\models\marts\core\dim_collector.sql
+07:22:09.469634 [debug]: Finished rendering [  0.03s] model marts.dim_collector [success]
+07:22:09.469651 [debug]: Started analyzing model marts.dim_collector
+07:22:09.469735 [debug]: Finished analyzing [  0.00s] model marts.dim_collector [success]
+07:22:09.469741 [info ]:  Succeeded [  0.02s] model marts.dim_collector (table)
+07:22:09.471051 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_ptp_fulfillment_rate at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_ptp_fulfillment_rate.sql
+07:22:09.471066 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_call_connect_rate at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_call_connect_rate.sql
+07:22:09.471147 [debug]: Finished rendering [  0.03s] model marts.kpi_ptp_fulfillment_rate [success]
+07:22:09.471163 [debug]: Started analyzing model marts.kpi_ptp_fulfillment_rate
+07:22:09.471174 [debug]: Finished rendering [  0.03s] model marts.kpi_call_connect_rate [success]
+07:22:09.471181 [debug]: Started analyzing model marts.kpi_call_connect_rate
+07:22:09.471450 [debug]: Compiled SQL for node model.loan_delinquency_command_center.kpi_roll_rate_daily at target\.lsp\compiled\loan_delinquency_command_center\models\marts\kpis\kpi_roll_rate_daily.sql
+07:22:09.471495 [debug]: Finished analyzing [  0.00s] model marts.kpi_ptp_fulfillment_rate [success]
+07:22:09.471504 [info ]:  Succeeded [  0.03s] model marts.kpi_ptp_fulfillment_rate (view)
+07:22:09.471567 [debug]: Finished rendering [  0.03s] model marts.kpi_roll_rate_daily [success]
+07:22:09.471574 [info ]: Finished rendering [  0.03s] (38 nodes, 0 skipped, 0 errors)
+07:22:09.471582 [debug]: Started analyzing model marts.kpi_roll_rate_daily
+07:22:09.471746 [debug]: Finished analyzing [  0.00s] model marts.fct_contact [success]
+07:22:09.471757 [info ]:  Succeeded [  0.03s] model marts.fct_contact (table)
+07:22:09.471949 [debug]: Finished analyzing [  0.00s] model marts.kpi_call_connect_rate [success]
+07:22:09.471966 [info ]:  Succeeded [  0.03s] model marts.kpi_call_connect_rate (view)
+07:22:09.472292 [debug]: Finished analyzing [  0.00s] model marts.kpi_roll_rate_daily [success]
+07:22:09.472308 [info ]: Finished analyzing [  0.03s] (36 nodes, 0 skipped, 0 errors)
+07:22:09.472315 [info ]:  Succeeded [  0.03s] model marts.kpi_roll_rate_daily (view)
+07:22:09.477003 [info ]: Started scheduling
+07:22:09.477106 [info ]: Finished scheduling [  0.00s]
+07:22:09.477289 [info ]: Cached model count updated: 35 models (accurate)

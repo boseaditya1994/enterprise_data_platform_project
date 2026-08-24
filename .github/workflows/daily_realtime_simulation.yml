@@ -81,3 +81,15 @@ jobs:
         run: |
           cd data/synthetic/realtime
           python3 trigger_downstream.py "${{ steps.date.outputs.run_date }}"
+      
+      - name: Send daily KPI report email
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PRIVATE_KEY_PATH: /tmp/snowflake_key.p8
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: |
+          pip install matplotlib
+          cd data/synthetic/realtime
+          python3 send_daily_report.py "${{ steps.date.outputs.run_date }}"
