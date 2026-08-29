@@ -66,9 +66,9 @@ jobs:
 
       - name: Write Snowflake private key
         env:
-          SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+          SNOWFLAKE_PRIVATE_KEY_B64: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
         run: |
-          echo "$SNOWFLAKE_PRIVATE_KEY" > /tmp/snowflake_key.p8
+          echo "$SNOWFLAKE_PRIVATE_KEY_B64" | base64 -d > /tmp/snowflake_key.p8
           chmod 600 /tmp/snowflake_key.p8
 
       - name: Trigger downstream ingestion (Databricks -> Snowflake -> dbt)
