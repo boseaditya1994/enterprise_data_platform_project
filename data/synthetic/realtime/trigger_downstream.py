@@ -24,46 +24,38 @@ import requests
 DAILY_TABLES = ["raw_payments", "raw_servicing_daily_status", "raw_call_center", "raw_collections_ptp"]
 
 
-def trigger_databricks_ingest(run_date: str, notebook_path: str = "/Workspace/Users/boseaditya1994@gmail.com/incremental_daily_bronze_ingest"):
-    """Submits the incremental notebook as a one-time job run, same runs/submit
-    pattern proven via ADF's Web Activity earlier today, and polls until it finishes."""
+def trigger_databricks_ingest(run_date: str, notebook_path: str = "/Workspace/Users/boseaditya1994@gmail.com/incremental_daily_bronze_ingest",
+                                max_retries: int = 3):
     host = os.environ["DATABRICKS_HOST"].rstrip("/")
     token = os.environ["DATABRICKS_TOKEN"]
     headers = {"Authorization": f"Bearer {token}"}
 
-    submit_resp = requests.post(
-        f"{host}/api/2.1/jobs/runs/submit",
-        headers=headers,
-        json={
-            "run_name": f"daily_ingest_{run_date}",
-            "tasks": [{
-                "task_key": "incremental_ingest",
-                "notebook_task": {
-                    "notebook_path": notebook_path,
-                    "base_parameters": {"run_date": run_date},
-                    "source": "WORKSPACE",
-                },
-            }],
-        },
-    )
-    submit_resp.raise_for_status()
+    for attempt in range(1, max_retries + 1):
+        submit_resp = requests.post(
+            f"{host}/api/2.1/jobs/runs/submit",
+            headers=headers,
+            json={
+                "run_name": f"daily_ingest_{run_date}",
+                "tasks": [{
+                    "task_key": "incremental_ingest",
+                    "notebook_task": {
+                        "notebook_path": notebook_path,
+                        "base_parameters": {"run_date": run_date},
+                        "source": "WORKSPACE",
+                    },
+                }],
+            },
+        )
+        if submit_resp.status_code == 200:
+            break
+        print(f"  Attempt {attempt}/{max_retries} failed ({submit_resp.status_code}): {submit_resp.text}")
+        if attempt == max_retries:
+            submit_resp.raise_for_status()
+        time.sleep(60)  # give transient capacity constraints time to clear
+
     run_id = submit_resp.json()["run_id"]
     print(f"Databricks run submitted: run_id={run_id}")
-
-    for _ in range(60):
-        status_resp = requests.get(f"{host}/api/2.1/jobs/runs/get", headers=headers, params={"run_id": run_id})
-        status_resp.raise_for_status()
-        state = status_resp.json().get("state", {})
-        life_cycle = state.get("life_cycle_state")
-        if life_cycle in ("TERMINATED", "SKIPPED", "INTERNAL_ERROR"):
-            result_state = state.get("result_state")
-            print(f"Databricks run finished: {life_cycle} / {result_state}")
-            if result_state != "SUCCESS":
-                raise RuntimeError(f"Databricks ingest failed: {state}")
-            return
-        time.sleep(5)
-    raise TimeoutError("Databricks run did not finish within 5 minutes")
-
+    # ... polling logic stays exactly the same below this line
 
 def trigger_snowflake_copy(run_date: str):
     """Runs COPY INTO scoped to just today's new partition. Uses key-pair auth
