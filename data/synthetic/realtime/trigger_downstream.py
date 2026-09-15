@@ -123,7 +123,11 @@ if __name__ == "__main__":
 
     print(f"=== Triggering downstream chain for {run_date} ===")
     print("\n[1/3] Databricks incremental ingest...")
-    trigger_databricks_ingest(run_date)
+    try:
+        trigger_databricks_ingest(run_date)
+    except Exception as e:
+        print(f"  WARNING: Databricks ingest failed/unavailable, continuing without it: {e}")
+        print("  (Snowflake/dbt are canonical and don't depend on this step -- see ADR-001)")
 
     print("\n[2/3] Snowflake COPY INTO...")
     trigger_snowflake_copy(run_date)
