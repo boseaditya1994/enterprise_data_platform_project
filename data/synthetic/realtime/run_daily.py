@@ -1,5 +1,7 @@
 """
-The single entry point run once per day.
+The single entry point run once per day. State lives at a fixed path
+inside the checked-out repo -- the workflow commits it back to git after
+each run, so the next day's fresh checkout already has it.
 """
 import argparse
 import os
@@ -10,8 +12,7 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(__file__))
 from advance_one_day import advance_one_day  # noqa: E402
 from write_daily_events import write_daily_events  # noqa: E402
-from state_store import save_state, load_state, azure_download_state, azure_upload_state  # noqa: E402
-from upload_to_azure import upload_landing_files, upload_to_databricks_volume  # noqa: E402
+from state_store import save_state, load_state  # noqa: E402
 
 EMPTY_PENDING_PTPS_COLUMNS = ["ptp_id", "loan_id", "customer_id", "contact_id", "collector_ref_id",
                               "ptp_created_date", "ptp_promised_date", "ptp_amount",
@@ -19,12 +20,8 @@ EMPTY_PENDING_PTPS_COLUMNS = ["ptp_id", "loan_id", "customer_id", "contact_id", 
 
 
 def run_daily(state_dir: str, landing_dir: str, target_date: pd.Timestamp,
-              seed_state_path: str = None, seed_roster_path: str = None, rng=None,
-              use_azure: bool = False):
+              seed_state_path: str = None, seed_roster_path: str = None, rng=None):
     rng = rng or np.random.default_rng()
-
-    if use_azure:
-        azure_download_state(state_dir)
 
     loaded = load_state(state_dir)
     if loaded is None:
@@ -58,12 +55,6 @@ def run_daily(state_dir: str, landing_dir: str, target_date: pd.Timestamp,
     written_files = write_daily_events(events, target_date, landing_dir)
     save_state(new_state, new_pending_ptps, target_date, state_dir)
 
-    if use_azure:
-        if written_files:
-            upload_landing_files(written_files, landing_dir)
-            upload_to_databricks_volume(written_files, landing_dir)
-        azure_upload_state(state_dir)
-
     print(f"\nDay complete: {target_date.date()}")
     print(f"Files written: {written_files or '(none -- no events today)'}")
     return new_state, new_pending_ptps, events, written_files
@@ -76,9 +67,7 @@ if __name__ == "__main__":
     parser.add_argument("--target-date", default=None)
     parser.add_argument("--seed-state-path", default=None)
     parser.add_argument("--seed-roster-path", default=None)
-    parser.add_argument("--use-azure", action="store_true")
     args = parser.parse_args()
 
     target = pd.Timestamp(args.target_date) if args.target_date else pd.Timestamp.today().normalize()
-    run_daily(args.state_dir, args.landing_dir, target, args.seed_state_path, args.seed_roster_path,
-              use_azure=args.use_azure)
+    run_daily(args.state_dir, args.landing_dir, target, args.seed_state_path, args.seed_roster_path)

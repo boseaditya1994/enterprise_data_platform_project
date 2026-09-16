@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       cold_start:
-        description: 'First-ever run: seed from committed Snowflake export instead of resuming from Azure state'
+        description: 'First-ever run: seed from committed Snowflake export instead of resuming from git state'
         required: false
         default: 'false'
         type: choice
@@ -15,6 +15,9 @@ on:
         description: 'Override the simulated date (YYYY-MM-DD) -- leave blank to use real today'
         required: false
         default: ''
+
+permissions:
+  contents: write
 
 jobs:
   simulate-and-ingest:
@@ -30,7 +33,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pandas numpy pyyaml azure-storage-blob requests snowflake-connector-python cryptography dbt-core dbt-snowflake
+          pip install pandas numpy pyyaml snowflake-connector-python cryptography dbt-core dbt-snowflake matplotlib
 
       - name: Determine today's simulation date
         id: date
@@ -42,27 +45,29 @@ jobs:
           fi
 
       - name: Run daily simulation
-        env:
-          AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
           cd data/synthetic/realtime
           if [ "${{ github.event.inputs.cold_start }}" == "true" ]; then
             python3 run_daily.py \
-              --state-dir /tmp/state \
+              --state-dir live_state \
               --landing-dir /tmp/landing \
               --target-date "${{ steps.date.outputs.run_date }}" \
               --seed-state-path seed_state_seed.csv \
-              --seed-roster-path collector_roster_seed.csv \
-              --use-azure
+              --seed-roster-path collector_roster_seed.csv
           else
             python3 run_daily.py \
-              --state-dir /tmp/state \
+              --state-dir live_state \
               --landing-dir /tmp/landing \
-              --target-date "${{ steps.date.outputs.run_date }}" \
-              --use-azure
+              --target-date "${{ steps.date.outputs.run_date }}"
           fi
+
+      - name: Commit updated state back to repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/synthetic/realtime/live_state
+          git commit -m "Update simulation state -- ${{ steps.date.outputs.run_date }}" || echo "No state changes to commit"
+          git push
 
       - name: Write Snowflake private key
         env:
@@ -71,17 +76,15 @@ jobs:
           echo "$SNOWFLAKE_PRIVATE_KEY_B64" | base64 -d > /tmp/snowflake_key.p8
           chmod 600 /tmp/snowflake_key.p8
 
-      - name: Trigger downstream ingestion (Databricks -> Snowflake -> dbt)
+      - name: Trigger downstream ingestion (Snowflake -> dbt)
         env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
           SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
           SNOWFLAKE_PRIVATE_KEY_PATH: /tmp/snowflake_key.p8
         run: |
           cd data/synthetic/realtime
-          python3 trigger_downstream.py "${{ steps.date.outputs.run_date }}"
-      
+          python3 trigger_downstream.py "${{ steps.date.outputs.run_date }}" /tmp/landing
+
       - name: Send daily KPI report email
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
@@ -90,6 +93,5 @@ jobs:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
         run: |
-          pip install matplotlib
           cd data/synthetic/realtime
           python3 send_daily_report.py "${{ steps.date.outputs.run_date }}"
