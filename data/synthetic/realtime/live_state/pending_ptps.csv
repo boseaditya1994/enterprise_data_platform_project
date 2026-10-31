@@ -1,5 +1,4 @@
 ptp_id,loan_id,customer_id,contact_id,collector_ref_id,ptp_created_date,ptp_promised_date,ptp_amount,ptp_status,amount_paid_against_ptp,fulfillment_date
-PTP-RT-ed3da9af91,LN-502124,CUST-106025,CNT-RT-75938de125,COL-1111,2026-10-24,2026-10-31,224.05,Open,0.0,
 PTP-RT-f7ea6d997c,LN-503361,CUST-107430,CNT-RT-117f62450b,COL-1047,2026-10-25,2026-11-01,2487.64,Open,0.0,
 PTP-RT-5bfdeb37db,LN-503478,CUST-102549,CNT-RT-b2f7a6c1a9,COL-1097,2026-10-25,2026-11-01,2775.3,Open,0.0,
 PTP-RT-a7e9d419e4,LN-508249,CUST-102649,CNT-RT-bd2baffb59,COL-1113,2026-10-25,2026-11-01,1985.96,Open,0.0,
